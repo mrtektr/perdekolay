@@ -2021,6 +2021,15 @@ async function migrateToSB(){
   let ok=0,fail=0;
 
   try{
+    // Önce tabloları temizle
+    const tables=['tul','kumas','fon_kumas','galeri','blog'];
+    for(const t of tables){
+      await fetch(`${SB_URL}/rest/v1/${t}?id=gte.0`,{
+        method:'DELETE',
+        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+      });
+    }
+
     // Tüller
     for(let i=0;i<T.length;i++){
       const u=T[i];
@@ -2081,6 +2090,15 @@ async function migrateToSB(){
   let ok=0,fail=0;
 
   try{
+    // Önce tabloları temizle
+    const tables=['tul','kumas','fon_kumas','galeri','blog'];
+    for(const t of tables){
+      await fetch(`${SB_URL}/rest/v1/${t}?id=gte.0`,{
+        method:'DELETE',
+        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+      });
+    }
+
     // Tüller
     for(let i=0;i<T.length;i++){
       const u=T[i];
