@@ -623,7 +623,6 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
   <nav>
     <a id="nav-1" onclick="sTo('.products-section')">Ürünler</a>
     <a id="nav-2" onclick="sTo('.calc-section')">Fiyat Hesapla</a>
-    <a id="nav-blog" onclick="sTo('.blog-section')">Blog</a>
     <a id="nav-3" onclick="sTo('.blog-section')">Blog</a>
     <a id="nav-4" onclick="sTo('.contact-section')">İletişim</a>
   </nav>
@@ -1174,6 +1173,56 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== STORAGE =====
 const LS={T:'perla_tuls',K:'perla_kumas',KN:'perla_kn',RV:'perla_rv',S:'perla_settings',G:'perla_gallery',TH:'perla_theme',P:'perla_proc',TX:'perla_texts',BL:'perla_blog'};
+
+// ===== SUPABASE =====
+const SB_URL='https://pytcoilrbjokizjascya.supabase.co';
+const SB_KEY='sb_publishable_w1pJ83Cv87Si-xI5PrE6ZQ_DZr5JiuN';
+async function sbGet(table){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}?select=*&order=sira.asc,id.asc`,{
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  });
+  if(!r.ok)return null;
+  return r.json();
+}
+async function sbGetOne(table,col,val){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}?${col}=eq.${val}&select=*`,{
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  });
+  if(!r.ok)return null;
+  const d=await r.json();
+  return d[0]||null;
+}
+async function sbInsert(table,data){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}`,{
+    method:'POST',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},
+    body:JSON.stringify(data)
+  });
+  return r.json();
+}
+async function sbUpdate(table,id,data){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`,{
+    method:'PATCH',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation'},
+    body:JSON.stringify(data)
+  });
+  return r.json();
+}
+async function sbUpsert(table,data){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}`,{
+    method:'POST',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=representation,resolution=merge-duplicates'},
+    body:JSON.stringify(data)
+  });
+  return r.json();
+}
+async function sbDelete(table,id){
+  await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`,{
+    method:'DELETE',
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  });
+}
+
 function lsGet(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
@@ -1217,7 +1266,7 @@ const DS={
   ctTag:'Bize Ulaşın',ctTitle:'Her Sorunuz İçin <em>Buradayız</em>',
 };
 const DTX={
-  nav1:'Ürünler',nav2:'Fiyat Hesapla',nav3:'İletişim',
+  nav1:'Ürünler',nav2:'Fiyat Hesapla',nav3:'Blog',nav4:'İletişim',
   hcta:'Randevu Al',btn1:'Fiyat Hesapla',btn2:'Ürünleri Gör',
   tabTul:'🌿 Tüller',tabKumas:'🧵 Kumaşlar',
   rvBtn:'📅 Randevu Al',ctBtn1:'Randevu Al',ctBtn2:'💬 WhatsApp ile Yaz',
@@ -1656,8 +1705,16 @@ function hesapla(){
 // ===== ADMIN LOGIN =====
 function openAdminLogin(){el('admin-login').classList.add('open');el('lerr').textContent='';el('lu').value='';el('lp').value='';setTimeout(()=>el('lu').focus(),100);}
 function closeAdminLogin(){el('admin-login').classList.remove('open');}
-function doLogin(){
-  if(el('lu').value.trim()==='admin'&&el('lp').value==='perla2025'){closeAdminLogin();openAdminPanel();}
+async function doLogin(){
+  const btn=el('login-btn')||document.querySelector('.login-btn');
+  const u=el('lu').value.trim();
+  const p=el('lp').value;
+  if(!u||!p){el('lerr').textContent='Kullanıcı adı ve şifre gerekli.';return;}
+  const uh=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(u));
+  const ph=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
+  const toHex=b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+  const uHex=toHex(uh), pHex=toHex(ph);
+  if(uHex==='8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'&&pHex==='8e70e131ae396d27fd27f25db50fcea339cd86839aced6a17182c3b115bab34b'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
 function openAdminPanel(){el('admin-panel').classList.add('open');apPage('dashboard',document.querySelector('.ap-ni'));}
@@ -1777,20 +1834,38 @@ function handleMultiImgUpload(input){
   });
   input.value='';
 }
-function saveUrun(){
+async function saveUrun(){
   const ad=el('um-ad').value.trim(),fiyat=parseFloat(el('um-fiyat').value);
   if(!ad||!fiyat){alert('Ürün adı ve fiyat zorunludur.');return;}
-  const u={name:ad,desc:el('um-desc').value.trim(),emoji:el('um-emoji').value.trim()||'🪟',tag:el('um-tag').value.trim()||'Yeni',fiyat,
-    img:umImgs.length>0?umImgs[0]:'',imgs:[...umImgs],video:el('um-video').value.trim()};
+  const table=editTip==='tul'?'tul':'kumas';
   const list=editTip==='tul'?T:K;
-  if(editIdx!==null)list[editIdx]=u;else list.push(u);
+  const u={name:ad,'desc':el('um-desc').value.trim(),emoji:el('um-emoji').value.trim()||'🪟',
+    tag:el('um-tag').value.trim()||'Yeni',fiyat,
+    img:umImgs.length>0?umImgs[0]:'',imgs:[...umImgs],
+    video:el('um-video').value.trim(),
+    sira:editIdx!==null?(list[editIdx].sira||editIdx):list.length};
+  try{
+    if(editIdx!==null&&list[editIdx].id){
+      await sbUpdate(table,list[editIdx].id,u);
+      list[editIdx]={...list[editIdx],...u};
+    } else {
+      const res=await sbInsert(table,u);
+      if(res&&res[0])list.push({...u,...res[0]});
+      else list.push(u);
+    }
+  } catch(e){
+    console.warn('SB save failed, localStorage only:',e);
+    if(editIdx!==null)list[editIdx]=u;else list.push(u);
+  }
   lsSet(editTip==='tul'?LS.T:LS.K,list);
   closeUrunModal();renderUrunTable(editTip);toast(`Ürün ${editIdx!==null?'güncellendi':'eklendi'} ✓`);
 }
-function deleteUrun(tip,idx){
+async function deleteUrun(tip,idx){
   const list=tip==='tul'?T:K;
   if(list.length<=1){alert('En az 1 ürün olmalıdır.');return;}
   if(!confirm(`"${list[idx].name}" silinecek?`))return;
+  const table=tip==='tul'?'tul':'kumas';
+  if(list[idx].id){try{await sbDelete(table,list[idx].id);}catch(e){console.warn('SB delete fail',e);}}
   list.splice(idx,1);lsSet(tip==='tul'?LS.T:LS.K,list);renderUrunTable(tip);toast('Silindi ✓');
 }
 
@@ -1946,8 +2021,13 @@ function fillWASettings(){
   if(numEl) numEl.value=S.wa||'';
   if(msgEl) msgEl.value=S.waMsg||'';
 }
-function saveWANum(){S.wa=el('wa-num').value;lsSet(LS.S,S);applySettings();toast('Numara kaydedildi ✓');}
-function saveWAMsg2(){S.waMsg=el('wa-msg').value;lsSet(LS.S,S);toast('Mesaj kaydedildi ✓');}
+async function sbSaveAyarlar(){
+  try{
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});
+  } catch(e){console.warn('SB ayar kayıt hatası:',e);}
+}
+async function saveWANum(){S.wa=el('wa-num').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();toast('Numara kaydedildi ✓');}
+async function saveWAMsg2(){S.waMsg=el('wa-msg').value;lsSet(LS.S,S);toast('Mesaj kaydedildi ✓');}
 
 function toast(msg){const t=el('ap-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
@@ -2079,23 +2159,36 @@ function handleBmImg(input){
   r.onload=e=>{bmImgSrc=e.target.result;renderBmImg();};
   r.readAsDataURL(file);
 }
-function saveBlog(){
+async function saveBlog(){
   const title=el('bm-title').value.trim();
   if(!title){alert('Başlık zorunludur.');return;}
   const p={
-    id:editBlogIdx!==null?BL[editBlogIdx].id:Date.now(),
     title,cat:el('bm-cat').value,emoji:el('bm-emoji').value||'📝',
     tarih:el('bm-tarih').value,okuma:parseInt(el('bm-okuma').value)||3,
-    excerpt:el('bm-excerpt').value.trim(),body:el('bm-body').value.trim(),img:bmImgSrc
+    excerpt:el('bm-excerpt').value.trim(),body:el('bm-body').value.trim(),img:bmImgSrc,
+    sira:editBlogIdx!==null?(BL[editBlogIdx].sira||editBlogIdx):BL.length
   };
-  if(editBlogIdx!==null)BL[editBlogIdx]=p;else BL.unshift(p);
+  try{
+    if(editBlogIdx!==null&&BL[editBlogIdx].id){
+      await sbUpdate('blog',BL[editBlogIdx].id,p);
+      BL[editBlogIdx]={...BL[editBlogIdx],...p};
+    } else {
+      const res=await sbInsert('blog',p);
+      if(res&&res[0])BL.unshift({...p,...res[0]});
+      else BL.unshift(p);
+    }
+  } catch(e){
+    console.warn('SB blog save fail:',e);
+    if(editBlogIdx!==null)BL[editBlogIdx]=p;else BL.unshift(p);
+  }
   lsSet(LS.BL,BL);
   el('blog-edit-modal').classList.remove('open');
   renderBlogAdmin();renderBlog();
   toast(`Yazı ${editBlogIdx!==null?'güncellendi':'eklendi'} ✓`);
 }
-function deleteBlog(i){
+async function deleteBlog(i){
   if(!confirm('Bu yazı silinsin mi?'))return;
+  if(BL[i]&&BL[i].id){try{await sbDelete('blog',BL[i].id);}catch(e){console.warn('SB delete fail',e);}}
   BL.splice(i,1);lsSet(LS.BL,BL);
   renderBlogAdmin();renderBlog();toast('Silindi ✓');
 }
@@ -2131,14 +2224,71 @@ function deleteBlog(i){
 })();
 
 // ===== INIT =====
-applyTheme();
-applySettings();
-applyTexts();
-renderProcess();
-renderProducts();
-renderGallery();
-renderBlog();
-addOda();
+async function initApp(){
+  // Önce localStorage'dan hızlı yükle (anlık görünüm)
+  applyTheme();
+  applySettings();
+  applyTexts();
+  renderProcess();
+  renderProducts();
+  renderGallery();
+  renderBlog();
+  addOda();
+
+  // Sonra Supabase'den taze veri çek
+  try{
+    const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
+      sbGet('tul'),
+      sbGet('kumas'),
+      sbGet('fon_kumas'),
+      sbGet('galeri'),
+      sbGet('blog'),
+      sbGetOne('ayarlar','id',1)
+    ]);
+
+    if(tulData&&tulData.length){
+      T=tulData.map(p=>({...p,imgs:p.imgs||[],ozellikler:p.ozellikler||[]}));
+      lsSet(LS.T,T);
+    }
+    if(kumasData&&kumasData.length){
+      K=kumasData.map(p=>({...p,imgs:p.imgs||[],ozellikler:p.ozellikler||[]}));
+      lsSet(LS.K,K);
+    }
+    if(fonData&&fonData.length){
+      FON_KUMASLAR=fonData;
+      lsSet(LS.FK,FON_KUMASLAR);
+    }
+    if(galeriData&&galeriData.length){
+      G=galeriData;
+      lsSet(LS.G,G);
+    }
+    if(blogData&&blogData.length){
+      BL=blogData;
+      lsSet(LS.BL,BL);
+    }
+    if(ayarData&&ayarData.data){
+      const d=ayarData.data;
+      if(d.S){S={...DS,...d.S};lsSet(LS.S,S);}
+      if(d.KN){KN=d.KN;lsSet(LS.KN,KN);}
+      if(d.TX){TX={...TX,...d.TX};lsSet(LS.TX,TX);}
+      if(d.P){PROC=d.P;lsSet(LS.P,PROC);}
+      if(d.TH){THEME={...THEME,...d.TH};lsSet(LS.TH,THEME);}
+    }
+
+    // Yeniden render
+    applyTheme();
+    applySettings();
+    applyTexts();
+    renderProcess();
+    renderProducts();
+    renderGallery();
+    renderBlog();
+    console.log('✓ Supabase verisi yüklendi');
+  } catch(e){
+    console.warn('Supabase bağlantı hatası, localStorage kullanılıyor:', e);
+  }
+}
+initApp();
 </script>
 
 <!-- BLOG EDIT MODAL -->
