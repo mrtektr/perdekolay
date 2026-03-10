@@ -2038,7 +2038,7 @@ async function migrateToSB(){
       await sbInsert('blog',{...p,sira:i});ok++;
     }
     // Ayarlar
-    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});ok++;
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P,TH}});ok++;
 
     lsSet(LS.T,T);lsSet(LS.K,K);
     toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
@@ -2092,7 +2092,7 @@ async function migrateToSB(){
       await sbInsert('blog',{...p,sira:i});ok++;
     }
     // Ayarlar
-    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});ok++;
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P,TH}});ok++;
 
     lsSet(LS.T,T);lsSet(LS.K,K);
     toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
@@ -2118,7 +2118,7 @@ function fillWASettings(){
 }
 async function sbSaveAyarlar(){
   try{
-    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P,TH}});
   } catch(e){console.warn('SB ayar kayıt hatası:',e);}
 }
 async function saveWANum(){S.wa=el('wa-num').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();toast('Numara kaydedildi ✓');}
@@ -2365,9 +2365,9 @@ async function initApp(){
       const d=ayarData.data;
       if(d.S){S={...DS,...d.S};lsSet(LS.S,S);}
       if(d.KN){KN=d.KN;lsSet(LS.KN,KN);}
-      if(d.TX){TX={...TX,...d.TX};lsSet(LS.TX,TX);}
-      if(d.P){PROC=d.P;lsSet(LS.P,PROC);}
-      if(d.TH){THEME={...THEME,...d.TH};lsSet(LS.TH,THEME);}
+      if(d.TX){TX={...DTX,...d.TX};lsSet(LS.TX,TX);}
+      if(d.P){P=d.P;lsSet(LS.P,P);}
+      if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
 
     // Yeniden render
