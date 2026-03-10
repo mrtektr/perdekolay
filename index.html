@@ -1728,6 +1728,17 @@ function apPage(page,e){
   apRefresh(page);
 }
 
+function updateDashboard(){
+  const tarih=el('dash-tarih');
+  if(tarih)tarih.textContent=new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const total=T.length+K.length;
+  const imgs=[...T,...K].filter(p=>p.imgs&&p.imgs.length>0||p.img&&p.img.length>10).length;
+  if(el('st-total'))el('st-total').textContent=total;
+  if(el('st-imgs'))el('st-imgs').textContent=imgs;
+  if(el('st-gal'))el('st-gal').textContent=G.length;
+  if(el('st-wa'))el('st-wa').textContent=S.wa?'Aktif':'—';
+}
+
 function apRefresh(page){
   if(page==='dashboard'){updateDashboard();}
   if(page==='tuller')renderUrunTable('tul');
