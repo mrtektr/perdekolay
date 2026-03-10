@@ -827,6 +827,7 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
       <div class="ap-topbar"><div><h1 class="ap-page-title">Genel Bakış</h1><p class="ap-page-sub" id="dash-tarih"></p></div>
         <div style="display:flex;gap:.6rem;">
           <button class="ap-btn" onclick="openWA()" style="background:rgba(37,211,102,.2);color:#25d366;border:1px solid rgba(37,211,102,.3);">💬 WhatsApp Test</button>
+          <button class="ap-btn" onclick="migrateToSB()" style="background:rgba(99,179,237,.15);color:#63b3ed;border:1px solid rgba(99,179,237,.3);" title="Tüm veriyi Supabase'e aktar">☁️ Supabase'e Aktar</button>
           <button class="ap-btn ap-btn-danger" onclick="resetLS()" title="Tüm veriyi sıfırla">🔄 Sıfırla</button>
         </div>
       </div>
@@ -2001,11 +2002,105 @@ function saveBtnText(){TX.btn1=el('mt-btn1').value;TX.btn2=el('mt-btn2').value;T
 function saveTabText(){TX.tabTul=el('mt-tab-tul').value;TX.tabKumas=el('mt-tab-kumas').value;TX.rvBtn=el('mt-rv-btn').value;TX.ctBtn1=el('mt-ct-btn1').value;TX.ctBtn2=el('mt-ct-btn2').value;lsSet(LS.TX,TX);applyTexts();renderProducts();toast('Metin ayarları kaydedildi ✓');}
 
 // ===== RANDEVULAR =====
+// ===== MIGRATE TO SUPABASE =====
+async function migrateToSB(){
+  if(!confirm('LocalStorage\'daki tüm veriler Supabase\'e aktarılacak. Devam?'))return;
+  const toast2=msg=>{const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#2d3748;color:#fff;padding:.7rem 1.5rem;border-radius:4px;z-index:9999;font-size:.8rem;';document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+  toast2('⏳ Aktarım başladı...');
+  let ok=0,fail=0;
+
+  try{
+    // Tüller
+    for(let i=0;i<T.length;i++){
+      const p={...T[i]};delete p.id;
+      const r=await sbInsert('tul',{...p,sira:i});
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else fail++;
+    }
+    // Kumaşlar
+    for(let i=0;i<K.length;i++){
+      const p={...K[i]};delete p.id;
+      const r=await sbInsert('kumas',{...p,sira:i});
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else fail++;
+    }
+    // Fon kumaşları
+    for(let i=0;i<FON_KUMASLAR.length;i++){
+      const p={...FON_KUMASLAR[i]};delete p.id;
+      await sbInsert('fon_kumas',{...p,sira:i});ok++;
+    }
+    // Galeri
+    for(let i=0;i<G.length;i++){
+      const p={...G[i]};delete p.id;
+      await sbInsert('galeri',{...p,sira:i});ok++;
+    }
+    // Blog
+    for(let i=0;i<BL.length;i++){
+      const p={...BL[i]};delete p.id;
+      await sbInsert('blog',{...p,sira:i});ok++;
+    }
+    // Ayarlar
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});ok++;
+
+    lsSet(LS.T,T);lsSet(LS.K,K);
+    toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
+    updateDashboard();
+  } catch(e){
+    toast2('❌ Hata: '+e.message);
+    console.error(e);
+  }
+}
+
 // ===== RESET =====
 function resetLS(){
   if(!confirm('Tüm veriler sıfırlanacak ve varsayılana dönecek. Emin misiniz?'))return;
   Object.values(LS).forEach(k=>localStorage.removeItem(k));
   location.reload();
+}
+
+// ===== MIGRATE TO SUPABASE =====
+async function migrateToSB(){
+  if(!confirm('LocalStorage\'daki tüm veriler Supabase\'e aktarılacak. Devam?'))return;
+  const toast2=msg=>{const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#2d3748;color:#fff;padding:.7rem 1.5rem;border-radius:4px;z-index:9999;font-size:.8rem;';document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+  toast2('⏳ Aktarım başladı...');
+  let ok=0,fail=0;
+
+  try{
+    // Tüller
+    for(let i=0;i<T.length;i++){
+      const p={...T[i]};delete p.id;
+      const r=await sbInsert('tul',{...p,sira:i});
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else fail++;
+    }
+    // Kumaşlar
+    for(let i=0;i<K.length;i++){
+      const p={...K[i]};delete p.id;
+      const r=await sbInsert('kumas',{...p,sira:i});
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else fail++;
+    }
+    // Fon kumaşları
+    for(let i=0;i<FON_KUMASLAR.length;i++){
+      const p={...FON_KUMASLAR[i]};delete p.id;
+      await sbInsert('fon_kumas',{...p,sira:i});ok++;
+    }
+    // Galeri
+    for(let i=0;i<G.length;i++){
+      const p={...G[i]};delete p.id;
+      await sbInsert('galeri',{...p,sira:i});ok++;
+    }
+    // Blog
+    for(let i=0;i<BL.length;i++){
+      const p={...BL[i]};delete p.id;
+      await sbInsert('blog',{...p,sira:i});ok++;
+    }
+    // Ayarlar
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P:PROC,TH:THEME}});ok++;
+
+    lsSet(LS.T,T);lsSet(LS.K,K);
+    toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
+    updateDashboard();
+  } catch(e){
+    toast2('❌ Hata: '+e.message);
+    console.error(e);
+  }
 }
 
 // ===== RESET =====
