@@ -958,6 +958,20 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
           <div class="sf"><label>Hero Arka Plan Yazısı (büyük fon yazısı)</label><input type="text" id="set-bgtext"></div>
           <button class="sc-save" onclick="saveSiteInfo()">💾 Kaydet</button>
         </div>
+        <div class="sc-card sc-full">
+          <h4>👁️ Bölüm Görünürlüğü</h4>
+          <p class="hint">Sitede göstermek istemediğiniz bölümleri kapatın.</p>
+          <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1rem;">
+            <label style="display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);cursor:pointer;">
+              <span>🖼️ Referanslar / Galeri bölümü</span>
+              <input type="checkbox" id="tog-gallery" onchange="toggleSection('gallery',this.checked)" style="width:18px;height:18px;cursor:pointer;">
+            </label>
+            <label style="display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);cursor:pointer;">
+              <span>✍️ Blog / Bilgi Köşesi bölümü</span>
+              <input type="checkbox" id="tog-blog" onchange="toggleSection('blog',this.checked)" style="width:18px;height:18px;cursor:pointer;">
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1144,13 +1158,54 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 
     <!-- Sosyal Medya -->
     <div class="ap-page" id="ap-sosyal">
-      <div class="ap-topbar"><div><h1 class="ap-page-title">Sosyal Medya</h1><p class="ap-page-sub">Footer'da görünecek hesaplar</p></div></div>
-      <div class="sc-card">
-        <div class="ap-fg"><label>📸 Instagram (kullanıcı adı)</label><input type="text" id="soc-ig" placeholder="perdekolay" oninput="saveSocial()"></div>
-        <div class="ap-fg"><label>💬 WhatsApp (numara)</label><input type="text" id="soc-wa" placeholder="905078859455" oninput="saveSocial()"></div>
-        <div class="ap-fg"><label>📘 Facebook (kullanıcı adı veya sayfa)</label><input type="text" id="soc-fb" placeholder="perdekolay" oninput="saveSocial()"></div>
-        <div class="ap-fg"><label>▶️ YouTube (kanal adı)</label><input type="text" id="soc-yt" placeholder="@perdekolay" oninput="saveSocial()"></div>
-        <div class="ap-fg"><label>🎵 TikTok (kullanıcı adı)</label><input type="text" id="soc-tt" placeholder="perdekolay" oninput="saveSocial()"></div>
+      <div class="ap-topbar"><div><h1 class="ap-page-title">Sosyal Medya</h1><p class="ap-page-sub">Footer'da görünecek hesaplar</p></div>
+        <button class="ap-btn" onclick="saveSocialBtn()" style="background:rgba(184,150,90,.15);color:var(--gold);border:1px solid rgba(184,150,90,.3);">💾 Kaydet</button>
+      </div>
+      <div class="sc-grid">
+        <div class="sc-card sc-full">
+          <h4>📱 Sosyal Medya Hesapları</h4>
+          <p class="hint">Sadece kullanıcı adını girin. Boş bırakılan platformlar footer'da görünmez.</p>
+          <div class="sf-row">
+            <div class="sf">
+              <label>📸 Instagram</label>
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <span style="color:var(--stone);font-size:.8rem;white-space:nowrap;">instagram.com/</span>
+                <input type="text" id="soc-ig" placeholder="perdekolay" style="flex:1;">
+              </div>
+            </div>
+            <div class="sf">
+              <label>🎵 TikTok</label>
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <span style="color:var(--stone);font-size:.8rem;white-space:nowrap;">tiktok.com/@</span>
+                <input type="text" id="soc-tt" placeholder="perdekolay" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="sf-row">
+            <div class="sf">
+              <label>📘 Facebook</label>
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <span style="color:var(--stone);font-size:.8rem;white-space:nowrap;">facebook.com/</span>
+                <input type="text" id="soc-fb" placeholder="perdekolay" style="flex:1;">
+              </div>
+            </div>
+            <div class="sf">
+              <label>▶️ YouTube</label>
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <span style="color:var(--stone);font-size:.8rem;white-space:nowrap;">youtube.com/</span>
+                <input type="text" id="soc-yt" placeholder="@perdekolay" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="sf">
+            <label>💬 WhatsApp (numara, başında 90 ile)</label>
+            <input type="text" id="soc-wa" placeholder="905078859455">
+          </div>
+          <div id="soc-preview" style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);text-align:center;">
+            <p style="font-size:.7rem;color:var(--stone);margin-bottom:.8rem;letter-spacing:.1em;">ÖNIZLEME</p>
+            <div id="soc-preview-icons" style="display:flex;justify-content:center;gap:1rem;"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2156,14 +2211,26 @@ function fillSosyal(){
   if(el('soc-fb'))el('soc-fb').value=S.socialFacebook||'';
   if(el('soc-yt'))el('soc-yt').value=S.socialYoutube||'';
   if(el('soc-tt'))el('soc-tt').value=S.socialTiktok||'';
+  setTimeout(previewSocial,100);
+}
+function previewSocial(){
+  const icons=el('soc-preview-icons');
+  if(!icons)return;
+  const map={ig:'📸',wa:'💬',fb:'📘',yt:'▶️',tt:'🎵'};
+  const vals={ig:el('soc-ig')?.value,wa:el('soc-wa')?.value,fb:el('soc-fb')?.value,yt:el('soc-yt')?.value,tt:el('soc-tt')?.value};
+  icons.innerHTML=Object.entries(vals).filter(([k,v])=>v&&v.trim()).map(([k,v])=>`<span style="width:36px;height:36px;border:1px solid rgba(212,200,176,.2);display:inline-flex;align-items:center;justify-content:center;font-size:1rem;">${map[k]}</span>`).join('');
+  if(!icons.innerHTML)icons.innerHTML='<span style="color:var(--stone);font-size:.75rem;">Henüz hesap eklenmedi</span>';
 }
 async function saveSocial(){
-  S.socialInstagram=el('soc-ig').value.trim();
-  S.socialWhatsapp=el('soc-wa').value.trim();
-  S.socialFacebook=el('soc-fb').value.trim();
-  S.socialYoutube=el('soc-yt').value.trim();
-  S.socialTiktok=el('soc-tt').value.trim();
-  lsSet(LS.S,S);applySettings();await sbSaveAyarlar();
+  S.socialInstagram=el('soc-ig')?.value.trim()||'';
+  S.socialWhatsapp=el('soc-wa')?.value.trim()||'';
+  S.socialFacebook=el('soc-fb')?.value.trim()||'';
+  S.socialYoutube=el('soc-yt')?.value.trim()||'';
+  S.socialTiktok=el('soc-tt')?.value.trim()||'';
+  lsSet(LS.S,S);applySettings();previewSocial();
+}
+async function saveSocialBtn(){
+  saveSocial();await sbSaveAyarlar();toast('Sosyal medya kaydedildi ✓');
 }
 
 // ===== WA SETTINGS ADMIN =====
