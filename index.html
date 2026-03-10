@@ -1310,7 +1310,7 @@ let G=lsGet(LS.G,DG),TH={...DTH,...lsGet(LS.TH,{})},P=lsGet(LS.P,DP);
 let TUL_OPT=T.map(t=>({label:t.name,fiyat:t.fiyat}));
 const BUZGU=[{label:"1'e 3 (Standart)",oran:3},{label:"1'e 2.5 (Hafif)",oran:2.5}];
 const FON_ENLER=[{cm:60},{cm:90},{cm:100}];
-const FON_KUMASLAR=[{label:'Keten',fiyat:600},{label:'Soft',fiyat:800},{label:'Kadife',fiyat:1000}];
+let FON_KUMASLAR=[{label:'Keten',fiyat:600},{label:'Soft',fiyat:800},{label:'Kadife',fiyat:1000}];
 let odalar=[],odaSayac=0,selTab='tumu';
 
 // ===== HELPERS =====
@@ -2012,15 +2012,21 @@ async function migrateToSB(){
   try{
     // Tüller
     for(let i=0;i<T.length;i++){
-      const p={...T[i]};delete p.id;
-      const r=await sbInsert('tul',{...p,sira:i});
-      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else fail++;
+      const u=T[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||u.description||'',emoji:u.emoji||'🪟',
+        fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',
+        ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('tul',p);
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else{console.warn('tul insert fail',r);fail++;}
     }
     // Kumaşlar
     for(let i=0;i<K.length;i++){
-      const p={...K[i]};delete p.id;
-      const r=await sbInsert('kumas',{...p,sira:i});
-      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else fail++;
+      const u=K[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||u.description||'',emoji:u.emoji||'🧵',
+        fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',
+        ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('kumas',p);
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else{console.warn('kumas insert fail',r);fail++;}
     }
     // Fon kumaşları
     for(let i=0;i<FON_KUMASLAR.length;i++){
@@ -2029,8 +2035,9 @@ async function migrateToSB(){
     }
     // Galeri
     for(let i=0;i<G.length;i++){
-      const p={...G[i]};delete p.id;
-      await sbInsert('galeri',{...p,sira:i});ok++;
+      const p={img:G[i].img||'',caption:G[i].caption||G[i].title||'',sira:i};
+      if(!p.img||p.img.length<5){ok++;continue;}
+      await sbInsert('galeri',p);ok++;
     }
     // Blog
     for(let i=0;i<BL.length;i++){
@@ -2042,7 +2049,6 @@ async function migrateToSB(){
 
     lsSet(LS.T,T);lsSet(LS.K,K);
     toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
-    updateDashboard();
   } catch(e){
     toast2('❌ Hata: '+e.message);
     console.error(e);
@@ -2066,15 +2072,21 @@ async function migrateToSB(){
   try{
     // Tüller
     for(let i=0;i<T.length;i++){
-      const p={...T[i]};delete p.id;
-      const r=await sbInsert('tul',{...p,sira:i});
-      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else fail++;
+      const u=T[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||u.description||'',emoji:u.emoji||'🪟',
+        fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',
+        ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('tul',p);
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else{console.warn('tul insert fail',r);fail++;}
     }
     // Kumaşlar
     for(let i=0;i<K.length;i++){
-      const p={...K[i]};delete p.id;
-      const r=await sbInsert('kumas',{...p,sira:i});
-      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else fail++;
+      const u=K[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||u.description||'',emoji:u.emoji||'🧵',
+        fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',
+        ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('kumas',p);
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else{console.warn('kumas insert fail',r);fail++;}
     }
     // Fon kumaşları
     for(let i=0;i<FON_KUMASLAR.length;i++){
@@ -2083,8 +2095,9 @@ async function migrateToSB(){
     }
     // Galeri
     for(let i=0;i<G.length;i++){
-      const p={...G[i]};delete p.id;
-      await sbInsert('galeri',{...p,sira:i});ok++;
+      const p={img:G[i].img||'',caption:G[i].caption||G[i].title||'',sira:i};
+      if(!p.img||p.img.length<5){ok++;continue;}
+      await sbInsert('galeri',p);ok++;
     }
     // Blog
     for(let i=0;i<BL.length;i++){
@@ -2096,7 +2109,6 @@ async function migrateToSB(){
 
     lsSet(LS.T,T);lsSet(LS.K,K);
     toast2(`✓ Aktarım tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
-    updateDashboard();
   } catch(e){
     toast2('❌ Hata: '+e.message);
     console.error(e);
