@@ -64,12 +64,12 @@ nav a:hover{color:var(--dark);}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:0 5vw;background:var(--dark);position:relative;overflow:hidden;}
-.hero-bg-text{position:absolute;right:-2vw;bottom:-3vw;font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:300;color:rgba(184,150,90,.07);line-height:1;pointer-events:none;user-select:none;}
+.hero-bg-text{position:absolute;right:-2vw;bottom:-3vw;font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:300;color:rgba(184,150,90,.07);line-height:1;pointer-events:none;user-select:none;z-index:1;}
 .hero-content{position:relative;z-index:2;max-width:620px;}
-.hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:1.05;opacity:0;animation:fadeUp .8s .4s forwards;}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:1.05;color:#f5f0e8;opacity:0;animation:fadeUp .8s .4s forwards;}
 .hero h1 em{font-style:italic;color:var(--accent);}
-.hero-sub{margin-top:1.8rem;font-size:.9rem;font-weight:300;color:var(--stone);line-height:1.8;max-width:440px;opacity:0;animation:fadeUp .8s .6s forwards;}
+.hero-sub{margin-top:1.8rem;font-size:.9rem;font-weight:300;color:rgba(240,235,225,.8);line-height:1.8;max-width:440px;opacity:0;animation:fadeUp .8s .6s forwards;}
 .hero-actions{margin-top:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards;}
 .btn-gold{background:var(--accent);color:white;border:none;padding:.9rem 2.4rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
 .btn-gold:hover{background:var(--dark);}
@@ -619,7 +619,23 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 </script>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://www.perdekolay.com/#business","name":"Perdekolay","telephone":"+905078859455","priceRange":"₺₺","address":{"@type":"PostalAddress","streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A","addressLocality":"Kadıköy","addressRegion":"İstanbul","addressCountry":"TR"},"geo":{"@type":"GeoCoordinates","latitude":40.9700999,"longitude":29.083736},"areaServed":[{"@type":"AdministrativeArea","name":"Kadıköy","containedIn":"İstanbul"}],"url":"https://www.perdekolay.com"},{"@type":"WebSite","url":"https://www.perdekolay.com","name":"Perdekolay","inLanguage":"tr-TR"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Perde fiyatları nasıl hesaplanır?","acceptedAnswer":{"@type":"Answer","text":"Perde fiyatı; oda genişliği, kumaş türü ve büzgü oranına göre hesaplanır."}},{"@type":"Question","name":"Hizmet bölgeniz neresi?","acceptedAnswer":{"@type":"Answer","text":"Kadıköy'de ücretsiz ölçü alma ve montaj hizmeti sunuyoruz."}}]}]}
+{"@context":"https://schema.org","@graph":[
+  {"@type":"LocalBusiness","@id":"https://www.perdekolay.com/#business",
+   "name":"Perdekolay","telephone":"+905078859455","priceRange":"₺₺",
+   "address":{"@type":"PostalAddress","streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A","addressLocality":"Kadıköy","addressRegion":"İstanbul","addressCountry":"TR"},
+   "geo":{"@type":"GeoCoordinates","latitude":40.9700999,"longitude":29.083736},
+   "areaServed":[{"@type":"AdministrativeArea","name":"Kadıköy","containedIn":"İstanbul"}],
+   "url":"https://www.perdekolay.com",
+   "sameAs":["https://www.instagram.com/perdekolay","https://www.facebook.com/perdekolay"]},
+  {"@type":"WebSite","url":"https://www.perdekolay.com","name":"Perdekolay","inLanguage":"tr-TR",
+   "potentialAction":{"@type":"SearchAction","target":"https://www.perdekolay.com","query-input":"required name=search_term_string"}},
+  {"@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"Perde fiyatları nasıl hesaplanır?","acceptedAnswer":{"@type":"Answer","text":"Perde fiyatı; oda genişliği, kumaş türü ve büzgü oranına göre hesaplanır. Sitemizden anlık fiyat hesaplayabilirsiniz."}},
+    {"@type":"Question","name":"Hizmet bölgeniz neresi?","acceptedAnswer":{"@type":"Answer","text":"Kadıköy ve çevresinde ücretsiz ölçü alma ve montaj hizmeti sunuyoruz."}},
+    {"@type":"Question","name":"Ücretsiz montaj yapıyor musunuz?","acceptedAnswer":{"@type":"Answer","text":"Evet, Kadıköy'de tüm perde montajlarımız ücretsizdir."}},
+    {"@type":"Question","name":"Özel ölçü kesimi yapıyor musunuz?","acceptedAnswer":{"@type":"Answer","text":"Evet, tüm perdelerimiz siparişe özel kesilmektedir. Standart beden bulunmamaktadır."}}
+  ]}
+]}
 </script>
 </head>
 <body>
@@ -839,6 +855,7 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
       <div class="ap-ni" onclick="apPage('tema',this)"><span class="ap-ni-icon">🎨</span>Tema & Renkler</div>
       <div class="ap-ni" onclick="apPage('metin',this)"><span class="ap-ni-icon">🔤</span>Buton & Menü Metinleri</div>
       <div class="ap-nav-section">Sistem</div>
+      <div class="ap-ni" onclick="apPage('pixels',this)"><span class="ap-ni-icon">📊</span>Piksel & Analiz</div>
       <div class="ap-ni" onclick="apPage('sosyal',this)"><span class="ap-ni-icon">📱</span>Sosyal Medya</div>
       <div class="ap-ni" onclick="apPage('whatsapp',this)"><span class="ap-ni-icon">💬</span>WhatsApp Ayarları</div>
     </nav>
@@ -1157,6 +1174,114 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
     </div>
 
     <!-- Sosyal Medya -->
+    <div class="ap-page" id="ap-pixels">
+      <div class="ap-topbar">
+        <div><h1 class="ap-page-title">Piksel & Analiz</h1><p class="ap-page-sub">Reklam takibi ve ziyaretçi analizi</p></div>
+        <button class="ap-btn" onclick="savePixels()" style="background:rgba(184,150,90,.15);color:var(--gold);border:1px solid rgba(184,150,90,.3);">💾 Kaydet & Aktifleştir</button>
+      </div>
+      <div class="sc-grid">
+
+        <!-- GTM -->
+        <div class="sc-card sc-full">
+          <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
+            <div style="width:36px;height:36px;background:#4285f4;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🏷️</div>
+            <div><h4 style="margin:0;">Google Tag Manager</h4><p class="hint" style="margin:0;">GA4, Meta Pixel ve daha fazlasını GTM üzerinden yönetebilirsiniz.</p></div>
+          </div>
+          <div class="sf">
+            <label>GTM Container ID <span style="color:var(--stone);font-weight:400;">(örn: GTM-XXXXXXX)</span></label>
+            <input type="text" id="px-gtm" placeholder="GTM-XXXXXXX" style="font-family:monospace;">
+          </div>
+          <div id="gtm-status" style="margin-top:.5rem;font-size:.75rem;"></div>
+        </div>
+
+        <!-- GA4 -->
+        <div class="sc-card">
+          <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
+            <div style="width:36px;height:36px;background:#e37400;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📈</div>
+            <div><h4 style="margin:0;">Google Analytics 4</h4><p class="hint" style="margin:0;">Ziyaretçi ve trafik analizi.</p></div>
+          </div>
+          <div class="sf">
+            <label>Ölçüm ID <span style="color:var(--stone);font-weight:400;">(örn: G-XXXXXXXXXX)</span></label>
+            <input type="text" id="px-ga4" placeholder="G-XXXXXXXXXX" style="font-family:monospace;">
+          </div>
+          <div id="ga4-status" style="margin-top:.5rem;font-size:.75rem;"></div>
+        </div>
+
+        <!-- Meta Pixel -->
+        <div class="sc-card">
+          <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;">
+            <div style="width:36px;height:36px;background:#1877f2;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📘</div>
+            <div><h4 style="margin:0;">Meta (Facebook) Pixel</h4><p class="hint" style="margin:0;">Facebook & Instagram reklam takibi.</p></div>
+          </div>
+          <div class="sf">
+            <label>Pixel ID <span style="color:var(--stone);font-weight:400;">(örn: 1234567890123)</span></label>
+            <input type="text" id="px-meta" placeholder="1234567890123" style="font-family:monospace;">
+          </div>
+          <div id="meta-status" style="margin-top:.5rem;font-size:.75rem;"></div>
+        </div>
+
+        <!-- Nasıl bulunur rehber -->
+        <div class="sc-card sc-full" style="background:rgba(184,150,90,.06);border-color:rgba(184,150,90,.2);">
+          <h4 style="color:var(--gold-light);">📖 ID'leri Nereden Bulursunuz?</h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:.8rem;">
+            <div>
+              <strong style="font-size:.8rem;">🏷️ GTM</strong>
+              <p class="hint">tagmanager.google.com → Hesabınız → Container → GTM-XXXXX</p>
+            </div>
+            <div>
+              <strong style="font-size:.8rem;">📈 GA4</strong>
+              <p class="hint">analytics.google.com → Yönetici → Veri Akışları → G-XXXXXXXX</p>
+            </div>
+            <div>
+              <strong style="font-size:.8rem;">📘 Meta Pixel</strong>
+              <p class="hint">business.facebook.com → Etkinlik Yöneticisi → Pixel ID</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aktif durum kartı -->
+        <div class="sc-card sc-full">
+          <h4>🟢 Aktif Kodlar</h4>
+          <div id="pixels-active-list" style="margin-top:.8rem;"></div>
+        </div>
+
+        <!-- Event log -->
+        <div class="sc-card sc-full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+            <h4 style="margin:0;">📡 Canlı Event Takibi</h4>
+            <button class="ap-btn" onclick="clearEventLog()" style="font-size:.7rem;padding:.3rem .8rem;">🗑 Temizle</button>
+          </div>
+          <p class="hint">Ziyaretçiler bu aksiyonları yapınca GA4 ve Meta Pixel'e bildirilir.</p>
+          <div style="margin-top:.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;">
+            <div style="padding:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);font-size:.75rem;">
+              <div style="color:var(--gold-light);margin-bottom:.3rem;">💬 whatsapp_click</div>
+              <div class="hint">WhatsApp butonuna tıklama</div>
+              <div style="color:#68d391;font-size:.7rem;margin-top:.3rem;">→ Meta: Contact | GA4: whatsapp_click</div>
+            </div>
+            <div style="padding:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);font-size:.75rem;">
+              <div style="color:var(--gold-light);margin-bottom:.3rem;">🧮 fiyat_hesapla</div>
+              <div class="hint">Fiyat hesaplayıcı kullanma</div>
+              <div style="color:#68d391;font-size:.7rem;margin-top:.3rem;">→ Meta: Lead | GA4: fiyat_hesapla</div>
+            </div>
+            <div style="padding:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);font-size:.75rem;">
+              <div style="color:var(--gold-light);margin-bottom:.3rem;">📤 fiyat_wa_gonder</div>
+              <div class="hint">Fiyat teklifi WhatsApp'a gönderme</div>
+              <div style="color:#68d391;font-size:.7rem;margin-top:.3rem;">→ Meta: Lead (değerli) | GA4: fiyat_wa_gonder</div>
+            </div>
+            <div style="padding:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.1);font-size:.75rem;">
+              <div style="color:var(--gold-light);margin-bottom:.3rem;">👁 urun_goruntule</div>
+              <div class="hint">Ürün detay sayfası açma</div>
+              <div style="color:#68d391;font-size:.7rem;margin-top:.3rem;">→ Meta: ViewContent | GA4: urun_goruntule</div>
+            </div>
+          </div>
+          <div id="event-log" style="margin-top:1rem;max-height:200px;overflow-y:auto;font-size:.72rem;font-family:monospace;background:rgba(0,0,0,.2);padding:.8rem;border-radius:2px;color:rgba(212,200,176,.6);">
+            <div style="color:var(--stone);">— Henüz event yok. Siteyi kullanmaya başlayın. —</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="ap-page" id="ap-sosyal">
       <div class="ap-topbar"><div><h1 class="ap-page-title">Sosyal Medya</h1><p class="ap-page-sub">Footer'da görünecek hesaplar</p></div>
         <button class="ap-btn" onclick="saveSocialBtn()" style="background:rgba(184,150,90,.15);color:var(--gold);border:1px solid rgba(184,150,90,.3);">💾 Kaydet</button>
@@ -1328,6 +1453,7 @@ const DS={
   ctTag:'Bize Ulaşın',ctTitle:'Her Sorunuz İçin <em>Buradayız</em>',
   showGallery:true,showBlog:true,
   socialInstagram:'',socialWhatsapp:'',socialFacebook:'',socialYoutube:'',socialTiktok:'',
+  metaPixelId:'',ga4Id:'',gtmId:'',
 };
 const DTX={
   nav1:'Ürünler',nav2:'Fiyat Hesapla',nav3:'İletişim',
@@ -1442,16 +1568,33 @@ function applySettings(){
   // Hero video
   const hw=el('hero-video-wrap');
   if(S.heroVideo){
-    const thumb=ytThumb(S.heroVideo);
-    hw.innerHTML=`<div style="width:100%;height:100%;position:relative;cursor:pointer;background:#000;" onclick="openHeroVideoModal()">
-      ${thumb?`<img loading="lazy" src="${thumb}" style="width:100%;height:100%;object-fit:cover;opacity:.85;">`:''}
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;">
-        <div style="width:56px;height:56px;background:rgba(255,0,0,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">▶</div>
-        <span style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);">İzle</span>
-      </div>
-    </div>`;
+    const vid=ytId(S.heroVideo);
+    if(vid){
+      hw.style.background='#000';
+      const heroEl2=document.querySelector('.hero');
+      if(heroEl2)heroEl2.style.background='var(--dark)';
+      const ov2=document.querySelector('.hero-overlay');
+      if(ov2)ov2.style.display='';
+      hw.innerHTML=`<iframe
+        src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&origin=${encodeURIComponent(location.origin)}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute;top:50%;left:50%;width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none;"></iframe>
+        <div onclick="openHeroVideoModal()" style="position:absolute;bottom:2rem;right:2rem;z-index:3;cursor:pointer;display:flex;align-items:center;gap:.6rem;background:rgba(0,0,0,.55);padding:.5rem 1.2rem;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(10px);">
+          <div style="width:26px;height:26px;background:rgba(220,30,30,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;">▶</div>
+          <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;">Sesli İzle</span>
+        </div>`;
+    }
   } else {
-    hw.innerHTML='<div class="hero-video-placeholder"><span>🎬</span><p>Tanıtım Videosu</p></div>';
+    hw.innerHTML='';
+    // Video yoksa hero arka planı sand
+    const heroEl=document.querySelector('.hero');
+    if(heroEl)heroEl.style.background='var(--sand)';
+    // Renkleri normale döndür
+    const h1=document.querySelector('.hero h1');
+    if(h1)h1.style.color='';
+    const ov=document.querySelector('.hero-overlay');
+    if(ov)ov.style.display='none';
   }
   // Process
   el('proc-tag').textContent=S.procTag;
@@ -1532,12 +1675,20 @@ function renderProducts(){
       </div>
     </div>`;
   }).join('');
+  injectProductSchema();
 }
 
 // ===== PRODUCT DETAIL =====
 let pdSlideIdx=0;
 function openProductDetail(idx,tab){
   const p=(tab==='tul'?T:K)[idx];
+  trackEvent('urun_goruntule',{
+    item_name: p.name,
+    item_category: tab==='tul'?'Tül Perde':'Kumaş Perde',
+    price: p.fiyat,
+    currency: 'TRY',
+    item_tag: p.tag||''
+  });
   const hv=p.video&&p.video.length>5;
   const typeLabel=tab==='tul'?'Tül':'Kumaş';
   // Build images array: imgs[] first, fallback to img, fallback to emoji
@@ -1657,6 +1808,10 @@ function openWA(msg){
   const n=raw.replace(/[^0-9]/g,'');
   const num='90'+n.slice(-10);
   const text=msg||S.waMsg||'Merhaba, perde hakkinda bilgi almak istiyorum.';
+  trackEvent('whatsapp_click',{
+    method: msg ? 'fiyat_teklifi' : 'genel',
+    page_location: window.location.href
+  });
   window.open('https://wa.me/'+num+'?text='+encodeURIComponent(text),'_blank');
 }
 function openProductWA(tab,idx){
@@ -1684,6 +1839,12 @@ function fiyatWA(){
   parts.push('');
   parts.push('Detayli bilgi verebilir misiniz?');
   const msg=parts.join('\n');
+  trackEvent('fiyat_wa_gonder',{
+    value: tot,
+    currency: 'TRY',
+    num_rooms: satirlar.length,
+    has_fon: odalar.some(o=>o.fonEn)
+  });
   openWA(msg);
 }
 
@@ -1785,6 +1946,15 @@ function hesapla(){
   });
   if(kt>0)s+=`<hr class="fiyat-divider"><div class="fiyat-satir"><span class="fiyat-satir-label">🎁 Korniş (${ku}m × ${KN} TL)</span><span class="fiyat-satir-val">${kt.toLocaleString('tr-TR')} TL</span></div>`;
   e.innerHTML=`<div class="fiyat-satirlar">${s}</div><hr class="fiyat-divider"><div class="fiyat-toplam"><span class="fiyat-toplam-label">Tahmini Toplam</span><span class="fiyat-toplam-val">${gt.toLocaleString('tr-TR')} TL</span></div>`;
+  if(gt>0){
+    trackEvent('fiyat_hesapla',{
+      value: gt,
+      currency: 'TRY',
+      num_rooms: odalar.filter(o=>o.genislik).length,
+      has_fon: odalar.some(o=>o.fonEn),
+      has_kornish: ku>0
+    });
+  }
 }
 
 
@@ -1835,6 +2005,7 @@ function apRefresh(page){
   if(page==='tema')fillTema();
   if(page==='metin')fillMetin();
   if(page==='blog'){renderBlogAdmin();}
+  if(page==='pixels'){fillPixels();}
   if(page==='sosyal')fillSosyal();
   if(page==='whatsapp')fillWASettings();
 }
@@ -2230,7 +2401,67 @@ async function saveSocial(){
   lsSet(LS.S,S);applySettings();previewSocial();
 }
 async function saveSocialBtn(){
-  saveSocial();await sbSaveAyarlar();toast('Sosyal medya kaydedildi ✓');
+  S.socialInstagram=(el('soc-ig')?.value||'').trim();
+  S.socialWhatsapp=(el('soc-wa')?.value||'').trim();
+  S.socialFacebook=(el('soc-fb')?.value||'').trim();
+  S.socialYoutube=(el('soc-yt')?.value||'').trim();
+  S.socialTiktok=(el('soc-tt')?.value||'').trim();
+  lsSet(LS.S,S);
+  applySettings();
+  previewSocial();
+  try{await sbSaveAyarlar();}catch(e){console.warn(e);}
+  toast('Sosyal medya kaydedildi ✓');
+}
+
+// ===== PIXEL & ANALIZ ADMIN =====
+function fillPixels(){
+  if(el('px-gtm'))el('px-gtm').value=S.gtmId||'';
+  if(el('px-ga4'))el('px-ga4').value=S.ga4Id||'';
+  if(el('px-meta'))el('px-meta').value=S.metaPixelId||'';
+  updatePixelStatus();
+}
+
+function updatePixelStatus(){
+  // Her alanın yanında durum göster
+  const checks=[
+    {inputId:'px-gtm',statusId:'gtm-status',key:'gtmId',label:'GTM'},
+    {inputId:'px-ga4',statusId:'ga4-status',key:'ga4Id',label:'GA4'},
+    {inputId:'px-meta',statusId:'meta-status',key:'metaPixelId',label:'Meta Pixel'},
+  ];
+  checks.forEach(ch=>{
+    const val=(el(ch.inputId)?.value||S[ch.key]||'').trim();
+    const box=el(ch.statusId);
+    if(!box)return;
+    if(val)box.innerHTML=`<span style="color:#68d391;">✓ Aktif: <code style="background:rgba(104,211,145,.1);padding:.1rem .4rem;">${val}</code></span>`;
+    else box.innerHTML='<span style="color:var(--stone);">— Henüz eklenmedi</span>';
+  });
+  // Aktif kodlar kartı
+  const list=el('pixels-active-list');
+  if(list){
+    const items=[];
+    if(S.gtmId)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(212,200,176,.08);"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Google Tag Manager</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.gtmId}</code></div>`);
+    if(S.ga4Id)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(212,200,176,.08);"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Google Analytics 4</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.ga4Id}</code></div>`);
+    if(S.metaPixelId)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Meta Pixel</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.metaPixelId}</code></div>`);
+    list.innerHTML=items.length?items.join(''):'<span style="color:var(--stone);font-size:.8rem;">Henüz aktif kod yok.</span>';
+  }
+}
+
+async function savePixels(){
+  S.gtmId=(el('px-gtm')?.value||'').trim();
+  S.ga4Id=(el('px-ga4')?.value||'').trim();
+  S.metaPixelId=(el('px-meta')?.value||'').trim();
+  lsSet(LS.S,S);
+  updatePixelStatus();
+  // Pikselleri yeniden yükle
+  window.__pixelsInjected=false;
+  injectPixels();
+  try{await sbSaveAyarlar();}catch(e){console.warn(e);}
+  toast('Piksel kodları kaydedildi & aktifleştirildi ✓');
+}
+
+function clearEventLog(){
+  const logBox=el('event-log');
+  if(logBox)logBox.innerHTML='<div style="color:var(--stone);">— Temizlendi. —</div>';
 }
 
 // ===== WA SETTINGS ADMIN =====
@@ -2309,6 +2540,7 @@ function renderBlog(){
       </div>
     </article>`;
   }).join('');
+  injectBlogSchema();
 }
 function openBlogDetail(i){
   const p=BL[i];
@@ -2395,6 +2627,199 @@ async function deleteBlog(i){
   renderBlogAdmin();renderBlog();toast('Silindi ✓');
 }
 
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Admin event log
+  const logBox=document.getElementById('event-log');
+  if(logBox){
+    const t=new Date().toLocaleTimeString('tr-TR');
+    const line=document.createElement('div');
+    line.style.cssText='padding:.2rem 0;border-bottom:1px solid rgba(212,200,176,.06);';
+    line.innerHTML=`<span style="color:rgba(184,150,90,.5);">${t}</span> <span style="color:#f6e05e;">${eventName}</span> <span style="color:rgba(212,200,176,.4);">${JSON.stringify(params).replace(/"/g,"'")}</span>`;
+    const empty=logBox.querySelector('div[style*="stone"]');
+    if(empty)empty.remove();
+    logBox.insertBefore(line, logBox.firstChild);
+    if(logBox.children.length>20)logBox.removeChild(logBox.lastChild);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
+
 // ===== SECRET ADMIN URL =====
 (function(){
   const path=window.location.pathname+window.location.search+window.location.hash;
@@ -2411,6 +2836,187 @@ async function deleteBlog(i){
   });
 })();
 
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
+
 // ===== SECRET ADMIN URL =====
 (function(){
   if(window.location.href.indexOf('zp25')!==-1){
@@ -2424,6 +3030,187 @@ async function deleteBlog(i){
     }
   });
 })();
+
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
 
 // ===== SECRET ADMIN URL =====
 (function(){
@@ -2441,7 +3228,7 @@ async function deleteBlog(i){
 
 // ===== INIT =====
 async function initApp(){
-  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();addOda();
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();addOda();injectPixels();
   try{
     const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
       sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
@@ -2453,13 +3240,22 @@ async function initApp(){
     if(blogData&&blogData.length){BL=blogData;lsSet(LS.BL,BL);}
     if(ayarData&&ayarData.data){
       const d=ayarData.data;
-      if(d.S){S={...DS,...d.S};lsSet(LS.S,S);}
+      if(d.S){
+      // Mevcut localStorage social değerlerini koru
+      const localS=lsGet(LS.S,{});
+      S={...DS,...d.S};
+      // Social keyler Supabase'de boşsa localStorage'dakini kullan
+      ['socialInstagram','socialWhatsapp','socialFacebook','socialYoutube','socialTiktok'].forEach(k=>{
+        if(!S[k]&&localS[k])S[k]=localS[k];
+      });
+      lsSet(LS.S,S);
+    }
       if(d.KN){KN=d.KN;lsSet(LS.KN,KN);}
       if(d.TX){TX={...DTX,...d.TX};lsSet(LS.TX,TX);}
       if(d.P){P=d.P;lsSet(LS.P,P);}
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
-    applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();
+    window.__pixelsInjected=false;applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();injectPixels();
     console.log('✓ Supabase verisi yüklendi');
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
 }
