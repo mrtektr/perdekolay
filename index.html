@@ -187,13 +187,13 @@ nav a:hover{color:var(--dark);}
 /* Product Detail Modal */
 .pd-modal{display:none;position:fixed;inset:0;z-index:600;background:rgba(44,38,32,.88);align-items:center;justify-content:center;padding:1.5rem;}
 .pd-modal.open{display:flex;}
-.pd-box{background:var(--white);width:900px;max-width:98vw;max-height:92vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;position:relative;}
-.pd-visual{background:var(--linen);min-height:480px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+/* removed */
+/* removed */
 .pd-visual img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
 .pd-visual-emoji{font-size:7rem;z-index:1;}
 .pd-visual-texture{position:absolute;inset:0;opacity:.05;background-image:repeating-linear-gradient(45deg,var(--dark) 0,var(--dark) 1px,transparent 1px,transparent 8px);}
 .pd-tag{position:absolute;top:1.2rem;left:1.2rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;background:var(--accent);color:white;padding:.3rem .8rem;z-index:2;}
-.pd-info{padding:2.5rem;}
+/* removed */
 .pd-type{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;}
 .pd-name{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.1;}
 .pd-price{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--accent);margin:1.2rem 0;}
@@ -217,7 +217,7 @@ nav a:hover{color:var(--dark);}
 .admin-trigger:hover{color:var(--gold);border-color:rgba(184,150,90,.4);}
 .pd-close{position:absolute;top:1rem;right:1rem;width:34px;height:34px;background:rgba(44,38,32,.08);border:none;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;}
 .pd-close:hover{background:rgba(44,38,32,.18);}
-@media(max-width:700px){.pd-box{grid-template-columns:1fr;}.pd-visual{min-height:260px;}}
+/* removed */}
 
 /* GALLERY */
 .gallery-section{padding:7rem 5vw;background:var(--linen);}
@@ -922,6 +922,157 @@ html { scroll-behavior: smooth; }
   .header-nav{display:none;}
   .header-cta-btn{font-size:.7rem;padding:.5rem .8rem;}
 }
+
+
+/* ============================================
+   ÜRÜN KARTI — TAM RESPONSIVE
+   ============================================ */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;
+  margin-top:2.5rem;
+}
+.product-card{
+  cursor:pointer;
+  background:var(--white);
+  border:1px solid transparent;
+  transition:all .3s;
+  overflow:hidden;
+}
+.product-card:hover{border-color:rgba(184,150,90,.3);transform:translateY(-4px);box-shadow:0 12px 32px rgba(44,38,32,.08);}
+.product-visual{
+  width:100%;
+  aspect-ratio:3/4;
+  background:var(--linen);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.product-img{
+  width:100%;height:100%;
+  object-fit:cover;
+  position:absolute;inset:0;
+  transition:transform .5s;
+}
+.product-card:hover .product-img{transform:scale(1.04);}
+.product-info{padding:1rem 1.2rem 1.4rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;margin-bottom:.3rem;}
+.product-price{font-size:.78rem;color:var(--gold);letter-spacing:.08em;}
+
+/* ============================================
+   ÜRÜN DETAY MODALİ — TAM RESPONSIVE
+   ============================================ */
+#pd-modal{
+  display:none;
+  position:fixed;inset:0;
+  z-index:9000;
+  background:rgba(20,15,10,.92);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.pd-box{
+  width:100%;
+  max-width:980px;
+  margin:0 auto;
+  padding:4rem 1.5rem 3rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:start;
+  box-sizing:border-box;
+}
+.pd-visual-wrap{
+  position:sticky;top:4rem;
+  width:100%;
+}
+.pd-slider{
+  position:relative;
+  width:100%;
+  aspect-ratio:4/5;
+  background:var(--linen);
+  overflow:hidden;
+  border-radius:0;
+}
+.pd-slides{
+  display:flex;
+  width:100%;height:100%;
+  transition:transform .4s ease;
+}
+.pd-slide{
+  min-width:100%;height:100%;
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+  background:var(--linen);
+}
+.pd-slide img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.pd-slide-texture{width:100%;height:100%;background:var(--linen);}
+.pd-slide-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+.pd-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:5;width:40px;height:40px;
+  background:rgba(255,255,255,.85);
+  border:none;cursor:pointer;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.pd-arrow-l{left:.5rem;}
+.pd-arrow-r{right:.5rem;}
+.pd-dots{
+  position:absolute;bottom:.8rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:.4rem;z-index:5;
+}
+.pd-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;padding:0;}
+.pd-dot.active{background:#fff;}
+.pd-thumb-row{display:flex;gap:.5rem;margin-top:.6rem;overflow-x:auto;padding-bottom:.3rem;}
+.pd-thumb{width:64px;height:64px;object-fit:cover;cursor:pointer;opacity:.55;flex-shrink:0;transition:opacity .2s;}
+.pd-thumb:hover,.pd-thumb.active{opacity:1;outline:2px solid var(--gold);}
+.pd-tag{position:absolute;top:.8rem;left:.8rem;z-index:4;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;background:var(--dark);color:var(--gold-light);padding:.3rem .7rem;}
+
+.pd-info-wrap{
+  padding:0;
+  color:var(--dark);
+}
+.pd-type{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);margin-bottom:.8rem;}
+.pd-name{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;line-height:1.1;margin-bottom:.5rem;}
+.pd-price{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold);margin:1rem 0;}
+.pd-price small{display:block;font-family:'Jost',sans-serif;font-size:.72rem;color:var(--stone);font-weight:400;margin-top:.3rem;}
+.pd-desc{font-size:.88rem;color:var(--stone);line-height:1.9;margin-bottom:1.5rem;}
+.pd-divider{border:none;border-top:1px solid rgba(184,150,90,.15);margin:1.2rem 0;}
+.pd-features{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;}
+.pd-feat{font-size:.8rem;color:var(--dark);display:flex;align-items:center;gap:.6rem;}
+.pd-feat-icon{color:var(--gold);font-size:.7rem;}
+.pd-actions{display:flex;flex-wrap:wrap;gap:.8rem;}
+.pd-cta{padding:.9rem 1.8rem;background:var(--gold);color:var(--dark);border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:background .2s;}
+.pd-cta:hover{background:var(--gold-light);}
+.pd-cta-sec{padding:.9rem 1.8rem;background:transparent;color:var(--dark);border:1px solid rgba(44,38,32,.25);cursor:pointer;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.12em;transition:all .2s;}
+.pd-play{padding:.9rem 1.8rem;background:transparent;color:var(--gold);border:1px solid rgba(184,150,90,.4);cursor:pointer;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.12em;}
+.pd-close-btn{position:fixed;top:1rem;right:1rem;z-index:9001;width:44px;height:44px;background:rgba(44,38,32,.8);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;border-radius:0;}
+
+/* TABLET */
+@media(max-width:860px){
+  .pd-box{grid-template-columns:1fr;gap:1.5rem;padding:3.5rem 1rem 2rem;}
+  .pd-visual-wrap{position:static;}
+  .pd-slider{aspect-ratio:16/10;}
+  .products-grid{grid-template-columns:repeat(3,1fr);}
+}
+
+/* MOBİL */
+@media(max-width:580px){
+  .pd-box{padding:3rem .75rem 2rem;gap:1rem;}
+  .pd-slider{aspect-ratio:1/1;}
+  .pd-name{font-size:1.7rem;}
+  .pd-price{font-size:1.5rem;}
+  .pd-actions{flex-direction:column;}
+  .pd-cta,.pd-cta-sec,.pd-play{width:100%;text-align:center;padding:.85rem 1rem;}
+  .pd-thumb{width:52px;height:52px;}
+  .products-grid{grid-template-columns:1fr 1fr;gap:.6rem;}
+  .product-visual{aspect-ratio:3/4;height:auto;}
+  .product-info{padding:.7rem .8rem 1rem;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1344,7 +1495,7 @@ html { scroll-behavior: smooth; }
 
 <!-- PRODUCT DETAIL MODAL -->
 <div id="pd-modal" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.9);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);">
-  <button onclick="closePdModal()" style="position:fixed;top:1.5rem;right:1.5rem;z-index:9001;width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:1.2rem;">✕</button>
+  <button onclick="closePdModal()" class="pd-close-btn">✕</button>
   <div class="pd-box">
     <div id="pd-visual" class="pd-visual-wrap"></div>
     <div id="pd-info" class="pd-info-wrap"></div>
