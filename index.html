@@ -2394,7 +2394,8 @@ function pdGoTo(i){
 }
 function closePdModal(e){
   if(e&&e.target!==el('pd-modal'))return;
-  el('pd-modal').classList.remove('open');
+  const pdm=el('pd-modal');
+  if(pdm)pdm.style.display='none';
   document.body.style.overflow='';
 }
 
@@ -2426,7 +2427,8 @@ function openVideoModal(idx,tab){
       </a>
     </div>`;
   el('video-title').textContent=p.name;
-  el('video-modal').classList.add('open');
+  const vm=el('video-modal');
+  if(vm)vm.style.cssText='display:flex;align-items:center;justify-content:center;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9100;';
   document.body.style.overflow='hidden';
 }
 function openHeroVideoModal(){
@@ -2434,10 +2436,11 @@ function openHeroVideoModal(){
   if(!id)return;
   el('video-content').innerHTML=ytEmbedHtml(id);
   el('video-title').textContent=S.logo||'PERLA';
-  el('video-modal').classList.add('open');
+  const vm=el('video-modal');
+  if(vm)vm.style.cssText='display:flex;align-items:center;justify-content:center;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9100;';
   document.body.style.overflow='hidden';
 }
-function closeVideoModal(e){if(!e||e.target===el('video-modal')){el('video-modal').classList.remove('open');el('video-content').innerHTML='';document.body.style.overflow='';}}
+function closeVideoModal(e){if(!e||e.target===el('video-modal')){const vm2=el('video-modal');if(vm2)vm2.style.display='none';const vc=el('video-content');if(vc)vc.innerHTML='';document.body.style.overflow='';}}
 
 // ===== WHATSAPP =====
 function openWA(msg){
@@ -3248,12 +3251,12 @@ function openBlogDetail(i){
     <div class="blog-box-meta">${p.tarih||''} · ${p.okuma||3} dakika okuma</div>
     <div class="blog-box-body">${p.body||''}</div>
     <button class="blog-box-wa" onclick="openWA('Merhaba, '+encodeURIComponent('${p.title}')+' yazısını okudum, bilgi almak istiyorum.')">💬 Bilgi Al — WhatsApp</button>`;
-  el('blog-modal').classList.add('open');
+  const bm=el('blog-modal');if(bm)bm.style.cssText='display:block;position:fixed;inset:0;background:rgba(20,15,10,.92);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);';
   document.body.style.overflow='hidden';
 }
 function closeBlogModal(e){
   if(e&&e.target!==el('blog-modal'))return;
-  el('blog-modal').classList.remove('open');
+  const bmc=el('blog-modal');if(bmc)bmc.style.display='none';
   document.body.style.overflow='';
 }
 // Blog admin
