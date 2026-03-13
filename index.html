@@ -1487,18 +1487,8 @@ html { scroll-behavior: smooth; }
 
     <!-- Adımlar -->
     <div class="ap-page" id="ap-adimlar">
-      <div class="ap-topbar"><div><h1 class="ap-page-title">Nasıl Çalışıyoruz</h1><p class="ap-page-sub">4 adımı düzenle</p></div></div>
-      <div class="sc-grid">
-        <div class="sc-card sc-full">
-          <h4>Bölüm Başlığı</h4>
-          <div class="sf-row">
-            <div class="sf"><label>Küçük Etiket</label><input type="text" id="set-proc-tag"></div>
-            <div class="sf"><label>Ana Başlık (em ile vurgu)</label><input type="text" id="set-proc-title"></div>
-          </div>
-          <button class="sc-save" onclick="saveProcHeader()">💾 Kaydet</button>
-        </div>
-      </div>
-      <div id="proc-admin-items"></div>
+      <div class="ap-topbar"><div><h1 class="ap-page-title">İş Akışı Adımları</h1><p class="ap-page-sub">Her adımın yazısını ve arka planını düzenle</p></div></div>
+      <div id="step-admin-items"></div>
     </div>
 
     <!-- Bölüm Başlıkları -->
@@ -2024,6 +2014,24 @@ const DS={
   showGallery:true,showBlog:true,
   socialInstagram:'',socialWhatsapp:'',socialFacebook:'',socialYoutube:'',socialTiktok:'',
   metaPixelId:'',ga4Id:'',gtmId:'',
+  step1Title:'Yüzlerce çeşit arasında <em>kaybolmak</em> zorunda değilsiniz.',
+  step1Text:'Kumaş mağazasına girdiniz, seçenekler kafanızı karıştırdı. Evinize döndüğünüzde hangisinin uyacağından emin olamadınız.',
+  step1Bg:'',
+  step2Title:'<em>Evinize</em> geliyoruz.',
+  step2Text:'Randevu alıyorsunuz, biz geliyor ve mekanınızı yerinde görüyoruz.',
+  step2Bg:'',
+  step3Title:'En çok tercih edilen <em>tülleri</em> salonunuza asıyoruz.',
+  step3Text:'Yüzlerce çeşit arasından önceden elediğimiz, mekanınıza uyacağına inandığımız modelleri evinizde deneyimliyorsunuz.',
+  step3Bg:'',
+  step4Title:'Görüyorsunuz, <em>beğeniyorsunuz,</em> alıyorsunuz.',
+  step4Text:'Tahmin değil, gerçek. Evinizin ışığında, duvarlarınızın renginde görerek karar veriyorsunuz.',
+  step4Bg:'',
+  step5Title:'Ölçünüze özel <em>dikiyoruz.</em>',
+  step5Text:'Standart beden yok. Her perde, tam pencerenize göre kesilip dikilir.',
+  step5Bg:'',
+  step6Title:'Biz takıyoruz. <em>Ücretsiz.</em>',
+  step6Text:'Matkap, vida, korniş… hepsi bizde. Siz sadece evinizde olun, gerisini biz halledelim.',
+  step6Bg:''
 };
 const DTX={
   nav1:'Ürünler',nav2:'Fiyat Hesapla',nav3:'İletişim',
@@ -2160,6 +2168,22 @@ function applySettings(){
   // Process
   const pt=el('proc-tag');if(pt)pt.textContent=S.procTag;
   const ptl=el('proc-title');if(ptl)ptl.innerHTML=S.procTitle;
+  // İş akışı adımları
+  [1,2,3,4,5,6].forEach(i=>{
+    const sec=el('story-step'+i);if(!sec)return;
+    const h2=sec.querySelector('h2');
+    const p=sec.querySelector('p.fs-sub,p.fs-sub-dark');
+    const bg=sec.querySelector('.fs-bg');
+    if(h2&&S['step'+i+'Title'])h2.innerHTML=S['step'+i+'Title'];
+    if(p&&S['step'+i+'Text'])p.innerHTML=S['step'+i+'Text'];
+    if(bg&&S['step'+i+'Bg']){
+      bg.style.backgroundImage=`url('${S['step'+i+'Bg']}')`;
+      bg.style.backgroundSize='cover';
+      bg.style.backgroundPosition='center';
+    } else if(bg){
+      bg.style.backgroundImage='';
+    }
+  });
   // Sections
   ['prod-tag-el','prod-tag2-el'].forEach(e=>{const x=el(e);if(x)x.textContent=S.prodTag;});
   ['prod-title-el','prod-title2-el'].forEach(e=>{const x=el(e);if(x)x.innerHTML=S.prodTitle;});
@@ -2771,19 +2795,70 @@ function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set
 
 // ===== ADIMLAR =====
 function fillAdimlar(){
-  el('set-proc-tag').value=S.procTag||'';
-  el('set-proc-title').value=S.procTitle||'';
-  el('proc-admin-items').innerHTML=P.map((p,i)=>`
-    <div class="proc-item-admin">
-      <div class="proc-item-header">
-        <div class="proc-num-badge">0${i+1}</div>
-        <input type="text" value="${p.icon}" style="width:60px;background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.5rem;font-size:1.2rem;text-align:center;outline:none;" oninput="P[${i}].icon=this.value">
-        <input type="text" value="${p.name}" placeholder="Adım adı" style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.5rem .8rem;font-family:'Jost',sans-serif;font-size:.88rem;outline:none;" oninput="P[${i}].name=this.value">
+  const steps=[
+    {id:1,label:'Adım 1 — Sorun',dark:false},
+    {id:2,label:'Adım 2 — Evinize geliyoruz',dark:true},
+    {id:3,label:'Adım 3 — Koleksiyonu getiriyoruz',dark:false},
+    {id:4,label:'Adım 4 — Görüyorsunuz, beğeniyorsunuz',dark:true},
+    {id:5,label:'Adım 5 — Özel dikim',dark:false},
+    {id:6,label:'Adım 6 — Ücretsiz montaj',dark:true},
+  ];
+  el('step-admin-items').innerHTML=steps.map(s=>`
+    <div class="sc-card sc-full" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;">
+        <div style="width:36px;height:36px;background:var(--gold);color:var(--dark);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;flex-shrink:0;">0${s.id}</div>
+        <h4 style="margin:0;font-size:.85rem;">${s.label}</h4>
       </div>
-      <textarea placeholder="Açıklama..." style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--silk);padding:.6rem .8rem;font-family:'Jost',sans-serif;font-size:.82rem;outline:none;resize:vertical;min-height:56px;" oninput="P[${i}].desc=this.value">${p.desc}</textarea>
-    </div>`).join('')+`<button class="sc-save" style="width:100%;margin-top:.5rem;" onclick="saveAdimlar()">💾 Tüm Adımları Kaydet</button>`;
+      <div class="sf-row">
+        <div class="sf" style="flex:2;">
+          <label>Başlık <span style="color:var(--stone);font-weight:400;">(em etiketi ile vurgu: &lt;em&gt;kelime&lt;/em&gt;)</span></label>
+          <input type="text" id="step${s.id}-title" value="${(S['step'+s.id+'Title']||'').replace(/"/g,'&quot;')}" placeholder="Başlık metni...">
+        </div>
+      </div>
+      <div class="sf">
+        <label>Açıklama metni</label>
+        <textarea id="step${s.id}-text" rows="2" style="resize:vertical;">${S['step'+s.id+'Text']||''}</textarea>
+      </div>
+      <div class="sf">
+        <label>🖼️ Arka Plan Görseli (URL)</label>
+        <div style="display:flex;gap:.8rem;align-items:flex-start;">
+          <input type="text" id="step${s.id}-bg" value="${S['step'+s.id+'Bg']||''}" placeholder="https://... veya boş bırakın (varsayılan arka plan)">
+          <button onclick="previewStepBg(${s.id})" style="padding:.5rem .9rem;background:rgba(184,150,90,.15);border:1px solid rgba(184,150,90,.3);color:var(--gold-light);cursor:pointer;white-space:nowrap;font-size:.75rem;">👁 Önizle</button>
+        </div>
+        <div id="step${s.id}-bg-preview" style="margin-top:.6rem;display:none;"></div>
+        <p style="font-size:.7rem;color:var(--stone);margin-top:.4rem;">Resim URL'si girin. Önerilen boyut: 1920×1080. Boş bırakırsanız varsayılan koyu/açık arka plan kullanılır.</p>
+      </div>
+      <button class="sc-save" onclick="saveStep(${s.id})">💾 Adım ${s.id}'i Kaydet</button>
+    </div>
+  `).join('');
 }
-function saveProcHeader(){S.procTag=el('set-proc-tag').value;S.procTitle=el('set-proc-title').value;lsSet(LS.S,S);applySettings();renderProcess();toast('Başlık kaydedildi ✓');}
+
+
+function saveProcHeader(){S.procTag=el('set-proc-tag').value;S.procTitle=el('set-proc-title').value;lsSet(LS.S,S);applySettings();renderProcess();toast('Başlık kaydedildi ✓');}function saveStep(i){
+  const title=el('step'+i+'-title')?.value||'';
+  const text=el('step'+i+'-text')?.value||'';
+  const bg=el('step'+i+'-bg')?.value||'';
+  S['step'+i+'Title']=title;
+  S['step'+i+'Text']=text;
+  S['step'+i+'Bg']=bg;
+  lsSet(LS.S,S);
+  applySettings();
+  sbSaveAyarlar();
+  apToast('Adım '+i+' kaydedildi ✓');
+}
+
+function previewStepBg(i){
+  const url=el('step'+i+'-bg')?.value||'';
+  const pv=el('step'+i+'-bg-preview');
+  if(!pv)return;
+  if(!url){pv.style.display='none';return;}
+  pv.style.display='block';
+  pv.innerHTML=`<div style="width:100%;height:120px;background:url('${url}') center/cover;border:1px solid rgba(184,150,90,.2);position:relative;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;letter-spacing:.1em;">Önizleme</div>
+  </div>`;
+}
+
+
 function saveAdimlar(){lsSet(LS.P,P);renderProcess();toast('Adımlar kaydedildi ✓');}
 
 // ===== BÖLÜMLER =====
