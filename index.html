@@ -3018,59 +3018,1182 @@ function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set
 
 // ===== ADIMLAR =====
 function fillAdimlar(){
-  const container=el('step-admin-items');
-  if(!container)return;
   const steps=[
-    {id:1,label:'Adım 1 — Sorun'},
-    {id:2,label:'Adım 2 — Evinize geliyoruz'},
-    {id:3,label:'Adım 3 — Koleksiyonu getiriyoruz'},
-    {id:4,label:'Adım 4 — Görüyorsunuz, beğeniyorsunuz'},
-    {id:5,label:'Adım 5 — Özel dikim'},
-    {id:6,label:'Adım 6 — Ücretsiz montaj'},
+    {id:1,label:'Adım 1 — Sorun',dark:false},
+    {id:2,label:'Adım 2 — Evinize geliyoruz',dark:true},
+    {id:3,label:'Adım 3 — Koleksiyonu getiriyoruz',dark:false},
+    {id:4,label:'Adım 4 — Görüyorsunuz, beğeniyorsunuz',dark:true},
+    {id:5,label:'Adım 5 — Özel dikim',dark:false},
+    {id:6,label:'Adım 6 — Ücretsiz montaj',dark:true},
   ];
-  container.innerHTML='';
-  steps.forEach(s=>{
-    const card=document.createElement('div');
-    card.className='sc-card sc-full';
-    card.style.marginBottom='1.5rem';
-
-    const titleVal=(S['step'+s.id+'Title']||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const textVal=S['step'+s.id+'Text']||'';
-    const bgVal=S['step'+s.id+'Bg']||'';
-
-    card.innerHTML=
-      '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;">'+
-        '<div style="width:36px;height:36px;background:var(--gold);color:var(--dark);display:flex;align-items:center;justify-content:center;font-family:\'Cormorant Garamond\',serif;font-size:1.1rem;font-weight:500;flex-shrink:0;">0'+s.id+'</div>'+
-        '<h4 style="margin:0;font-size:.85rem;">'+s.label+'</h4>'+
-      '</div>'+
-      '<div class="sf">'+
-        '<label>Başlık <span style="color:var(--stone);font-weight:400;">(vurgu için &lt;em&gt;kelime&lt;/em&gt; kullanın)</span></label>'+
-        '<input type="text" id="step'+s.id+'-title" placeholder="Başlık metni...">'+
-      '</div>'+
-      '<div class="sf">'+
-        '<label>Açıklama metni</label>'+
-        '<textarea id="step'+s.id+'-text" rows="3" style="resize:vertical;width:100%;"></textarea>'+
-      '</div>'+
-      '<div class="sf">'+
-        '<label>🖼️ Arka Plan Görseli (URL) — boş bırakırsanız varsayılan kullanılır</label>'+
-        '<div style="display:flex;gap:.8rem;align-items:center;">'+
-          '<input type="text" id="step'+s.id+'-bg" placeholder="https://...">'+
-          '<button onclick="previewStepBg('+s.id+')" style="padding:.5rem .9rem;background:rgba(184,150,90,.15);border:1px solid rgba(184,150,90,.3);color:var(--gold-light);cursor:pointer;white-space:nowrap;font-size:.75rem;flex-shrink:0;">👁 Önizle</button>'+
-        '</div>'+
-        '<div id="step'+s.id+'-bg-preview" style="margin-top:.6rem;display:none;"></div>'+
-      '</div>'+
-      '<button class="sc-save" onclick="saveStep('+s.id+')">💾 Adım '+s.id+'i Kaydet</button>';
-
-    container.appendChild(card);
-
-    // Değerleri sonradan set et (XSS güvenli)
-    const titleEl=el('step'+s.id+'-title');
-    const textEl=el('step'+s.id+'-text');
-    const bgEl=el('step'+s.id+'-bg');
-    if(titleEl)titleEl.value=S['step'+s.id+'Title']||'';
-    if(textEl)textEl.value=S['step'+s.id+'Text']||'';
-    if(bgEl)bgEl.value=S['step'+s.id+'Bg']||'';
-  });
+  el('step-admin-items').innerHTML=steps.map(s=>`
+    <div class="sc-card sc-full" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;">
+        <div style="width:36px;height:36px;background:var(--gold);color:var(--dark);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;flex-shrink:0;">0${s.id}</div>
+        <h4 style="margin:0;font-size:.85rem;">${s.label}</h4>
+      </div>
+      <div class="sf-row">
+        <div class="sf" style="flex:2;">
+          <label>Başlık <span style="color:var(--stone);font-weight:400;">(em etiketi ile vurgu: &lt;em&gt;kelime&lt;/em&gt;)</span></label>
+          <input type="text" id="step${s.id}-title" value="${(S['step'+s.id+'Title']||'').replace(/"/g,'&quot;')}" placeholder="Başlık metni...">
+        </div>
+      </div>
+      <div class="sf">
+        <label>Açıklama metni</label>
+        <textarea id="step${s.id}-text" rows="2" style="resize:vertical;">${S['step'+s.id+'Text']||''}</textarea>
+      </div>
+      <div class="sf">
+        <label>🖼️ Arka Plan Görseli (URL)</label>
+        <div style="display:flex;gap:.8rem;align-items:flex-start;">
+          <input type="text" id="step${s.id}-bg" value="${S['step'+s.id+'Bg']||''}" placeholder="https://... veya boş bırakın (varsayılan arka plan)">
+          <button onclick="previewStepBg(${s.id})" style="padding:.5rem .9rem;background:rgba(184,150,90,.15);border:1px solid rgba(184,150,90,.3);color:var(--gold-light);cursor:pointer;white-space:nowrap;font-size:.75rem;">👁 Önizle</button>
+        </div>
+        <div id="step${s.id}-bg-preview" style="margin-top:.6rem;display:none;"></div>
+        <p style="font-size:.7rem;color:var(--stone);margin-top:.4rem;">Resim URL'si girin. Önerilen boyut: 1920×1080. Boş bırakırsanız varsayılan koyu/açık arka plan kullanılır.</p>
+      </div>
+      <button class="sc-save" onclick="saveStep(${s.id})">💾 Adım ${s.id}'i Kaydet</button>
+    </div>
+  `).join('');
 }
 
- 
+
+function saveProcHeader(){S.procTag=el('set-proc-tag').value;S.procTitle=el('set-proc-title').value;lsSet(LS.S,S);applySettings();renderProcess();toast('Başlık kaydedildi ✓');}function saveStep(i){
+  const title=el('step'+i+'-title')?.value||'';
+  const text=el('step'+i+'-text')?.value||'';
+  const bg=el('step'+i+'-bg')?.value||'';
+  S['step'+i+'Title']=title;
+  S['step'+i+'Text']=text;
+  S['step'+i+'Bg']=bg;
+  lsSet(LS.S,S);
+  applySettings();
+  sbSaveAyarlar();
+  apToast('Adım '+i+' kaydedildi ✓');
+}
+
+function previewStepBg(i){
+  const url=el('step'+i+'-bg')?.value||'';
+  const pv=el('step'+i+'-bg-preview');
+  if(!pv)return;
+  if(!url){pv.style.display='none';return;}
+  pv.style.display='block';
+  pv.innerHTML=`<div style="width:100%;height:120px;background:url('${url}') center/cover;border:1px solid rgba(184,150,90,.2);position:relative;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;letter-spacing:.1em;">Önizleme</div>
+  </div>`;
+}
+
+
+function saveAdimlar(){lsSet(LS.P,P);renderProcess();toast('Adımlar kaydedildi ✓');}
+
+// ===== BÖLÜMLER =====
+function fillBolumler(){
+  el('bs-prod-tag').value=S.prodTag||'';el('bs-prod-title').value=S.prodTitle||'';el('bs-prod-sub').value=S.prodSub||'';
+  el('bs-gal-tag').value=S.galTag||'';el('bs-gal-title').value=S.galTitle||'';
+  el('bs-calc-tag').value=S.calcTag||'';el('bs-calc-title').value=S.calcTitle||'';el('bs-calc-sub').value=S.calcSub||'';
+  el('bs-ct-tag').value=S.ctTag||'';el('bs-ct-title').value=S.ctTitle||'';
+}
+function saveBolum(tip){
+  if(tip==='prod'){S.prodTag=el('bs-prod-tag').value;S.prodTitle=el('bs-prod-title').value;S.prodSub=el('bs-prod-sub').value;}
+  if(tip==='gal'){S.galTag=el('bs-gal-tag').value;S.galTitle=el('bs-gal-title').value;}
+  if(tip==='calc'){S.calcTag=el('bs-calc-tag').value;S.calcTitle=el('bs-calc-title').value;S.calcSub=el('bs-calc-sub').value;}
+  if(tip==='ct'){S.ctTag=el('bs-ct-tag').value;S.ctTitle=el('bs-ct-title').value;}
+  lsSet(LS.S,S);applySettings();toast('Bölüm kaydedildi ✓');
+}
+
+// ===== GALERİ =====
+function renderGaleriAdmin(){
+  el('gal-grid-admin').innerHTML=G.map((g,i)=>`
+    <div class="gal-item-admin">
+      ${g.img?`<img loading="lazy" src="${g.img}" alt="${g.label}">`:`<span>${g.emoji}</span>`}
+      <div class="gal-hover">
+        <label style="background:var(--gold);color:white;padding:.38rem .8rem;font-size:.68rem;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;position:relative;display:inline-block;">
+          📷 Görsel Yükle
+          <input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;" onchange="uploadGalImg(${i},this)">
+        </label>
+        <input type="text" value="${g.label}" placeholder="Etiket" style="background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2);color:white;padding:.3rem .6rem;font-size:.7rem;text-align:center;width:130px;outline:none;" onchange="updateGalLabel(${i},this.value)">
+        ${g.img?`<button onclick="removeGalImg(${i})" style="background:rgba(200,60,50,.8);color:white;border:none;padding:.3rem .8rem;font-size:.7rem;cursor:pointer;">✕ Sil</button>`:''}
+      </div>
+    </div>`).join('')+
+    (G.length<6?`<div class="gal-add"><span style="font-size:2rem;">＋</span><span>Yeni Görsel Ekle</span><input type="file" accept="image/*" onchange="addGalImg(this)"></div>`:'');
+}
+function uploadGalImg(i,input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{G[i].img=e.target.result;lsSet(LS.G,G);renderGaleriAdmin();renderGallery();toast('Görsel güncellendi ✓');};r.readAsDataURL(f);}
+function updateGalLabel(i,v){G[i].label=v;lsSet(LS.G,G);renderGallery();}
+function removeGalImg(i){G[i].img='';lsSet(LS.G,G);renderGaleriAdmin();renderGallery();}
+function addGalImg(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{G.push({img:e.target.result,label:'Yeni Mekan',emoji:'🪟'});lsSet(LS.G,G);renderGaleriAdmin();renderGallery();toast('Görsel eklendi ✓');};r.readAsDataURL(f);}
+
+// ===== İLETİŞİM =====
+function fillIletisim(){
+  el('si-tel').value=S.tel||'';el('si-wa').value=S.wa||'';el('si-email').value=S.email||'';el('si-adres').value=S.adres||'';
+  el('si-wamsg').value=S.waMsg||'';el('si-footer').value=S.footer||'';
+}
+function saveContact(){S.tel=el('si-tel').value;S.wa=el('si-wa').value;S.email=el('si-email').value;S.adres=el('si-adres').value;lsSet(LS.S,S);applySettings();toast('İletişim kaydedildi ✓');}
+function saveWAMsg(){S.waMsg=el('si-wamsg').value;lsSet(LS.S,S);toast('WhatsApp mesajı kaydedildi ✓');}
+function saveFooter(){S.footer=el('si-footer').value;lsSet(LS.S,S);applySettings();toast('Footer kaydedildi ✓');}
+
+// ===== TEMA =====
+function fillTema(){
+  // Presets
+  el('theme-presets').innerHTML=TEMALAR.map(t=>`
+    <div class="theme-preset" onclick="applyPreset('${t.id}')">
+      <div class="theme-swatch">
+        <div class="swatch" style="background:${t.colors.sand}"></div>
+        <div class="swatch" style="background:${t.colors.gold}"></div>
+        <div class="swatch" style="background:${t.colors.dark}"></div>
+        <div class="swatch" style="background:${t.colors.linen}"></div>
+      </div>
+      <div class="theme-preset-name">${t.name}</div>
+    </div>`).join('');
+  // Color inputs
+  el('c-gold').value=TH.gold;el('c-dark').value=TH.dark;el('c-sand').value=TH.sand;
+  el('c-linen').value=TH.linen;el('c-silk').value=TH.silk;el('c-stone').value=TH.stone;el('c-white').value=TH.white;
+}
+function applyPreset(id){
+  const t=TEMALAR.find(t=>t.id===id);if(!t)return;
+  TH={...t.colors};applyTheme();fillTema();toast(`"${t.name}" teması uygulandı — Kaydetmeyi unutmayın!`);
+}
+function pvColor(v,val){document.documentElement.style.setProperty(v,val);}
+function saveTheme(){
+  TH.gold=el('c-gold').value;TH.dark=el('c-dark').value;TH.sand=el('c-sand').value;
+  TH.linen=el('c-linen').value;TH.silk=el('c-silk').value;TH.stone=el('c-stone').value;TH.white=el('c-white').value;
+  lsSet(LS.TH,TH);applyTheme();toast('Tema renkleri kaydedildi ✓');
+}
+function resetTheme(){TH={...DTH};lsSet(LS.TH,TH);applyTheme();fillTema();toast('Varsayılan renkler geri yüklendi ✓');}
+
+// ===== METİNLER =====
+function fillMetin(){
+  el('mt-nav1').value=TX.nav1||'';el('mt-nav2').value=TX.nav2||'';el('mt-nav3').value=TX.nav3||'';
+  el('mt-hcta').value=TX.hcta||'';el('mt-btn1').value=TX.btn1||'';el('mt-btn2').value=TX.btn2||'';
+  el('mt-tab-tul').value=TX.tabTul||'';el('mt-tab-kumas').value=TX.tabKumas||'';
+  el('mt-rv-btn').value=TX.rvBtn||'';el('mt-ct-btn1').value=TX.ctBtn1||'';el('mt-ct-btn2').value=TX.ctBtn2||'';
+}
+function saveMenuText(){TX.nav1=el('mt-nav1').value;TX.nav2=el('mt-nav2').value;TX.nav3=el('mt-nav3').value;TX.hcta=el('mt-hcta').value;lsSet(LS.TX,TX);applyTexts();toast('Menü metinleri kaydedildi ✓');}
+function saveBtnText(){TX.btn1=el('mt-btn1').value;TX.btn2=el('mt-btn2').value;TX.hcta=el('mt-hcta').value;lsSet(LS.TX,TX);applyTexts();toast('Buton metinleri kaydedildi ✓');}
+function saveTabText(){TX.tabTul=el('mt-tab-tul').value;TX.tabKumas=el('mt-tab-kumas').value;TX.rvBtn=el('mt-rv-btn').value;TX.ctBtn1=el('mt-ct-btn1').value;TX.ctBtn2=el('mt-ct-btn2').value;lsSet(LS.TX,TX);applyTexts();renderProducts();toast('Metin ayarları kaydedildi ✓');}
+
+// ===== RANDEVULAR =====
+// ===== MIGRATE TO SUPABASE =====
+async function migrateToSB(){
+  if(!confirm('LocalStorage\'daki tüm veriler Supabase\'e aktarılacak. Devam?'))return;
+  const toast2=msg=>{const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#2d3748;color:#fff;padding:.7rem 1.5rem;border-radius:4px;z-index:9999;font-size:.8rem;';document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+  toast2('Aktarım başladı...');
+  let ok=0,fail=0;
+  try{
+    // Tabloları temizle
+    for(const t of ['tul','kumas','fon_kumas','galeri','blog']){
+      await fetch(`${SB_URL}/rest/v1/${t}?id=gte.0`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+    }
+    // Tüller
+    for(let i=0;i<T.length;i++){
+      const u=T[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||'',emoji:u.emoji||'🪟',fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('tul',p);
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else{console.warn('tul fail',r);fail++;}
+    }
+    // Kumaşlar
+    for(let i=0;i<K.length;i++){
+      const u=K[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||'',emoji:u.emoji||'🧵',fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('kumas',p);
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else{console.warn('kumas fail',r);fail++;}
+    }
+    // Fon kumaşları
+    for(let i=0;i<FON_KUMASLAR.length;i++){
+      const u=FON_KUMASLAR[i];
+      await sbInsert('fon_kumas',{label:u.label||'',fiyat:parseFloat(u.fiyat)||0,sira:i});ok++;
+    }
+    // Galeri
+    for(let i=0;i<G.length;i++){
+      const p={img:G[i].img||'',caption:G[i].caption||G[i].title||'',sira:i};
+      if(p.img&&p.img.length>5){await sbInsert('galeri',p);ok++;}
+    }
+    // Blog
+    for(let i=0;i<BL.length;i++){
+      const u=BL[i];
+      const p={title:u.title||'',cat:u.cat||'',emoji:u.emoji||'📝',img:u.img||'',excerpt:u.excerpt||'',body:u.body||'',tarih:u.tarih||'',okuma:u.okuma||3,sira:i};
+      await sbInsert('blog',p);ok++;
+    }
+    // Ayarlar
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P,TH}});ok++;
+    lsSet(LS.T,T);lsSet(LS.K,K);
+    toast2(`✓ Tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
+  }catch(e){toast2('Hata: '+e.message);console.error(e);}
+}
+
+// ===== RESET =====
+function resetLS(){
+  if(!confirm('Tüm veriler sıfırlanacak ve varsayılana dönecek. Emin misiniz?'))return;
+  Object.values(LS).forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
+
+// ===== MIGRATE TO SUPABASE =====
+async function migrateToSB(){
+  if(!confirm('LocalStorage\'daki tüm veriler Supabase\'e aktarılacak. Devam?'))return;
+  const toast2=msg=>{const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#2d3748;color:#fff;padding:.7rem 1.5rem;border-radius:4px;z-index:9999;font-size:.8rem;';document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+  toast2('Aktarım başladı...');
+  let ok=0,fail=0;
+  try{
+    // Tabloları temizle
+    for(const t of ['tul','kumas','fon_kumas','galeri','blog']){
+      await fetch(`${SB_URL}/rest/v1/${t}?id=gte.0`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+    }
+    // Tüller
+    for(let i=0;i<T.length;i++){
+      const u=T[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||'',emoji:u.emoji||'🪟',fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('tul',p);
+      if(r&&r[0]){T[i]={...T[i],...r[0]};ok++;}else{console.warn('tul fail',r);fail++;}
+    }
+    // Kumaşlar
+    for(let i=0;i<K.length;i++){
+      const u=K[i];
+      const p={name:u.name||'',tag:u.tag||'','desc':u.desc||'',emoji:u.emoji||'🧵',fiyat:parseFloat(u.fiyat)||0,img:u.img||'',imgs:u.imgs||[],video:u.video||'',ozellikler:u.ozellikler||[],sira:i};
+      const r=await sbInsert('kumas',p);
+      if(r&&r[0]){K[i]={...K[i],...r[0]};ok++;}else{console.warn('kumas fail',r);fail++;}
+    }
+    // Fon kumaşları
+    for(let i=0;i<FON_KUMASLAR.length;i++){
+      const u=FON_KUMASLAR[i];
+      await sbInsert('fon_kumas',{label:u.label||'',fiyat:parseFloat(u.fiyat)||0,sira:i});ok++;
+    }
+    // Galeri
+    for(let i=0;i<G.length;i++){
+      const p={img:G[i].img||'',caption:G[i].caption||G[i].title||'',sira:i};
+      if(p.img&&p.img.length>5){await sbInsert('galeri',p);ok++;}
+    }
+    // Blog
+    for(let i=0;i<BL.length;i++){
+      const u=BL[i];
+      const p={title:u.title||'',cat:u.cat||'',emoji:u.emoji||'📝',img:u.img||'',excerpt:u.excerpt||'',body:u.body||'',tarih:u.tarih||'',okuma:u.okuma||3,sira:i};
+      await sbInsert('blog',p);ok++;
+    }
+    // Ayarlar
+    await sbUpsert('ayarlar',{id:1,data:{S,KN,TX,P,TH}});ok++;
+    lsSet(LS.T,T);lsSet(LS.K,K);
+    toast2(`✓ Tamamlandı! ${ok} kayıt${fail?' | '+fail+' hata':''}`);
+  }catch(e){toast2('Hata: '+e.message);console.error(e);}
+}
+
+// ===== RESET =====
+function resetLS(){
+  if(!confirm('Tum veriler sifirlanacak ve varsayilana donecek. Emin misiniz?'))return;
+  Object.values(LS).forEach(function(k){localStorage.removeItem(k);});
+  location.reload();
+}
+
+// ===== SOSYAL MEDYA ADMIN =====
+function fillSosyal(){
+  if(el('soc-ig'))el('soc-ig').value=S.socialInstagram||'';
+  if(el('soc-wa'))el('soc-wa').value=S.socialWhatsapp||'';
+  if(el('soc-fb'))el('soc-fb').value=S.socialFacebook||'';
+  if(el('soc-yt'))el('soc-yt').value=S.socialYoutube||'';
+  if(el('soc-tt'))el('soc-tt').value=S.socialTiktok||'';
+  setTimeout(previewSocial,100);
+}
+function previewSocial(){
+  const icons=el('soc-preview-icons');
+  if(!icons)return;
+  const map={ig:'📸',wa:'💬',fb:'📘',yt:'▶️',tt:'🎵'};
+  const vals={ig:el('soc-ig')?.value,wa:el('soc-wa')?.value,fb:el('soc-fb')?.value,yt:el('soc-yt')?.value,tt:el('soc-tt')?.value};
+  icons.innerHTML=Object.entries(vals).filter(([k,v])=>v&&v.trim()).map(([k,v])=>`<span style="width:36px;height:36px;border:1px solid rgba(212,200,176,.2);display:inline-flex;align-items:center;justify-content:center;font-size:1rem;">${map[k]}</span>`).join('');
+  if(!icons.innerHTML)icons.innerHTML='<span style="color:var(--stone);font-size:.75rem;">Henüz hesap eklenmedi</span>';
+}
+async function saveSocial(){
+  S.socialInstagram=el('soc-ig')?.value.trim()||'';
+  S.socialWhatsapp=el('soc-wa')?.value.trim()||'';
+  S.socialFacebook=el('soc-fb')?.value.trim()||'';
+  S.socialYoutube=el('soc-yt')?.value.trim()||'';
+  S.socialTiktok=el('soc-tt')?.value.trim()||'';
+  lsSet(LS.S,S);applySettings();previewSocial();
+}
+async function saveSocialBtn(){
+  S.socialInstagram=(el('soc-ig')?.value||'').trim();
+  S.socialWhatsapp=(el('soc-wa')?.value||'').trim();
+  S.socialFacebook=(el('soc-fb')?.value||'').trim();
+  S.socialYoutube=(el('soc-yt')?.value||'').trim();
+  S.socialTiktok=(el('soc-tt')?.value||'').trim();
+  lsSet(LS.S,S);
+  applySettings();
+  previewSocial();
+  try{await sbSaveAyarlar();}catch(e){console.warn(e);}
+  toast('Sosyal medya kaydedildi ✓');
+}
+
+// ===== PIXEL & ANALIZ ADMIN =====
+function fillPixels(){
+  if(el('px-gtm'))el('px-gtm').value=S.gtmId||'';
+  if(el('px-ga4'))el('px-ga4').value=S.ga4Id||'';
+  if(el('px-meta'))el('px-meta').value=S.metaPixelId||'';
+  updatePixelStatus();
+}
+
+function updatePixelStatus(){
+  // Her alanın yanında durum göster
+  const checks=[
+    {inputId:'px-gtm',statusId:'gtm-status',key:'gtmId',label:'GTM'},
+    {inputId:'px-ga4',statusId:'ga4-status',key:'ga4Id',label:'GA4'},
+    {inputId:'px-meta',statusId:'meta-status',key:'metaPixelId',label:'Meta Pixel'},
+  ];
+  checks.forEach(ch=>{
+    const val=(el(ch.inputId)?.value||S[ch.key]||'').trim();
+    const box=el(ch.statusId);
+    if(!box)return;
+    if(val)box.innerHTML=`<span style="color:#68d391;">✓ Aktif: <code style="background:rgba(104,211,145,.1);padding:.1rem .4rem;">${val}</code></span>`;
+    else box.innerHTML='<span style="color:var(--stone);">— Henüz eklenmedi</span>';
+  });
+  // Aktif kodlar kartı
+  const list=el('pixels-active-list');
+  if(list){
+    const items=[];
+    if(S.gtmId)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(212,200,176,.08);"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Google Tag Manager</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.gtmId}</code></div>`);
+    if(S.ga4Id)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(212,200,176,.08);"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Google Analytics 4</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.ga4Id}</code></div>`);
+    if(S.metaPixelId)items.push(`<div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;"><span style="width:8px;height:8px;background:#68d391;border-radius:50%;display:inline-block;"></span><span style="font-size:.8rem;flex:1;">Meta Pixel</span><code style="font-size:.75rem;color:var(--gold-light);background:rgba(184,150,90,.1);padding:.15rem .5rem;">${S.metaPixelId}</code></div>`);
+    list.innerHTML=items.length?items.join(''):'<span style="color:var(--stone);font-size:.8rem;">Henüz aktif kod yok.</span>';
+  }
+}
+
+async function savePixels(){
+  S.gtmId=(el('px-gtm')?.value||'').trim();
+  S.ga4Id=(el('px-ga4')?.value||'').trim();
+  S.metaPixelId=(el('px-meta')?.value||'').trim();
+  lsSet(LS.S,S);
+  updatePixelStatus();
+  // Pikselleri yeniden yükle
+  window.__pixelsInjected=false;
+  injectPixels();
+  try{await sbSaveAyarlar();}catch(e){console.warn(e);}
+  toast('Piksel kodları kaydedildi & aktifleştirildi ✓');
+}
+
+function clearEventLog(){
+  const logBox=el('event-log');
+  if(logBox)logBox.innerHTML='<div style="color:var(--stone);">— Temizlendi. —</div>';
+}
+
+// ===== WA SETTINGS ADMIN =====
+function fillWASettings(){
+  const numEl=el('wa-num'),msgEl=el('wa-msg');
+  if(numEl) numEl.value=S.wa||'';
+  if(msgEl) msgEl.value=S.waMsg||'';
+}
+async function saveWANum(){S.wa=el('wa-num').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();toast('Numara kaydedildi ✓');}
+function saveWAMsg2(){S.waMsg=el('wa-msg').value;lsSet(LS.S,S);toast('Mesaj kaydedildi ✓');}
+
+function toast(msg){const t=el('ap-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ===== FON KUMAŞ ADMİN =====
+function renderFonKumasAdmin(){
+  // Enler
+  const enInput = document.getElementById('fon-enler-input');
+  if(enInput) enInput.value = FON_ENLER.map(e=>e.cm).join(',');
+  // Kumaşlar
+  const list = document.getElementById('fon-kumas-list');
+  if(!list) return;
+  list.innerHTML = FON_KUMASLAR.map((k,i)=>`
+    <div style="display:grid;grid-template-columns:1fr 110px auto;gap:.7rem;align-items:center;margin-bottom:.8rem;">
+      <input type="text" value="${k.label}" placeholder="Kumaş adı"
+        style="background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.55rem .8rem;font-family:'Jost',sans-serif;font-size:.85rem;outline:none;"
+        oninput="FON_KUMASLAR[${i}].label=this.value">
+      <input type="number" value="${k.fiyat}" placeholder="TL/m"
+        style="background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--gold-light);padding:.55rem .8rem;font-family:monospace;font-size:.88rem;outline:none;text-align:right;"
+        oninput="FON_KUMASLAR[${i}].fiyat=parseInt(this.value)||0">
+      <button class="tbl-btn del" onclick="deleteFonKumas(${i})" style="padding:.4rem .7rem;">✕</button>
+    </div>`).join('')+
+    `<button class="sc-save" style="width:100%;margin-top:.5rem;" onclick="saveFonKumaslar()">💾 Kumaşları Kaydet</button>`;
+}
+function addFonKumas(){
+  FON_KUMASLAR.push({label:'Yeni Kumaş',fiyat:700});
+  saveFonKumaslar(false);
+  renderFonKumasAdmin();
+}
+function deleteFonKumas(i){
+  if(FON_KUMASLAR.length<=1){alert('En az 1 kumaş olmalı.');return;}
+  FON_KUMASLAR.splice(i,1);
+  saveFonKumaslar(false);
+  renderFonKumasAdmin();
+}
+function saveFonKumaslar(showToast=true){
+  lsSet('perla_fon_kumas', FON_KUMASLAR);
+  if(showToast) toast('Fon kumaşları kaydedildi ✓');
+}
+function saveFonEnler(){
+  const val = document.getElementById('fon-enler-input').value;
+  const enler = val.split(',').map(v=>parseInt(v.trim())).filter(v=>v>0);
+  if(!enler.length){alert('Geçerli bir değer girin.');return;}
+  FON_ENLER.length=0;
+  enler.forEach(cm=>FON_ENLER.push({cm}));
+  lsSet('perla_fon_enler', FON_ENLER);
+  toast('Genişlikler kaydedildi ✓');
+}
+
+// ===== BLOG =====
+function renderBlog(){
+  const grid=el('blog-grid');
+  if(!grid)return;
+  if(!BL.length){grid.innerHTML='<p style="color:var(--stone);text-align:center;padding:2rem;">Henüz yazı eklenmemiş.</p>';return;}
+  grid.innerHTML=BL.map((p,i)=>{
+    const hi=p.img&&p.img.length>10;
+    return `<article class="blog-card" onclick="openBlogDetail(${i})" itemscope itemtype="https://schema.org/BlogPosting">
+      <div class="blog-card-img">
+        ${hi?`<img loading="lazy" src="${p.img}" alt="${p.title}">`:`<div class="blog-card-emoji">${p.emoji||'📝'}</div>`}
+        <span class="blog-card-cat">${p.cat||'Blog'}</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-date">${p.tarih||''} · ${p.okuma||3} dk okuma</div>
+        <div class="blog-card-title" itemprop="headline">${p.title}</div>
+        <div class="blog-card-excerpt">${p.excerpt||''}</div>
+        <span class="blog-card-read">Devamını Oku →</span>
+      </div>
+    </article>`;
+  }).join('');
+  injectBlogSchema();
+}
+function openBlogDetail(i){
+  const p=BL[i];
+  const hi=p.img&&p.img.length>10;
+  el('blog-box-img').innerHTML=hi?`<img src="${p.img}" alt="${p.title}">`:`<div class="blog-box-img-emoji">${p.emoji||'📝'}</div>`;
+  el('blog-box-content').innerHTML=`
+    <div class="blog-box-cat">${p.cat||'Blog'}</div>
+    <h1 class="blog-box-title">${p.title}</h1>
+    <div class="blog-box-meta">${p.tarih||''} · ${p.okuma||3} dakika okuma</div>
+    <div class="blog-box-body">${p.body||''}</div>
+    <button class="blog-box-wa" onclick="openWA('Merhaba, '+encodeURIComponent('${p.title}')+' yazısını okudum, bilgi almak istiyorum.')">💬 Bilgi Al — WhatsApp</button>`;
+  const bm=el('blog-modal');if(bm)bm.style.cssText='display:block;position:fixed;inset:0;background:rgba(20,15,10,.92);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);';
+  document.body.style.overflow='hidden';
+}
+function closeBlogModal(e){
+  if(e&&e.target!==el('blog-modal'))return;
+  const bmc=el('blog-modal');if(bmc)bmc.style.display='none';
+  document.body.style.overflow='';
+}
+// Blog admin
+let editBlogIdx=null;
+function renderBlogAdmin(){
+  const c=el('blog-admin-list');
+  if(!c)return;
+  if(!BL.length){c.innerHTML='<div class="ap-empty">Henüz yazı yok.</div>';return;}
+  c.innerHTML=BL.map((p,i)=>`
+    <div class="drag-row">
+      <div class="drag-info">
+        <div class="drag-name">${p.title}</div>
+        <div class="drag-meta"><span class="badge badge-green">${p.cat}</span> · ${p.tarih} · ${p.okuma} dk</div>
+      </div>
+      <div class="drag-actions">
+        <button class="tbl-btn" onclick="openBlogModal(${i})">✏️ Düzenle</button>
+        <button class="tbl-btn del" onclick="deleteBlog(${i})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+function openBlogModal(idx){
+  editBlogIdx=idx!==undefined?idx:null;
+  const p=editBlogIdx!==null?BL[editBlogIdx]:{};
+  el('bm-title').value=p.title||'';
+  el('bm-cat').value=p.cat||'Rehber';
+  el('bm-emoji').value=p.emoji||'📝';
+  el('bm-tarih').value=p.tarih||new Date().toISOString().slice(0,10);
+  el('bm-okuma').value=p.okuma||3;
+  el('bm-excerpt').value=p.excerpt||'';
+  el('bm-body').value=p.body||'';
+  bmImgSrc=p.img||'';
+  renderBmImg();
+  el('blog-edit-modal').classList.add('open');
+}
+let bmImgSrc='';
+function renderBmImg(){
+  const prev=el('bm-img-prev');
+  if(bmImgSrc&&bmImgSrc.length>10){prev.src=bmImgSrc;prev.style.display='block';}
+  else prev.style.display='none';
+}
+function handleBmImg(input){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{bmImgSrc=e.target.result;renderBmImg();};
+  r.readAsDataURL(file);
+}
+async function saveBlog(){
+  const title=el('bm-title').value.trim();
+  if(!title){alert('Başlık zorunludur.');return;}
+  const p={title,cat:el('bm-cat').value,emoji:el('bm-emoji').value||'📝',
+    tarih:el('bm-tarih').value,okuma:parseInt(el('bm-okuma').value)||3,
+    excerpt:el('bm-excerpt').value.trim(),body:el('bm-body').value.trim(),img:bmImgSrc,
+    sira:editBlogIdx!==null?(BL[editBlogIdx].sira||editBlogIdx):BL.length};
+  try{
+    if(editBlogIdx!==null&&BL[editBlogIdx].id){await sbUpdate('blog',BL[editBlogIdx].id,p);BL[editBlogIdx]={...BL[editBlogIdx],...p};}
+    else{const r=await sbInsert('blog',p);if(r&&r[0])BL.unshift({...p,...r[0]});else BL.unshift(p);}
+  }catch(e){if(editBlogIdx!==null)BL[editBlogIdx]=p;else BL.unshift(p);}
+  lsSet(LS.BL,BL);
+  el('blog-edit-modal').classList.remove('open');
+  renderBlogAdmin();renderBlog();
+  toast(`Yazı ${editBlogIdx!==null?'güncellendi':'eklendi'} ✓`);
+}
+async function deleteBlog(i){
+  if(!confirm('Bu yazı silinsin mi?'))return;
+  if(BL[i]&&BL[i].id){try{await sbDelete('blog',BL[i].id);}catch(e){}}
+  BL.splice(i,1);lsSet(LS.BL,BL);
+  renderBlogAdmin();renderBlog();toast('Silindi ✓');
+}
+
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Admin event log
+  const logBox=document.getElementById('event-log');
+  if(logBox){
+    const t=new Date().toLocaleTimeString('tr-TR');
+    const line=document.createElement('div');
+    line.style.cssText='padding:.2rem 0;border-bottom:1px solid rgba(212,200,176,.06);';
+    line.innerHTML=`<span style="color:rgba(184,150,90,.5);">${t}</span> <span style="color:#f6e05e;">${eventName}</span> <span style="color:rgba(212,200,176,.4);">${JSON.stringify(params).replace(/"/g,"'")}</span>`;
+    const empty=logBox.querySelector('div[style*="stone"]');
+    if(empty)empty.remove();
+    logBox.insertBefore(line, logBox.firstChild);
+    if(logBox.children.length>20)logBox.removeChild(logBox.lastChild);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
+
+// ===== SECRET ADMIN URL =====
+(function(){
+  const path=window.location.pathname+window.location.search+window.location.hash;
+  if(path.includes('/zp25(as(')||window.location.href.includes('zp25(as(')){
+    history.replaceState(null,'','/');
+    setTimeout(openAdminLogin,300);
+  }
+  // Also listen for hash change
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash==='#zp25(as('){
+      history.replaceState(null,'','/');
+      openAdminLogin();
+    }
+  });
+})();
+
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
+
+// ===== SECRET ADMIN URL =====
+(function(){
+  if(window.location.href.indexOf('zp25')!==-1){
+    history.replaceState(null,'','/');
+    setTimeout(openAdminLogin,400);
+  }
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash.indexOf('zp25')!==-1){
+      history.replaceState(null,'',window.location.pathname);
+      openAdminLogin();
+    }
+  });
+})();
+
+// ===== PRODUCT SCHEMA (JSON-LD) =====
+function injectProductSchema(){
+  // Eski schema'yı temizle
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+
+  const siteUrl='https://www.perdekolay.com';
+  const seller={
+    "@type":"Organization",
+    "name":"Perdekolay",
+    "url":siteUrl,
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A",
+      "addressLocality":"Kadıköy",
+      "addressRegion":"İstanbul",
+      "addressCountry":"TR"
+    },
+    "telephone":"+905078859455"
+  };
+
+  const allProducts=[
+    ...T.map(p=>({...p,_cat:'Tül Perde',_cat_en:'Window Sheer'})),
+    ...K.map(p=>({...p,_cat:'Kumaş Perde',_cat_en:'Curtain Fabric'})),
+  ];
+
+  const schemas=allProducts.map(p=>{
+    const img=p.imgs&&p.imgs.length>0?p.imgs[0]:(p.img&&p.img.length>10?p.img:'');
+    const schema={
+      "@context":"https://schema.org/",
+      "@type":"Product",
+      "name":p.name,
+      "description":p.desc||`${p.name} — Kadıköy'de ölçülü dikim, ücretsiz montaj.`,
+      "category":p._cat,
+      "brand":{"@type":"Brand","name":"Perdekolay"},
+      "offers":{
+        "@type":"Offer",
+        "priceCurrency":"TRY",
+        "price":p.fiyat,
+        "priceValidUntil":new Date(Date.now()+90*24*60*60*1000).toISOString().split('T')[0],
+        "availability":"https://schema.org/InStock",
+        "url":siteUrl,
+        "seller":seller,
+        "areaServed":{
+          "@type":"AdministrativeArea",
+          "name":"Kadıköy, İstanbul"
+        }
+      }
+    };
+    if(img)schema.image=[img];
+    if(p.tag)schema.additionalProperty=[{"@type":"PropertyValue","name":"Koleksiyon","value":p.tag}];
+    return schema;
+  });
+
+  if(!schemas.length)return;
+
+  // ItemList schema - tüm ürünleri listele
+  const itemList={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Kataloğu",
+    "description":"Kadıköy'de ölçülü perde, tül ve kumaş koleksiyonu",
+    "url":siteUrl,
+    "numberOfItems":schemas.length,
+    "itemListElement":schemas.map((s,i)=>({
+      "@type":"ListItem",
+      "position":i+1,
+      "name":s.name,
+      "url":siteUrl,
+      "item":s
+    }))
+  };
+
+  const tag=document.createElement('script');
+  tag.id='schema-products';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(itemList);
+  document.head.appendChild(tag);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL||!BL.length)return;
+
+  const siteUrl='https://www.perdekolay.com';
+  const articles=BL.map(p=>({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":p.title,
+    "description":p.excerpt||p.title,
+    "datePublished":p.tarih||new Date().toISOString().split('T')[0],
+    "author":{"@type":"Organization","name":"Perdekolay"},
+    "publisher":{"@type":"Organization","name":"Perdekolay","url":siteUrl},
+    "url":siteUrl,
+    ...(p.img?{"image":p.img}:{})
+  }));
+
+  const tag=document.createElement('script');
+  tag.id='schema-blog';
+  tag.type='application/ld+json';
+  tag.textContent=JSON.stringify(articles.length===1?articles[0]:{"@context":"https://schema.org","@graph":articles});
+  document.head.appendChild(tag);
+}
+
+// ===== EVENT TRACKER =====
+function trackEvent(eventName, params={}){
+  // GA4 / GTM - dataLayer push
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+  // GA4 gtag (GTM yoksa direkt)
+  if(window.gtag){
+    window.gtag('event', eventName, params);
+  }
+  // Meta Pixel
+  if(window.fbq){
+    // Standard events map
+    const metaMap = {
+      'whatsapp_click':     ()=> fbq('track','Contact', {content_name:'WhatsApp', ...params}),
+      'fiyat_hesapla':      ()=> fbq('track','Lead', {content_name:'Fiyat Hesaplama', value: params.value||0, currency:'TRY'}),
+      'fiyat_wa_gonder':    ()=> fbq('track','Lead', {content_name:'WhatsApp Fiyat Teklifi', value: params.value||0, currency:'TRY'}),
+      'urun_goruntule':     ()=> fbq('track','ViewContent', {content_name: params.item_name||'', content_category: params.item_category||'', value: params.price||0, currency:'TRY'}),
+      'hesap_ac':           ()=> fbq('track','PageView'),
+    };
+    if(metaMap[eventName]) metaMap[eventName]();
+    else fbq('trackCustom', eventName, params);
+  }
+}
+
+// ===== PIXEL / ANALYTICS INJECT =====
+function injectPixels(){
+  // Daha önce eklendiyse tekrar ekleme
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+
+  // ---- Google Tag Manager ----
+  if(S.gtmId&&S.gtmId.trim()){
+    const gtmId=S.gtmId.trim();
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);
+    // GTM noscript
+    const ns=document.createElement('noscript');
+    ns.innerHTML=`<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+    document.body.insertBefore(ns,document.body.firstChild);
+  }
+
+  // ---- Google Analytics 4 ---- (GTM kullanılmıyorsa)
+  if(S.ga4Id&&S.ga4Id.trim()&&!S.gtmId){
+    const ga4Id=S.ga4Id.trim();
+    const s1=document.createElement('script');
+    s1.async=true;
+    s1.src='https://www.googletagmanager.com/gtag/js?id='+ga4Id;
+    document.head.appendChild(s1);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag=gtag;
+    gtag('js',new Date());
+    gtag('config',ga4Id);
+  }
+
+  // ---- Meta (Facebook) Pixel ----
+  if(S.metaPixelId&&S.metaPixelId.trim()){
+    const pid=S.metaPixelId.trim();
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',pid);
+    fbq('track','PageView');
+    const ns2=document.createElement('noscript');
+    ns2.innerHTML=`<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pid}&ev=PageView&noscript=1"/>`;
+    document.body.appendChild(ns2);
+  }
+}
+
+// ===== SECRET ADMIN URL =====
+(function(){
+  if(window.location.href.indexOf('zp25')!==-1){
+    history.replaceState(null,'','/');
+    setTimeout(openAdminLogin,400);
+  }
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash.indexOf('zp25')!==-1){
+      history.replaceState(null,'',window.location.pathname);
+      openAdminLogin();
+    }
+  });
+})();
+
+// ===== INIT =====
+async function initApp(){
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();addOda();injectPixels();
+  try{
+    const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
+      sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
+    ]);
+    if(tulData&&tulData.length){T=tulData.map(p=>({imgs:[],video:'',...p}));lsSet(LS.T,T);}
+    if(kumasData&&kumasData.length){K=kumasData.map(p=>({imgs:[],video:'',...p}));lsSet(LS.K,K);}
+    if(fonData&&fonData.length){FON_KUMASLAR=fonData;lsSet(LS.FK,FON_KUMASLAR);}
+    if(galeriData&&galeriData.length){G=galeriData;lsSet(LS.G,G);}
+    if(blogData&&blogData.length){BL=blogData;lsSet(LS.BL,BL);}
+    if(ayarData&&ayarData.data){
+      const d=ayarData.data;
+      if(d.S){
+      // Mevcut localStorage social değerlerini koru
+      const localS=lsGet(LS.S,{});
+      S={...DS,...d.S};
+      // Social keyler Supabase'de boşsa localStorage'dakini kullan
+      ['socialInstagram','socialWhatsapp','socialFacebook','socialYoutube','socialTiktok'].forEach(k=>{
+        if(!S[k]&&localS[k])S[k]=localS[k];
+      });
+      lsSet(LS.S,S);
+    }
+      if(d.KN){KN=d.KN;lsSet(LS.KN,KN);}
+      if(d.TX){TX={...DTX,...d.TX};lsSet(LS.TX,TX);}
+      if(d.P){P=d.P;lsSet(LS.P,P);}
+      if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
+    }
+    window.__pixelsInjected=false;applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
+    console.log('✓ Supabase verisi yüklendi');
+  }catch(e){console.warn('Supabase baglanti hatasi:',e);}
+}
+initApp();
+</script>
+
+<!-- BLOG EDIT MODAL -->
+<div class="ap-mo" id="blog-edit-modal">
+  <div class="ap-modal" style="max-width:680px;">
+    <button class="ap-mc" onclick="el('blog-edit-modal').classList.remove('open')">✕</button>
+    <h3 id="bm-heading">Blog Yazısı</h3>
+    <div class="ap-fr">
+      <div class="ap-fg"><label>Başlık *</label><input type="text" id="bm-title" placeholder="Yazı başlığı"></div>
+      <div class="ap-fg"><label>Kategori</label>
+        <select id="bm-cat" style="background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.6rem;font-family:'Jost',sans-serif;outline:none;">
+          <option>Rehber</option><option>Bakım</option><option>Dekorasyon</option><option>İpuçları</option><option>Haberler</option>
+        </select>
+      </div>
+    </div>
+    <div class="ap-fr">
+      <div class="ap-fg"><label>Emoji / İkon</label><input type="text" id="bm-emoji" placeholder="📝"></div>
+      <div class="ap-fg"><label>Tarih</label><input type="date" id="bm-tarih"></div>
+      <div class="ap-fg"><label>Okuma Süresi (dk)</label><input type="number" id="bm-okuma" min="1" max="30" value="3"></div>
+    </div>
+    <div class="ap-fg"><label>Kısa Özet (kartlarda görünür)</label><textarea id="bm-excerpt" rows="2" placeholder="Yazının kısa özeti..."></textarea></div>
+    <div class="ap-fg">
+      <label>📸 Kapak Görseli</label>
+      <div class="img-upload">
+        <div style="font-size:2rem;">📷</div>
+        <p>Tıkla veya sürükle</p>
+        <input type="file" accept="image/*" onchange="handleBmImg(this)">
+        <img class="img-prev" id="bm-img-prev" src="" alt="" style="display:none;">
+      </div>
+    </div>
+    <div class="ap-fg">
+      <label>📄 İçerik 
