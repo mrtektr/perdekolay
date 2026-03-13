@@ -2269,7 +2269,7 @@ function renderStep3Tuller(){
   showcase.innerHTML=items.map(t=>{
     const img=t.imgs&&t.imgs[0]?t.imgs[0]:'';
     const price=t.fiyat?`<span class="fabric-price">${t.fiyat} TL/m</span>`:'';
-    return `<div class="fabric-item" onclick="openProductDetail('tul',${T.indexOf(t)})" style="cursor:pointer;">
+    return `<div class="fabric-item" onclick="openProductDetail(${T.indexOf(t)},'tul')" style="cursor:pointer;">
       <div class="fabric-swatch" style="${img?`background:url('${img}') center/cover`:'background:linear-gradient(135deg,#f0ece6,#ddd4c4)'}"></div>
       <span>${t.name}</span>
       ${price}
@@ -2299,8 +2299,8 @@ function renderProducts(){
     return `<div class="product-card" onclick="openProductDetail(${i},'${tab}')">
       <div class="product-visual ${tab==='tul'?'product-tul':''}">
         ${!hi?'<div class="product-texture"></div>':''}
-        <span class="product-tag-badge">${p.tag}</span>
-        ${hi?`<img class="product-img" src="${coverImg}" alt="${p.name}">`:`<div class="product-emoji-fb">${p.emoji}</div>`}
+        <span class="product-tag-badge">${p.tag||''}</span>
+        ${hi?`<img class="product-img" src="${coverImg}" alt="${p.name}">`:`<div class="product-emoji-fb">${p.emoji||'✦'}</div>`}
         <div class="product-overlay"><span class="product-overlay-btn">Detayları Gör</span></div>
         ${hv?`<button class="play-btn" onclick="event.stopPropagation();openVideoModal(${i},'${tab}')" title="İzle">▶</button>`:''}
       </div>
@@ -2308,7 +2308,7 @@ function renderProducts(){
         <span class="prod-type-badge">${typeLabel}</span>
         <div class="product-name">${p.name}</div>
         <div class="product-desc-short">${p.desc}</div>
-        <div class="product-price">${p.fiyat.toLocaleString('tr-TR')} TL/m</div>
+        <div class="product-price">${(Number(p.fiyat)||0).toLocaleString('tr-TR')} TL/m</div>
       </div>
     </div>`;
   }).join('');
@@ -2335,7 +2335,7 @@ function openProductDetail(idx,tab){
   // Slider HTML
   const slidesHtml=allImgs.length>0
     ? allImgs.map(src=>`<div class="pd-slide"><img loading="lazy" src="${src}" alt="${p.name}"></div>`).join('')
-    : `<div class="pd-slide"><div class="pd-slide-texture"></div><div class="pd-slide-emoji">${p.emoji}</div></div>`;
+    : `<div class="pd-slide"><div class="pd-slide-texture"></div><div class="pd-slide-emoji">${p.emoji||'✦'}</div></div>`;
 
   const arrowsHtml=allImgs.length>1
     ? `<button class="pd-arrow pd-arrow-l" onclick="pdSlide(-1)">&#8592;</button>
@@ -2351,7 +2351,7 @@ function openProductDetail(idx,tab){
     <div class="pd-slider" id="pd-slider">
       <div class="pd-slides" id="pd-slides">${slidesHtml}</div>
       ${arrowsHtml}
-      <span class="pd-tag">${p.tag}</span>
+      <span class="pd-tag">${p.tag||''}</span>
     </div>
     ${thumbsHtml}`;
 
@@ -2359,10 +2359,10 @@ function openProductDetail(idx,tab){
     <div class="pd-type">${typeLabel} Koleksiyonu</div>
     <div class="pd-name">${p.name}</div>
     <div class="pd-price">
-      ${p.fiyat.toLocaleString('tr-TR')} TL<span style="font-family:'Jost',sans-serif;font-size:.72rem;color:var(--stone);font-weight:400;"> / metre</span>
+      ${(Number(p.fiyat)||0).toLocaleString('tr-TR')} TL<span style="font-family:'Jost',sans-serif;font-size:.72rem;color:var(--stone);font-weight:400;"> / metre</span>
       <small>Kesin fiyat için ücretsiz ölçü hizmeti alın</small>
     </div>
-    <p class="pd-desc">${p.desc}</p>
+    <p class="pd-desc">${p.desc||''}</p>
     <hr class="pd-divider">
     <div class="pd-features">
       <div class="pd-feat"><span class="pd-feat-icon">✦</span>Özel ölçüye göre dikilir</div>
@@ -2376,7 +2376,9 @@ function openProductDetail(idx,tab){
       ${hv?`<button class="pd-play" onclick="closePdModal();openVideoModal(${idx},'${tab}')">▶ Ürün Videosunu İzle</button>`:''}
     </div>`;
 
-  el('pd-modal').classList.add('open');
+  const pdm=el('pd-modal');
+  if(!pdm){console.error('pd-modal bulunamadi');return;}
+  pdm.style.cssText='display:block;position:fixed;inset:0;background:rgba(20,15,10,.9);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);';
   document.body.style.overflow='hidden';
   pdSlideTotal=allImgs.length;
 }
