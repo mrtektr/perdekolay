@@ -53,7 +53,7 @@ body{font-family:'Jost',sans-serif;background:var(--white);color:var(--dark);ove
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.4;}
 
 /* HEADER */
-header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(253,252,249,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--linen);}
+/* header scroll override */
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:.2em;color:var(--dark);}
 .logo span{color:var(--accent);}
 nav{display:flex;gap:2.5rem;}
@@ -298,7 +298,7 @@ footer{background:#1a1612;color:var(--stone);text-align:center;padding:2rem;font
 
 /* Login */
 #admin-login{display:none;position:fixed;inset:0;z-index:2000;background:var(--dark);align-items:center;justify-content:center;}
-#admin-login.open{display:flex;}
+#admin-login.open{display:flex;align-items:center;justify-content:center;}
 .login-box{width:380px;max-width:95vw;border:1px solid rgba(212,200,176,.15);padding:3rem;}
 .login-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--white);text-align:center;letter-spacing:.2em;margin-bottom:.3rem;}
 .login-logo span{color:var(--gold);}
@@ -510,6 +510,356 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 .st-warn{color:#d4a870;font-size:.75rem;}
 /* WA settings */
 .wa-preview{background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15);border-radius:8px;padding:1rem;margin-top:.8rem;font-size:.8rem;color:var(--silk);line-height:1.7;font-style:italic;}
+
+/* ===== NEW SCROLL EXPERIENCE ===== */
+/* ===== SCROLL EXPERIENCE ===== */
+html { scroll-behavior: smooth; }
+
+/* Header */
+#site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 4vw;
+  background: rgba(44,38,32,0); 
+  backdrop-filter: blur(0px);
+  transition: background .4s, backdrop-filter .4s, padding .4s;
+}
+#site-header.scrolled {
+  background: rgba(44,38,32,.92);
+  backdrop-filter: blur(12px);
+  padding: .8rem 4vw;
+  border-bottom: 1px solid rgba(184,150,90,.15);
+}
+#site-header.light-header { }
+#site-header.light-header .header-logo { color: var(--dark); }
+#site-header.light-header .nav-link { color: var(--dark); }
+#site-header.light-header .nav-link:hover { color: var(--gold); }
+
+.header-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 300; letter-spacing: .25em;
+  color: #f5f0e8; text-transform: uppercase; cursor: pointer;
+  transition: color .3s;
+}
+.header-nav { display: flex; gap: 2rem; }
+.nav-link {
+  font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(245,240,232,.75); cursor: pointer; transition: color .2s;
+}
+.nav-link:hover { color: var(--gold-light); }
+
+/* Fullscreen sections */
+.scroll-experience { }
+.fs-section {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.fs-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  will-change: transform;
+}
+.fs-bg-dark-pattern {
+  background: var(--dark);
+  background-image: 
+    radial-gradient(ellipse at 20% 80%, rgba(184,150,90,.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(184,150,90,.05) 0%, transparent 50%);
+}
+.fs-bg-sand {
+  background: var(--sand);
+  background-image:
+    radial-gradient(ellipse at 70% 30%, rgba(184,150,90,.12) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8965a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.fs-bg-texture {
+  background: var(--linen);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23b8965a' fill-opacity='0.05' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+.fs-overlay { position: absolute; inset: 0; pointer-events: none; }
+.fs-overlay-dark { background: rgba(20,15,10,.58); }
+.fs-overlay-light { background: rgba(245,240,232,.15); }
+
+/* Content layouts */
+.fs-content {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1200px;
+  padding: 8rem 6vw 6rem;
+}
+.fs-content-center { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.fs-content-split { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.fs-content-reverse { direction: rtl; }
+.fs-content-reverse > * { direction: ltr; }
+
+/* Typography */
+.fs-eyebrow {
+  font-size: .7rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--gold-light); margin-bottom: 1.5rem;
+}
+.fs-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 300; line-height: 1.05; color: #f5f0e8;
+  margin-bottom: 1.5rem;
+}
+.fs-headline em { font-style: italic; color: var(--gold-light); }
+.fs-headline-dark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  font-weight: 300; line-height: 1.1; color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+.fs-headline-dark em { font-style: italic; color: var(--gold); }
+.fs-sub {
+  font-size: 1rem; font-weight: 300; color: rgba(240,235,225,.75);
+  line-height: 1.9; max-width: 520px; margin-bottom: 2.5rem;
+}
+.fs-sub-dark {
+  font-size: .95rem; font-weight: 300; color: var(--stone);
+  line-height: 1.9; max-width: 480px; margin-bottom: 2rem;
+}
+.fs-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Step numbers */
+.step-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(6rem, 15vw, 14rem);
+  font-weight: 300; color: rgba(184,150,90,.15);
+  line-height: 1; margin-bottom: -1rem;
+  position: relative; z-index: 0;
+}
+.step-number-dark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  font-weight: 300; color: rgba(184,150,90,.12);
+  line-height: 1; margin-bottom: -.5rem;
+}
+
+/* Chips */
+.step-detail { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
+.step-chip {
+  padding: .45rem 1rem; border: 1px solid rgba(184,150,90,.3);
+  color: var(--gold-light); font-size: .72rem; letter-spacing: .12em;
+}
+.step-detail-dark { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
+.step-chip-dark {
+  padding: .45rem 1rem; border: 1px solid rgba(184,150,90,.25);
+  color: var(--gold); font-size: .72rem; letter-spacing: .12em;
+}
+
+/* Problem cards */
+.problem-card {
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(184,150,90,.15);
+  padding: 1.5rem; margin-bottom: 1rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  backdrop-filter: blur(8px);
+}
+.problem-icon { font-size: 1.5rem; flex-shrink: 0; }
+.problem-card p { color: var(--dark); font-size: .9rem; line-height: 1.6; margin: 0; }
+
+/* Fabric showcase */
+.fabric-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fabric-item { text-align: center; }
+.fabric-swatch {
+  width: 100%; aspect-ratio: 3/4;
+  border: 1px solid rgba(184,150,90,.2);
+  margin-bottom: .5rem;
+  transition: transform .3s;
+}
+.fabric-item:hover .fabric-swatch { transform: scale(1.02); }
+.fabric-item span { font-size: .7rem; letter-spacing: .12em; color: var(--stone); text-transform: uppercase; }
+
+/* Checkmarks */
+.checkmarks { display: flex; flex-direction: column; gap: .8rem; margin-top: 1rem; align-items: flex-start; }
+.checkmark-item {
+  font-size: .9rem; color: rgba(240,235,225,.9);
+  padding: .5rem 1.2rem; border-left: 2px solid var(--gold);
+}
+
+/* Window illustration */
+.measure-visual { position: relative; width: 260px; height: 320px; margin: 0 auto; }
+.window-illustration { position: absolute; inset: 20px; }
+.window-frame {
+  width: 100%; height: 100%;
+  border: 3px solid rgba(184,150,90,.4);
+  position: relative; background: rgba(255,255,255,.05);
+  display: flex;
+}
+.curtain-left, .curtain-right {
+  width: 40%; height: 100%;
+  background: linear-gradient(180deg, rgba(184,150,90,.3) 0%, rgba(184,150,90,.15) 100%);
+  position: relative;
+}
+.curtain-left { border-right: 1px solid rgba(184,150,90,.2); }
+.curtain-right { border-left: 1px solid rgba(184,150,90,.2); }
+.window-glass { flex: 1; background: rgba(135,180,220,.06); }
+.measure-h, .measure-v {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: .65rem; letter-spacing: .12em;
+}
+.measure-h { top: 0; left: 20px; right: 20px; height: 20px; border-top: 1px dashed rgba(184,150,90,.4); }
+.measure-v { left: 0; top: 20px; bottom: 20px; width: 20px; border-left: 1px dashed rgba(184,150,90,.4); writing-mode: vertical-rl; }
+
+/* Scroll hint */
+.fs-scroll-hint {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: rgba(245,240,232,.4); font-size: .65rem; letter-spacing: .2em;
+  text-transform: uppercase; z-index: 3;
+  animation: scrollHintFade 2s 2s ease-in-out infinite;
+}
+.scroll-arrow {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(184,150,90,.5), transparent);
+  animation: scrollArrow 1.5s ease-in-out infinite;
+}
+@keyframes scrollArrow {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+@keyframes scrollHintFade {
+  0%,100% { opacity: .4; } 50% { opacity: .8; }
+}
+
+/* Transition section */
+.fs-transition { min-height: 60vh; }
+
+/* Reveal animations */
+.reveal-up {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal-up.visible { opacity: 1; transform: translateY(0); }
+.reveal-right {
+  opacity: 0; transform: translateX(40px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.delay-1 { transition-delay: .15s !important; }
+.delay-2 { transition-delay: .3s !important; }
+.delay-3 { transition-delay: .45s !important; }
+
+/* btn-gold-lg */
+.btn-gold-lg {
+  padding: 1.1rem 3rem; background: var(--gold); color: var(--dark);
+  border: none; font-size: .85rem; letter-spacing: .2em; text-transform: uppercase;
+  cursor: pointer; transition: all .3s; font-family: 'Jost', sans-serif;
+}
+.btn-gold-lg:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,150,90,.35); }
+
+/* Paralaks */
+@media (prefers-reduced-motion: no-preference) {
+  .fs-bg-parallax { transition: transform .1s linear; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fs-content-split { grid-template-columns: 1fr; gap: 3rem; }
+  .fs-content-reverse { direction: ltr; }
+  .header-nav { display: none; }
+  .fs-headline { font-size: clamp(2.8rem, 10vw, 5rem); }
+  .split-visual { order: -1; }
+  .fabric-showcase { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ===== CALC FIYAT SONUÇ ===== */
+.fiyat-empty{text-align:center;color:var(--stone);padding:2rem;font-size:.85rem;line-height:2;}
+.fiyat-satirlar{display:flex;flex-direction:column;gap:.3rem;}
+.fiyat-satir{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;font-size:.82rem;}
+.fiyat-satir-label{color:var(--stone);}
+.fiyat-satir-val{color:var(--dark);font-weight:500;}
+.fiyat-divider{border:none;border-top:1px solid rgba(184,150,90,.15);margin:.5rem 0;}
+.fiyat-toplam{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;}
+.fiyat-toplam-label{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);}
+.fiyat-toplam-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--gold);}
+#fiyat-icerik{background:rgba(255,255,255,.6);border:1px solid rgba(184,150,90,.15);padding:1.5rem;min-height:120px;backdrop-filter:blur(8px);}
+
+/* ===== KORNİŞ BOX ===== */
+.calc-kornish-box{
+  margin-top:1.2rem;padding:1rem 1.2rem;
+  background:rgba(184,150,90,.07);
+  border:1px solid rgba(184,150,90,.25);
+}
+.calc-kornish-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;}
+.calc-kornish-title{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dark);font-weight:500;}
+.calc-kornish-badge{
+  font-size:.62rem;padding:.2rem .6rem;
+  background:rgba(184,150,90,.2);color:var(--gold);
+  border:1px solid rgba(184,150,90,.3);letter-spacing:.08em;
+}
+.calc-kornish-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.kornish-price-display{display:flex;align-items:center;padding:.6rem .8rem;background:rgba(255,255,255,.5);border:1px solid rgba(184,150,90,.15);font-size:.85rem;font-weight:500;}
+
+/* ===== CALC EKSİK CSS ===== */
+.calc-left{display:flex;flex-direction:column;gap:1.2rem;}
+.calc-right{position:sticky;top:6rem;}
+.calc-add-btn{
+  width:100%;padding:1rem;background:transparent;
+  border:1px dashed rgba(184,150,90,.35);color:var(--gold-light);
+  font-family:'Jost',sans-serif;font-size:.78rem;letter-spacing:.2em;
+  text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:.5rem;
+}
+.calc-add-btn:hover{background:rgba(184,150,90,.08);border-color:var(--gold);}
+.oda-input{
+  background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.18);
+  color:var(--sand);padding:.7rem .9rem;font-family:'Jost',sans-serif;
+  font-size:.88rem;outline:none;width:100%;box-sizing:border-box;
+}
+.oda-input:focus{border-color:rgba(184,150,90,.5);}
+.calc-actions{display:flex;flex-direction:column;gap:0;}
+@media(max-width:768px){
+  .calc-layout{grid-template-columns:1fr;}
+  .calc-right{position:static;}
+  .oda-row{grid-template-columns:1fr 1fr;}
+}
+
+#video-modal.open{display:flex;align-items:center;justify-content:center;}
+#pd-modal.open{display:block;}
+#blog-modal.open{display:block;}
+
+/* ===== HERO VIDEO (inline) ===== */
+.hero-video-section{
+  width:100%;max-width:760px;margin-top:3rem;
+  position:relative;aspect-ratio:16/9;
+  border:1px solid rgba(184,150,90,.2);
+  overflow:hidden;background:#000;
+}
+.hero-video-section iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:none;
+}
+.hero-video-placeholder{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;color:rgba(245,240,232,.3);gap:.5rem;
+}
+.hero-video-placeholder span{font-size:2rem;}
+.hero-video-placeholder p{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;}
+
+/* ===== CONTACT SOCIAL ===== */
+.contact-social{display:flex;flex-direction:column;justify-content:center;gap:1.5rem;}
+.social-label{
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.5rem;
+}
+.social-links-large{display:flex;flex-wrap:wrap;gap:1rem;}
+.social-link-large{
+  display:flex;align-items:center;gap:.8rem;
+  padding:.8rem 1.4rem;
+  border:1px solid rgba(184,150,90,.2);
+  color:rgba(245,240,232,.7);text-decoration:none;
+  font-size:.78rem;letter-spacing:.1em;
+  transition:all .25s;
+}
+.social-link-large:hover{
+  border-color:var(--gold);color:var(--gold-light);
+  background:rgba(184,150,90,.07);
+}
+.social-link-large svg{flex-shrink:0;opacity:.8;}
+.social-hint{
+  font-size:.78rem;color:var(--stone);line-height:1.8;
+  max-width:320px;
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -641,84 +991,219 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 <body>
 
 <!-- HEADER -->
-<header>
-  <div class="logo" id="site-logo-el">PERLA<span>.</span></div>
-  <nav>
-    <a id="nav-1" onclick="sTo('.products-section')">Ürünler</a>
-    <a id="nav-2" onclick="sTo('.calc-section')">Fiyat Hesapla</a>
-    <a id="nav-blog" onclick="sTo('.blog-section')">Blog</a>
-    <a id="nav-3" onclick="sTo('.blog-section')">Blog</a>
-    <a id="nav-4" onclick="sTo('.contact-section')">İletişim</a>
+<header id="site-header">
+  <div class="header-logo" id="header-logo-el">PERLA</div>
+  <nav class="header-nav">
+    <a class="nav-link" onclick="scrollToSection('story')">Hikayemiz</a>
+    <a class="nav-link" onclick="scrollToSection('products-section')">Ürünler</a>
+    <a class="nav-link" onclick="scrollToSection('calc-section')">Fiyat Al</a>
+    <a class="nav-link" onclick="scrollToSection('contact-section')">İletişim</a>
   </nav>
-  <button class="header-cta" id="header-cta-btn" onclick="openWA()">💬 WhatsApp</button>
+  <button class="header-cta-btn" onclick="openWA()">💬 WhatsApp</button>
 </header>
 
-<!-- HERO -->
-<div class="hero">
-  <div style="position:absolute;inset:0;background:rgba(20,16,12,.55);z-index:1;"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow" id="hero-eyebrow">✦ El Seçimi Kumaş & Tül Koleksiyonu</div>
-    <h1 id="hero-title">Mekanınıza <em>Zarafet</em><br>Katın.</h1>
-    <p class="hero-sub" id="hero-sub">Özel ölçü kesimi, ithal kumaşlar ve Türkiye'nin en ince tülleri ile hayalinizdeki perdeyi birlikte tasarlayalım.</p>
-    <div class="hero-actions">
-      <button class="btn-gold" id="hero-btn1" onclick="sTo('.calc-section')">Fiyat Hesapla</button>
-      <button class="btn-ghost" id="hero-btn2" onclick="sTo('.products-section')">Ürünleri Gör</button>
-    </div>
-  </div>
-  <div class="hero-video-wrap" id="hero-video-wrap">
-    <div class="hero-video-placeholder"><span>🎬</span><p>Tanıtım Videosu</p></div>
-  </div>
-  <div class="hero-bg-text" id="hero-bg-text">PERLA</div>
-</div>
+<!-- FULLSCREEN SCROLL EXPERIENCE -->
+<div class="scroll-experience" id="story">
 
-<!-- PROCESS -->
-<section class="process-section">
-  <div class="section-tag" id="proc-tag">Nasıl Çalışıyoruz</div>
-  <div class="section-title" id="proc-title">Dört Adımda <em>Mükemmellik</em></div>
-  <div class="process-grid" id="process-grid"></div>
-</section>
+  <!-- BÖLÜM 1: Hero - Kapı açılıyor -->
+  <section class="fs-section fs-hero" data-section="0">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark" style="background:rgba(20,15,10,.45);"></div>
+    <div class="fs-content fs-content-center">
+      <div class="fs-eyebrow reveal-up" id="hero-eyebrow">✦ Kadıköy · Perde & Kumaş Atölyesi</div>
+      <h1 class="fs-headline reveal-up delay-1" id="hero-title">Evinize<br><em>Zarafet</em><br>Getiriyoruz.</h1>
+      <p class="fs-sub reveal-up delay-2" id="hero-sub">Siz seçin, biz dikelim, biz takalım.</p>
+      <div class="fs-actions reveal-up delay-3">
+        <button class="btn-gold" onclick="scrollToSection('story-step1')">Nasıl Çalışıyoruz</button>
+        <button class="btn-ghost" onclick="scrollToSection('products-section')">Ürünleri Gör</button>
+      </div>
+      <!-- Hero Video -->
+      <div class="hero-video-section reveal-up delay-3" id="hero-video-wrap">
+        <div class="hero-video-placeholder"><span>🎬</span><p>Tanıtım Videosu</p></div>
+      </div>
+    </div>
+    <div class="fs-scroll-hint">
+      <span>Kaydırın</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 2: Sorun - Sizi anlıyoruz -->
+  <section class="fs-section fs-problem" data-section="1" id="story-step1">
+    <div class="fs-bg fs-bg-texture"></div>
+    <div class="fs-overlay fs-overlay-light"></div>
+    <div class="fs-content fs-content-split">
+      <div class="split-text">
+        <div class="fs-eyebrow reveal-up" style="color:var(--gold);">Tanıdık mı geldi?</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">Yüzlerce çeşit<br>arasında <em>kaybolmak</em><br>zorunda değilsiniz.</h2>
+        <p class="fs-sub-dark reveal-up delay-2">Kumaş mağazasına girdiniz, seçenekler kafanızı karıştırdı. Evinize döndüğünüzde hangisinin uyacağından emin olamadınız.<br><br>Biz bunu biliyoruz. Bu yüzden farklı çalışıyoruz.</p>
+      </div>
+      <div class="split-visual reveal-right delay-1">
+        <div class="problem-card">
+          <div class="problem-icon">🏬</div>
+          <p>Mağazada beğendiğiniz, evde tutmadı</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">📏</div>
+          <p>Ölçü almak, montaj ayarlamak… hepsi sizin sorununuz oldu</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">😕</div>
+          <p>Yüzlerce çeşit arasından "doğru" olanı bulmak yordu</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 3: Çözüm adım 1 - Evinize geliyoruz -->
+  <section class="fs-section fs-step" data-section="2" id="story-step2">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number reveal-up">01</div>
+      <h2 class="fs-headline reveal-up delay-1"><em>Evinize</em> geliyoruz.</h2>
+      <p class="fs-sub reveal-up delay-2">Randevu alıyorsunuz, biz geliyor<br>ve mekanınızı yerinde görüyoruz.</p>
+      <div class="step-detail reveal-up delay-3">
+        <div class="step-chip">📍 Kadıköy ve çevresi</div>
+        <div class="step-chip">🕐 Randevuya göre</div>
+        <div class="step-chip">💰 Ücretsiz ölçü alma</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 4: Adım 2 - Koleksiyonu getiriyoruz -->
+  <section class="fs-section fs-step fs-step-light" data-section="3" id="story-step3">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split fs-content-reverse">
+      <div class="split-text">
+        <div class="step-number-dark reveal-up">02</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">En çok tercih<br>edilen <em>tülleri</em><br>salonunuza asıyoruz.</h2>
+        <p class="fs-sub-dark reveal-up delay-2">Yüzlerce çeşit arasından önceden elediğimiz,<br>mekanınıza uyacağına inandığımız modelleri<br>evinizde deneyimliyorsunuz.</p>
+      </div>
+      <div class="split-visual reveal-right delay-1">
+        <div class="fabric-showcase">
+          <div class="fabric-item">
+            <div class="fabric-swatch" style="background:linear-gradient(135deg,#f8f4ee,#e8ddd0)"></div>
+            <span>Krem Tül</span>
+          </div>
+          <div class="fabric-item">
+            <div class="fabric-swatch" style="background:linear-gradient(135deg,#e8e0d8,#d4c9b0)"></div>
+            <span>İpek Tül</span>
+          </div>
+          <div class="fabric-item">
+            <div class="fabric-swatch" style="background:linear-gradient(135deg,#f0ece6,#ddd4c4)"></div>
+            <span>Nakışlı Tül</span>
+          </div>
+          <div class="fabric-item">
+            <div class="fabric-swatch" style="background:linear-gradient(135deg,#e0ddd8,#c8c0b0)"></div>
+            <span>Simli Tül</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 5: Adım 3 - Görüyorsunuz, beğeniyorsunuz -->
+  <section class="fs-section fs-step" data-section="4" id="story-step4">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number reveal-up">03</div>
+      <h2 class="fs-headline reveal-up delay-1">Görüyorsunuz,<br><em>beğeniyorsunuz,</em><br>alıyorsunuz.</h2>
+      <p class="fs-sub reveal-up delay-2">Tahmin değil, gerçek. Evinizin ışığında,<br>duvarlarınızın renginde görerek karar veriyorsunuz.<br>Binlerce seçenek yorgunluğu yok.</p>
+      <div class="checkmarks reveal-up delay-3">
+        <div class="checkmark-item">✓ Evinizde deneyimleyin</div>
+        <div class="checkmark-item">✓ Doğal ışıkta görün</div>
+        <div class="checkmark-item">✓ Emin olarak seçin</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 6: Adım 4 - Özel dikim -->
+  <section class="fs-section fs-step fs-step-light" data-section="5" id="story-step5">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split">
+      <div class="split-text">
+        <div class="step-number-dark reveal-up">04</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">Ölçünüze özel<br><em>dikiyoruz.</em></h2>
+        <p class="fs-sub-dark reveal-up delay-2">Standart beden yok. Her perde,<br>tam pencerenize göre kesilip<br>dikilir.</p>
+        <div class="step-detail-dark reveal-up delay-3">
+          <div class="step-chip-dark">✂️ Özel ölçü kesim</div>
+          <div class="step-chip-dark">🪡 El işi büzgü</div>
+          <div class="step-chip-dark">⏱️ 3-5 iş günü</div>
+        </div>
+      </div>
+      <div class="split-visual reveal-right delay-1">
+        <div class="measure-visual">
+          <div class="measure-line measure-h">
+            <span class="measure-label">Genişlik</span>
+          </div>
+          <div class="measure-line measure-v">
+            <span class="measure-label">Uzunluk</span>
+          </div>
+          <div class="window-illustration">
+            <div class="window-frame">
+              <div class="curtain-left"></div>
+              <div class="curtain-right"></div>
+              <div class="window-glass"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 7: Adım 5 - Montaj -->
+  <section class="fs-section fs-step" data-section="6" id="story-step6">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number reveal-up">05</div>
+      <h2 class="fs-headline reveal-up delay-1">Biz takıyoruz.<br><em>Ücretsiz.</em></h2>
+      <p class="fs-sub reveal-up delay-2">Matkap, vida, korniş… hepsi bizde.<br>Siz sadece evinizde olun,<br>gerisini biz halledelim.</p>
+      <button class="btn-gold-lg reveal-up delay-3" onclick="openWA()">💬 Randevu Al — Ücretsiz</button>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 8: Ürünler geçiş bölümü -->
+  <section class="fs-section fs-transition" data-section="7">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-center">
+      <div class="fs-eyebrow reveal-up" style="color:var(--gold);" id="prod-tag-el">Koleksiyonumuz</div>
+      <h2 class="fs-headline-dark reveal-up delay-1" id="prod-title-el">Seçilmiş <em>Ürünler</em></h2>
+      <p class="fs-sub-dark reveal-up delay-2" id="prod-sub-el">Her biri özenle seçilmiş tül ve kumaş modellerimiz</p>
+      <button class="btn-gold reveal-up delay-3" onclick="scrollToSection('products-section')">Ürünleri İncele ↓</button>
+    </div>
+  </section>
+
+</div>
+<!-- END SCROLL EXPERIENCE -->
 
 <!-- PRODUCTS -->
-<section class="products-section" aria-label="Ürün kataloğu">
-  <div class="section-tag" id="prod-tag">Koleksiyonumuz</div>
-  <div class="section-title" id="prod-title">Tüm <em>Ürünler</em></div>
-  <div class="section-sub" id="prod-sub">Her biri özenle seçilmiş tül ve kumaş modellerimiz mekanınızı dönüştürmek için hazır.</div>
-  <div class="products-toolbar">
-    <div class="products-tabs">
-      <button class="tab-btn active" id="tab-tumu" onclick="switchTab('tumu',this)">✦ Tümü</button>
-      <button class="tab-btn" id="tab-tul" onclick="switchTab('tul',this)">🌿 Tüller</button>
-      <button class="tab-btn" id="tab-kumas" onclick="switchTab('kumas',this)">🧵 Kumaşlar</button>
-    </div>
-    <div class="products-filter">
-      <span class="pf-label">Sırala</span>
-      <select class="pf-select" id="prod-sort" onchange="renderProducts()">
-        <option value="default">Varsayılan</option>
-        <option value="asc">Fiyat: Düşükten Yükseğe</option>
-        <option value="desc">Fiyat: Yüksekten Düşüğe</option>
-        <option value="name">İsme Göre</option>
-      </select>
-      <span class="products-count" id="prod-count"></span>
-    </div>
+<section class="products-section" id="products-section" aria-label="Ürünlerimiz">
+  <div class="section-tag" id="prod-tag2-el">Koleksiyonumuz</div>
+  <h2 class="section-title" id="prod-title2-el">Seçilmiş <em>Ürünler</em></h2>
+  <div class="prod-tabs">
+    <button class="prod-tab active" onclick="setTab('tumu',this)">Tümü</button>
+    <button class="prod-tab" onclick="setTab('tul',this)">🌿 Tüller</button>
+    <button class="prod-tab" onclick="setTab('kumas',this)">🧵 Kumaşlar</button>
+    <select id="prod-sort" onchange="renderProducts()" class="prod-sort-sel">
+      <option value="default">Sıralama</option>
+      <option value="asc">Fiyat: Düşük → Yüksek</option>
+      <option value="desc">Fiyat: Yüksek → Düşük</option>
+      <option value="name">İsme Göre</option>
+    </select>
+    <span class="prod-count" id="prod-count"></span>
   </div>
   <div class="products-grid" id="products-grid"></div>
 </section>
 
 <!-- GALLERY -->
-<section class="gallery-section" aria-label="Referans galeri">
-  <div class="section-tag" id="gal-tag">Referanslarımız</div>
-  <div class="section-title" id="gal-title">Gerçek <em>Mekanlar</em></div>
+<section class="gallery-section" id="gallery-el" aria-label="Referans Projeler">
+  <div class="section-tag" id="gal-tag-el">Referanslarımız</div>
+  <h2 class="section-title" id="gal-title-el">Gerçek <em>Mekanlar</em></h2>
   <div class="gallery-grid" id="gallery-grid"></div>
 </section>
-
-
-<!-- BLOG -->
-<section class="blog-section" id="blog-el" aria-label="Blog & İpuçları">
-  <div class="section-tag" id="blog-tag-el">Bilgi Köşesi</div>
-  <h2 class="section-title" id="blog-title-el">Perde <em>Rehberi</em></h2>
-  <p class="section-sub" id="blog-sub-el">Doğru perde seçimi için uzman tavsiyeleri</p>
-  <div class="blog-grid" id="blog-grid"></div>
-</section>
-
 
 <!-- BLOG -->
 <section class="blog-section" id="blog-el" aria-label="Blog & İpuçları">
@@ -729,106 +1214,113 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 </section>
 
 <!-- CALC -->
-<section class="calc-section" aria-label="Fiyat hesaplayıcı" id="calc-section">
-  <div class="section-tag" id="calc-tag">Anlık Fiyat Hesaplayıcı</div>
-  <div class="section-title" style="color:var(--white)" id="calc-title">Odalarınızı Ekleyin, <em>Fiyatı</em> Görün</div>
-  <div class="section-sub" id="calc-sub" style="color:var(--silk)">Her oda için genişlik, tül türü ve büzgü oranını seçin.</div>
+<section class="calc-section" id="calc-section" aria-label="Fiyat Hesaplayıcı">
+  <div class="section-tag" id="calc-tag-el">Anlık Fiyat Hesaplayıcı</div>
+  <h2 class="section-title" id="calc-title-el">Odalarınızı Ekleyin, <em>Fiyatı</em> Görün</h2>
+  <p class="section-sub" id="calc-sub-el">Her oda için genişlik, tül türü ve büzgü oranını seçin.</p>
   <div class="calc-layout">
-    <div>
-      <div class="oda-list" id="oda-list"></div>
-      <button class="add-oda-btn" onclick="addOda()">+ Yeni Oda Ekle</button>
-      <div class="kornish-card" style="margin-top:1.5rem;">
-        <div class="kornish-badge">🎁 %50 İndirimli Fırsat</div>
-        <div class="oda-row" style="grid-template-columns:1fr 1fr;margin-top:.5rem;">
-          <div class="oda-group"><label class="oda-label">Korniş Uzunluğu (metre)</label><input class="oda-input" type="number" id="kornish-uzunluk" placeholder="0.0" min="0" step="0.1" oninput="hesapla()"></div>
-          <div class="oda-group" style="justify-content:flex-end;"><label class="oda-label">Fiyat</label><div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold-light);padding:.7rem 0;"><s style="color:var(--stone);font-size:.85rem;">450 TL/m</s> → <strong id="kornish-display">225 TL/m</strong></div></div>
+    <div class="calc-left">
+      <div id="oda-list"></div>
+      <div class="calc-actions">
+        <button class="calc-add-btn" onclick="addOda()">+ Oda Ekle</button>
+        <div class="calc-kornish-box">
+          <div class="calc-kornish-header">
+            <span class="calc-kornish-title">🎁 Korniş</span>
+            <span class="calc-kornish-badge">%50 İndirimli</span>
+          </div>
+          <div class="calc-kornish-row">
+            <div class="oda-group">
+              <label class="oda-label">Metraj (m)</label>
+              <input class="oda-input" type="number" id="kornish-uzunluk" min="0" step="0.1" placeholder="0" oninput="hesapla()">
+            </div>
+            <div class="oda-group">
+              <label class="oda-label">Birim fiyat</label>
+              <div class="kornish-price-display">
+                <span id="kornish-display" style="color:var(--gold);">225 TL/m</span>
+                <span style="text-decoration:line-through;color:var(--stone);font-size:.7rem;margin-left:.4rem;" id="kornish-original">450 TL/m</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="fiyat-panel">
-      <div class="fiyat-panel-title">✦ Fiyat Özeti</div>
+    <div class="calc-right">
       <div id="fiyat-icerik"><div class="fiyat-empty">Oda bilgilerini girerek<br>anlık fiyatı görün.</div></div>
       <button class="fiyat-cta" onclick="fiyatWA()">💬 Bu Fiyatla WhatsApp'a Yaz</button>
-      <div class="fiyat-not">* Fiyatlar tahminidir. Kesin fiyat için uzmanımız sizi arayacaktır.</div>
+      <div class="calc-note">* Fiyatlar tahminidir. Kesin teklif için WhatsApp'tan yazın.</div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section class="contact-section">
-  <div class="section-tag" id="ct-tag">Bize Ulaşın</div>
-  <div class="section-title" style="color:var(--white)" id="ct-title">Her Sorunuz İçin <em>Buradayız</em></div>
-  <div class="contact-info">
-    <div class="contact-item"><strong>Telefon</strong><span id="ct-tel">05078859455</span></div>
-    <div class="contact-item"><strong>WhatsApp</strong><span id="ct-wa">05078859455</span></div>
-    <div class="contact-item"><strong>E-posta</strong><span id="ct-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ee87808881ae9e8b9c828fc08d8183c09a9c">[email&#160;protected]</a></span></div>
-    <div class="contact-item"><strong>Adres</strong><span id="ct-adres">Bağcılar, İstanbul</span></div>
-  </div>
-  <div class="contact-actions">
-    <button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:1rem 3rem;font-size:.85rem;">💬 WhatsApp ile Yaz</button>
-    <button class="contact-btn" id="ct-btn2" onclick="window.location.href='tel:'+S.tel.replace(/\D/g,'')">📞 Hemen Ara</button>
+<section class="contact-section" id="contact-section" aria-label="İletişim">
+  <div class="section-tag" id="ct-tag-el">Bize Ulaşın</div>
+  <h2 class="section-title" id="ct-title-el">İletişim & <em>Sosyal Medya</em></h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
+      <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
+    </div>
+    <div class="contact-social">
+      <div class="social-label">Sosyal Medyada Bizi Bulun</div>
+      <div class="social-links-large" id="ct-social-links"></div>
+      <p class="social-hint">Koleksiyonlarımızı, montaj videolarımızı ve müşteri yorumlarını takip edin.</p>
+    </div>
   </div>
 </section>
 
-<!-- BLOG -->
-<section class="blog-section" id="blog-section">
-  <div class="section-tag">Faydalı Bilgiler</div>
-  <div class="section-title">Perde <em>Rehberi</em></div>
-  <div class="section-sub">Perde seçimi, bakımı ve dekorasyon ipuçları hakkında uzman görüşleri.</div>
-  <div class="blog-grid" id="blog-grid"></div>
-</section>
-
-<!-- BLOG DETAIL MODAL -->
-<div class="blog-modal" id="blog-modal" onclick="closeBlogModal(event)">
-  <div class="blog-box" id="blog-box">
-    <button class="blog-close" onclick="closeBlogModal()">✕</button>
-    <div class="blog-box-img" id="blog-box-img"></div>
-    <div class="blog-box-content" id="blog-box-content"></div>
-  </div>
-</div>
-
+<!-- FOOTER -->
 <footer id="footer-el">
   <div class="social-bar" id="social-bar"></div>
-  © 2025 <span id="footer-brand">PERLA Perde & Kumaş</span> — Tüm hakları saklıdır.  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);font-size:.65rem;color:rgba(158,144,128,.4);line-height:2;">
-    <strong style="color:rgba(158,144,128,.6);">Hizmet Bölgelerimiz:</strong> Kadıköy, İstanbul
-  </div>
+  © 2025 <span id="footer-brand">PERLA Perde & Kumaş</span> — Tüm hakları saklıdır.
   <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);font-size:.65rem;color:rgba(158,144,128,.4);line-height:2;">
     <strong style="color:rgba(158,144,128,.6);">Hizmet Bölgemiz:</strong> Kadıköy, İstanbul
   </div>
 </footer>
 
-<!-- ÜRÜN DETAY MODAL -->
-<div class="pd-modal" id="pd-modal" onclick="closePdModal(event)">
-  <div class="pd-box" id="pd-box">
-    <button class="pd-close" onclick="closePdModal()">✕</button>
-    <div class="pd-visual" id="pd-visual"></div>
-    <div class="pd-info" id="pd-info"></div>
-  </div>
-</div>
-
-<!-- Randevu formu kaldırıldı - WhatsApp yönlendirmesi aktif -->
 <button class="admin-trigger" onclick="openAdminLogin()">⚙ Admin</button>
 
-<!-- VİDEO MODAL -->
-<div class="video-modal-wrap" id="video-modal" onclick="closeVideoModal(event)">
-  <div class="video-modal-box">
-    <button class="video-close-btn" onclick="closeVideoModal()">✕</button>
-    <div id="video-content"></div>
-    <div class="video-modal-title" id="video-title"></div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="admin-login" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.85);z-index:9998;backdrop-filter:blur(8px);">
+  <div style="background:var(--dark);border:1px solid rgba(184,150,90,.2);padding:2.5rem;width:360px;max-width:90vw;">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;margin-bottom:1.5rem;color:var(--gold-light);">Yönetici Girişi</h3>
+    <div class="ap-fg"><label>Kullanıcı Adı</label><input type="text" id="lu" placeholder="admin" style="width:100%;padding:.7rem;background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--white);font-family:'Jost',sans-serif;"></div>
+    <div class="ap-fg" style="margin-top:1rem;"><label>Şifre</label><input type="password" id="lp" placeholder="••••••••" style="width:100%;padding:.7rem;background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--white);font-family:'Jost',sans-serif;" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div id="lerr" style="color:#fc8181;font-size:.75rem;margin:.6rem 0;min-height:1rem;"></div>
+    <div style="display:flex;gap:1rem;margin-top:1rem;">
+      <button onclick="doLogin()" style="flex:1;padding:.8rem;background:var(--gold);color:var(--dark);border:none;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.1em;font-size:.8rem;">GİRİŞ</button>
+      <button onclick="closeAdminLogin()" style="padding:.8rem 1.2rem;border:1px solid rgba(212,200,176,.2);background:transparent;color:var(--stone);cursor:pointer;">İptal</button>
+    </div>
   </div>
 </div>
 
-<!-- ADMIN GİRİŞ -->
+<!-- PRODUCT DETAIL MODAL -->
+<div id="pd-modal" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.9);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);">
+  <button onclick="closePdModal()" style="position:fixed;top:1.5rem;right:1.5rem;z-index:9001;width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:1.2rem;">✕</button>
+  <div style="max-width:960px;margin:4rem auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+    <div id="pd-visual"></div>
+    <div id="pd-info"></div>
+  </div>
+</div>
 
-<div id="admin-login">
-  <div class="login-box">
-    <div class="login-logo">PERLA<span>.</span></div>
-    <div class="login-sub">Yönetim Paneli</div>
-    <div class="lg"><label>Kullanıcı Adı</label><input type="text" id="lu" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <div class="lg"><label>Şifre</label><input type="password" id="lp" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <div class="login-err" id="lerr"></div>
-    <button class="login-btn" onclick="doLogin()">Giriş Yap</button>
-    <div style="text-align:center;margin-top:1.2rem;"><span style="font-size:.68rem;color:var(--stone);cursor:pointer;" onclick="closeAdminLogin()">← Siteye Dön</span></div>
+<!-- VIDEO MODAL -->
+<div id="video-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9100;align-items:center;justify-content:center;">
+  <button onclick="closeVideoModal()" style="position:fixed;top:1.5rem;right:1.5rem;width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:1.2rem;z-index:9101;">✕</button>
+  <div style="width:90vw;max-width:900px;aspect-ratio:16/9;position:relative;">
+    <div id="video-title" style="position:absolute;top:-2.5rem;left:0;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(255,255,255,.7);"></div>
+    <div id="video-content" style="width:100%;height:100%;"></div>
+  </div>
+</div>
+
+<!-- BLOG MODAL -->
+<div id="blog-modal" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.92);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);">
+  <button onclick="closeBlogModal()" style="position:fixed;top:1.5rem;right:1.5rem;z-index:9001;width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:1.2rem;">✕</button>
+  <div style="max-width:760px;margin:4rem auto;padding:2rem;">
+    <div id="blog-box-img"></div>
+    <div id="blog-box-content"></div>
   </div>
 </div>
 
@@ -1395,7 +1887,84 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 
 <div class="ap-toast" id="ap-toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ===== SCROLL EXPERIENCE =====
+
+// Header light/dark based on section
+function initScrollExperience() {
+  const header = document.getElementById('site-header');
+  const lightSections = document.querySelectorAll('.fs-step-light, .fs-problem, .fs-transition, .products-section, .gallery-section, .blog-section, .calc-section, .contact-section');
+
+  // Intersection Observer for header style
+  const headerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        header.classList.add('light-header');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const darkSections = document.querySelectorAll('.fs-hero, .fs-step:not(.fs-step-light)');
+  const darkObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        header.classList.remove('light-header');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  lightSections.forEach(s => headerObserver.observe(s));
+  darkSections.forEach(s => darkObserver.observe(s));
+
+  // Scroll → header background
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Reveal animations on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal-up, .reveal-right').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // Paralaks effect on bg elements
+  const parallaxBgs = document.querySelectorAll('.fs-bg-dark-pattern, .fs-bg-sand, .fs-bg-texture');
+  window.addEventListener('scroll', () => {
+    parallaxBgs.forEach(bg => {
+      const section = bg.closest('.fs-section');
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewH) return;
+      const progress = (viewH - rect.top) / (viewH + rect.height);
+      const offset = (progress - 0.5) * 80;
+      bg.style.transform = `translateY(${offset}px)`;
+    });
+  }, { passive: true });
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id) || document.querySelector('.' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(initScrollExperience, 100);
+});
+
+
 // ===== STORAGE =====
 const LS={T:'perla_tuls',K:'perla_kumas',KN:'perla_kn',RV:'perla_rv',S:'perla_settings',G:'perla_gallery',TH:'perla_theme',P:'perla_proc',TX:'perla_texts',BL:'perla_blog'};
 
@@ -1539,9 +2108,9 @@ function applySettings(){
   el('hero-eyebrow').textContent=S.heroEyebrow;
   el('hero-title').innerHTML=S.heroTitle;
   el('hero-sub').textContent=S.heroSub;
-  el('hero-bg-text').textContent=S.bgText||S.logo;
+  // hero-bg-text n/a
   // Logo & title
-  el('site-logo-el').innerHTML=S.logo+'<span>.</span>';
+  // site-logo n/a
   document.title=S.siteTitle||'Perdekolay Kadıköy | Perde & Tül — Ölçülü Dikim, Ücretsiz Montaj';
   // Sosyal medya
   const sb=el('social-bar');
@@ -1567,64 +2136,93 @@ function applySettings(){
   if(blogSec)blogSec.style.display=S.showBlog===false?'none':'';
   // Hero video
   const hw=el('hero-video-wrap');
-  if(S.heroVideo){
+  if(hw&&S.heroVideo){
     const vid=ytId(S.heroVideo);
     if(vid){
       hw.style.background='#000';
-      const heroEl2=document.querySelector('.hero');
-      if(heroEl2)heroEl2.style.background='var(--dark)';
-      const ov2=document.querySelector('.hero-overlay');
-      if(ov2)ov2.style.display='';
       hw.innerHTML=`<iframe
-        src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&origin=${encodeURIComponent(location.origin)}"
+        src="https://www.youtube-nocookie.com/embed/${vid}?autoplay=0&mute=1&loop=1&playlist=${vid}&controls=1&rel=0&modestbranding=1&playsinline=1&origin=${encodeURIComponent(location.origin)}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="position:absolute;top:50%;left:50%;width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none;"></iframe>
-        <div onclick="openHeroVideoModal()" style="position:absolute;bottom:2rem;right:2rem;z-index:3;cursor:pointer;display:flex;align-items:center;gap:.6rem;background:rgba(0,0,0,.55);padding:.5rem 1.2rem;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(10px);">
-          <div style="width:26px;height:26px;background:rgba(220,30,30,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;">▶</div>
-          <span style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;">Sesli İzle</span>
-        </div>`;
+        allowfullscreen></iframe>`;
     }
   } else {
-    hw.innerHTML='';
+    if(hw)hw.innerHTML='';
     // Video yoksa hero arka planı sand
-    const heroEl=document.querySelector('.hero');
-    if(heroEl)heroEl.style.background='var(--sand)';
+    const heroEl=document.querySelector('.fs-hero');
+    if(heroEl)heroEl.style.background='var(--dark)';
     // Renkleri normale döndür
     const h1=document.querySelector('.hero h1');
     if(h1)h1.style.color='';
-    const ov=document.querySelector('.hero-overlay');
+    const ov=document.querySelector('.hero-overlay-el');
     if(ov)ov.style.display='none';
   }
   // Process
-  el('proc-tag').textContent=S.procTag;
-  el('proc-title').innerHTML=S.procTitle;
+  const pt=el('proc-tag');if(pt)pt.textContent=S.procTag;
+  const ptl=el('proc-title');if(ptl)ptl.innerHTML=S.procTitle;
   // Sections
-  el('prod-tag').textContent=S.prodTag;el('prod-title').innerHTML=S.prodTitle;el('prod-sub').textContent=S.prodSub;
-  el('gal-tag').textContent=S.galTag;el('gal-title').innerHTML=S.galTitle;
-  el('calc-tag').textContent=S.calcTag;el('calc-title').innerHTML=S.calcTitle;el('calc-sub').textContent=S.calcSub;
-  el('ct-tag').textContent=S.ctTag;el('ct-title').innerHTML=S.ctTitle;
+  ['prod-tag-el','prod-tag2-el'].forEach(e=>{const x=el(e);if(x)x.textContent=S.prodTag;});
+  ['prod-title-el','prod-title2-el'].forEach(e=>{const x=el(e);if(x)x.innerHTML=S.prodTitle;});
+  ['prod-sub-el'].forEach(e=>{const x=el(e);if(x)x.textContent=S.prodSub;});
+  const gt=el('gal-tag-el');if(gt)gt.textContent=S.galTag;const gtl=el('gal-title-el');if(gtl)gtl.innerHTML=S.galTitle;
+  const ca=el('calc-tag-el');if(ca)ca.textContent=S.calcTag;const cb=el('calc-title-el');if(cb)cb.innerHTML=S.calcTitle;const cc=el('calc-sub-el');if(cc)cc.textContent=S.calcSub;
+  const cta=el('ct-tag-el');if(cta)cta.textContent=S.ctTag;const ctb=el('ct-title-el');if(ctb)ctb.innerHTML=S.ctTitle;
   // Contact
-  el('ct-tel').textContent=S.tel;el('ct-wa').textContent=S.wa;el('ct-email').textContent=S.email;el('ct-adres').textContent=S.adres;
+  const ctel=el('ct-tel-el');if(ctel)ctel.textContent=S.tel;
+  const cwa=el('ct-wa');if(cwa)cwa.textContent=S.wa;
+  const cemail=el('ct-email-el');if(cemail)cemail.href='mailto:'+S.email;
+  const cadres=el('ct-adres-el');if(cadres)cadres.innerHTML=S.adres;
   // Footer
-  el('footer-el').innerHTML=S.footer;
+  // Contact social links
+  const cts=el('ct-social-links');
+  if(cts){
+    const svgIG='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
+    const svgWA='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+    const svgFB='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
+    const svgYT='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>';
+    const svgTT='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>';
+    const ctSocialLinks=[
+      {k:'socialInstagram',icon:svgIG,label:'Instagram',url:'https://instagram.com/'},
+      {k:'socialWhatsapp',icon:svgWA,label:'WhatsApp',url:'https://wa.me/'},
+      {k:'socialFacebook',icon:svgFB,label:'Facebook',url:'https://facebook.com/'},
+      {k:'socialYoutube',icon:svgYT,label:'YouTube',url:'https://youtube.com/'},
+      {k:'socialTiktok',icon:svgTT,label:'TikTok',url:'https://tiktok.com/@'},
+    ];
+    const activeLinks=ctSocialLinks.filter(l=>S[l.k]);
+    cts.innerHTML=activeLinks.length
+      ? activeLinks.map(l=>`<a href="${l.url}${S[l.k]}" target="_blank" rel="noopener" class="social-link-large">${l.icon}<span>${l.label}</span></a>`).join('')
+      : '<span style="color:var(--stone);font-size:.8rem;">Admin panelinden sosyal medya ekleyin.</span>';
+  }
+  const bta=el('blog-tag-el');if(bta)bta.textContent=S.galTag||'Bilgi Köşesi';
+  const btb=el('blog-title-el');if(btb)btb.innerHTML=S.blogTitle||'Perde <em>Rehberi</em>';
+  const btc=el('blog-sub-el');if(btc)btc.textContent=S.blogSub||'Doğru perde seçimi için uzman tavsiyeleri';
+  const fel=el('footer-el');if(fel)fel.innerHTML=S.footer;
   // Korniş
-  el('kornish-display').textContent=KN+' TL/m';
+  const kd=el('kornish-display');if(kd)kd.textContent=KN+' TL/m';
+  const ko=el('kornish-original');if(ko)ko.textContent=(KN*2)+' TL/m';
 }
 
 function applyTexts(){
-  el('nav-1').textContent=TX.nav1;el('nav-2').textContent=TX.nav2;el('nav-3').textContent=TX.nav3;
-  el('header-cta-btn').textContent=TX.hcta;
-  el('hero-btn1').textContent=TX.btn1;el('hero-btn2').textContent=TX.btn2;
-  el('tab-tul').textContent=TX.tabTul;el('tab-kumas').textContent=TX.tabKumas;
-  el('ct-btn1').textContent=TX.ctBtn1;el('ct-btn2').textContent=TX.ctBtn2;
+  ['nav-1','nav-2','nav-3','nav-4'].forEach((id,i)=>{
+    const keys=['nav1','nav2','nav3','nav4'];
+    const x=el(id);if(x&&TX[keys[i]])x.textContent=TX[keys[i]];
+  });
+  const hcta=el('header-cta-btn');if(hcta)hcta.textContent=TX.hcta||'💬 WhatsApp';
+  const hb1=el('hero-btn1');if(hb1)hb1.textContent=TX.btn1||'Fiyat Hesapla';
+  const hb2=el('hero-btn2');if(hb2)hb2.textContent=TX.btn2||'Ürünleri Gör';
+  const tt=el('tab-tul');if(tt)tt.textContent=TX.tabTul||'🌿 Tüller';
+  const tk=el('tab-kumas');if(tk)tk.textContent=TX.tabKumas||'🧵 Kumaşlar';
+  const cb1=el('ct-btn1');if(cb1)cb1.textContent=TX.ctBtn1||'💬 WhatsApp ile Yaz';
+  const cb2=el('ct-btn2');if(cb2)cb2.textContent=TX.ctBtn2||'📅 Randevu Al';
+  // Header logo
+  const hl=document.querySelector('.header-logo');
+  if(hl)hl.textContent=S.logo||'PERLA';
 }
 
 function el(id){return document.getElementById(id);}
 
 // ===== PROCESS RENDER =====
 function renderProcess(){
-  el('process-grid').innerHTML=P.map((p,i)=>`
+  const pg=el('process-grid');if(!pg)return;pg.innerHTML=P.map((p,i)=>`
     <div class="process-item">
       <div class="process-num">0${i+1}</div>
       <div class="process-icon">${p.icon}</div>
@@ -1862,7 +2460,8 @@ function odaChange(id,f,v){
 }
 function renderOdalar(){
   TUL_OPT=T.map(t=>({label:t.name,fiyat:t.fiyat}));
-  el('oda-list').innerHTML=odalar.map(o=>{
+  const ol=el('oda-list');if(!ol)return;
+  ol.innerHTML=odalar.map(o=>{
     const f=odaFiyat(o);
     const ff=fonFiyat(o);
     const toplam=f+ff;
@@ -1929,7 +2528,7 @@ function hesapla(){
   const fonTop=tot.reduce((s,o)=>s+o.fon,0);
   const ku=parseFloat(el('kornish-uzunluk')?.value)||0,kt=Math.round(ku*KN);
   const gt=tulTop+fonTop+kt;
-  const e=el('fiyat-icerik');
+  const e=el('fiyat-icerik');if(!e)return;
   if(!gt){e.innerHTML='<div class="fiyat-empty">Oda bilgilerini girerek<br>anlık fiyatı görün.</div>';return;}
   let s='';
   tot.forEach(o=>{
@@ -1944,7 +2543,7 @@ function hesapla(){
       s+=`<div class="fiyat-satir"><span class="fiyat-satir-label">Oda ${o.id} Fon — ${o.o.fonEn}cm ${k.label}${adet>1?' × '+adet+' adet':''}</span><span class="fiyat-satir-val">${o.fon.toLocaleString('tr-TR')} TL</span></div>`;
     }
   });
-  if(kt>0)s+=`<hr class="fiyat-divider"><div class="fiyat-satir"><span class="fiyat-satir-label">🎁 Korniş (${ku}m × ${KN} TL)</span><span class="fiyat-satir-val">${kt.toLocaleString('tr-TR')} TL</span></div>`;
+  if(kt>0)s+=`<hr class="fiyat-divider"><div class="fiyat-satir"><span class="fiyat-satir-label">🎁 Korniş — <span style='text-decoration:line-through;color:var(--stone);font-size:.75em;'>${(ku*KN*2).toLocaleString('tr-TR')} TL</span> <span style='color:var(--gold);font-size:.7rem;'>%50 İndirimli</span> (${ku}m × ${KN} TL)</span><span class="fiyat-satir-val">${kt.toLocaleString('tr-TR')} TL</span></div>`;
   e.innerHTML=`<div class="fiyat-satirlar">${s}</div><hr class="fiyat-divider"><div class="fiyat-toplam"><span class="fiyat-toplam-label">Tahmini Toplam</span><span class="fiyat-toplam-val">${gt.toLocaleString('tr-TR')} TL</span></div>`;
   if(gt>0){
     trackEvent('fiyat_hesapla',{
@@ -3293,13 +3892,4 @@ initApp();
     <div class="ap-fg">
       <label>📄 İçerik (HTML destekler: &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;)</label>
       <textarea id="bm-body" rows="10" placeholder="&lt;h3&gt;Başlık&lt;/h3&gt;&lt;p&gt;İçerik...&lt;/p&gt;" style="font-family:monospace;font-size:.8rem;"></textarea>
-    </div>
-    <div class="ap-ma">
-      <button class="ap-cancel" onclick="el('blog-edit-modal').classList.remove('open')">İptal</button>
-      <button class="ap-save" onclick="saveBlog()">Kaydet</button>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+    </d
