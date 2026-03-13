@@ -54,6 +54,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 /* HEADER */
 /* header scroll override */
+#site-header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;letter-spacing:.2em;color:var(--dark);}
 .logo span{color:var(--accent);}
 nav{display:flex;gap:2.5rem;}
@@ -212,7 +213,7 @@ nav a:hover{color:var(--dark);}
 .social-bar{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin:1.5rem 0 .5rem;}
 .social-link{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(212,200,176,.15);color:rgba(212,200,176,.5);font-size:1.1rem;transition:all .2s;text-decoration:none;border-radius:2px;}
 .social-link:hover{color:var(--gold);border-color:rgba(184,150,90,.4);transform:translateY(-2px);}
-.admin-trigger{position:fixed;bottom:1.5rem;right:1.5rem;z-index:90;background:rgba(44,38,32,.75);color:rgba(212,200,176,.5);border:1px solid rgba(212,200,176,.15);padding:.5rem 1rem;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;border-radius:2px;}
+.admin-trigger{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:rgba(44,38,32,.75);color:rgba(212,200,176,.5);border:1px solid rgba(212,200,176,.15);padding:.5rem 1rem;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;border-radius:2px;}
 .admin-trigger:hover{color:var(--gold);border-color:rgba(184,150,90,.4);}
 .pd-close{position:absolute;top:1rem;right:1rem;width:34px;height:34px;background:rgba(44,38,32,.08);border:none;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;}
 .pd-close:hover{background:rgba(44,38,32,.18);}
@@ -297,7 +298,7 @@ footer{background:#1a1612;color:var(--stone);text-align:center;padding:2rem;font
 .admin-trigger:hover{color:var(--gold);border-color:var(--gold);}
 
 /* Login */
-#admin-login{display:none;position:fixed;inset:0;z-index:2000;background:var(--dark);align-items:center;justify-content:center;}
+#admin-login{display:none;position:fixed;inset:0;z-index:9998;background:rgba(20,15,10,.92);backdrop-filter:blur(8px);}
 #admin-login.open{display:flex;align-items:center;justify-content:center;}
 .login-box{width:380px;max-width:95vw;border:1px solid rgba(212,200,176,.15);padding:3rem;}
 .login-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--white);text-align:center;letter-spacing:.2em;margin-bottom:.3rem;}
@@ -1260,7 +1261,7 @@ html { scroll-behavior: smooth; }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#d0b9beb6bf90a0b5a2b4b5bbbfbcb1a9feb3bfbd"><span class="__cf_email__" data-cfemail="f59c9b939ab585908791909e9a99948cdb969a98">[email&#160;protected]</span></a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -1284,7 +1285,7 @@ html { scroll-behavior: smooth; }
 
 
 <!-- ADMIN LOGIN MODAL -->
-<div id="admin-login" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.85);z-index:9998;backdrop-filter:blur(8px);">
+<div id="admin-login">
   <div style="background:var(--dark);border:1px solid rgba(184,150,90,.2);padding:2.5rem;width:360px;max-width:90vw;">
     <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;margin-bottom:1.5rem;color:var(--gold-light);">Yönetici Girişi</h3>
     <div class="ap-fg"><label>Kullanıcı Adı</label><input type="text" id="lu" placeholder="admin" style="width:100%;padding:.7rem;background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--white);font-family:'Jost',sans-serif;"></div>
@@ -1887,7 +1888,7 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2489,9 +2490,10 @@ function renderOdalar(){
           ${o.genislik ? (()=>{
             const k=FON_KUMASLAR[o.fonKumasIdx||0];
             const adet=o.fonAdet||1;
+            const metraj=fonCarpan(parseFloat(o.fonEn));
             return adet>1
-              ? `${o.fonEn}cm ${k.label} &nbsp;|&nbsp; <strong>${adet} adet</strong> = <strong style="color:var(--gold-light)">${ff.toLocaleString('tr-TR')} TL</strong>`
-              : `${o.fonEn}cm ${k.label} = <strong style="color:var(--gold-light)">${ff.toLocaleString('tr-TR')} TL</strong>`;
+              ? `${o.fonEn}cm → ${metraj}m × ${k.fiyat} TL × <strong>${adet} adet</strong> = <strong style="color:var(--gold-light)">${ff.toLocaleString('tr-TR')} TL</strong>`
+              : `${o.fonEn}cm → ${metraj}m × ${k.fiyat} TL = <strong style="color:var(--gold-light)">${ff.toLocaleString('tr-TR')} TL</strong>`;
           })() : '<span style="color:var(--stone)">Oda genişliğini girin</span>'}
         </div>
       </div>`;
@@ -2516,11 +2518,11 @@ function fonCarpan(en){
   return 1;
 }
 function fonFiyat(o){
-  if(!o.genislik||!o.fonEn)return 0;
+  if(!o.fonEn)return 0;
   const k=FON_KUMASLAR[o.fonKumasIdx||0];
-  const carpan=fonCarpan(parseFloat(o.fonEn));
+  const metraj=fonCarpan(parseFloat(o.fonEn)); // 60cm→1.7m, 90cm→2.5m, 100cm→2.7m
   const adet=o.fonAdet||1;
-  return Math.round(o.genislik*k.fiyat*carpan*adet);
+  return Math.round(metraj*k.fiyat*adet);
 }
 function hesapla(){
   const tot=odalar.map(o=>({id:o.id,tul:odaFiyat(o),fon:fonFiyat(o),o}));
@@ -2538,9 +2540,9 @@ function hesapla(){
     }
     if(o.fon>0){
       const k=FON_KUMASLAR[o.o.fonKumasIdx||0];
-      const metre=Math.round((o.o.fonEn/100)*3*o.o.genislik*100)/100;
+      const metraj=fonCarpan(parseFloat(o.o.fonEn));
       const adet=o.o.fonAdet||1;
-      s+=`<div class="fiyat-satir"><span class="fiyat-satir-label">Oda ${o.id} Fon — ${o.o.fonEn}cm ${k.label}${adet>1?' × '+adet+' adet':''}</span><span class="fiyat-satir-val">${o.fon.toLocaleString('tr-TR')} TL</span></div>`;
+      s+=`<div class="fiyat-satir"><span class="fiyat-satir-label">Oda ${o.id} Fon — ${o.o.fonEn}cm → ${metraj}m × ${k.fiyat} TL${adet>1?' × '+adet+' adet':''}</span><span class="fiyat-satir-val">${o.fon.toLocaleString('tr-TR')} TL</span></div>`;
     }
   });
   if(kt>0)s+=`<hr class="fiyat-divider"><div class="fiyat-satir"><span class="fiyat-satir-label">🎁 Korniş — <span style='text-decoration:line-through;color:var(--stone);font-size:.75em;'>${(ku*KN*2).toLocaleString('tr-TR')} TL</span> <span style='color:var(--gold);font-size:.7rem;'>%50 İndirimli</span> (${ku}m × ${KN} TL)</span><span class="fiyat-satir-val">${kt.toLocaleString('tr-TR')} TL</span></div>`;
@@ -3890,6 +3892,4 @@ initApp();
       </div>
     </div>
     <div class="ap-fg">
-      <label>📄 İçerik (HTML destekler: &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;)</label>
-      <textarea id="bm-body" rows="10" placeholder="&lt;h3&gt;Başlık&lt;/h3&gt;&lt;p&gt;İçerik...&lt;/p&gt;" style="font-family:monospace;font-size:.8rem;"></textarea>
-    </d
+      <label>📄 İçerik 
