@@ -861,6 +861,14 @@ html { scroll-behavior: smooth; }
   font-size:.78rem;color:var(--stone);line-height:1.8;
   max-width:320px;
 }
+
+.fabric-price{
+  display:block;font-size:.68rem;color:var(--gold);
+  margin-top:.2rem;letter-spacing:.08em;
+}
+.fabric-item:hover .fabric-swatch{
+  transform:scale(1.03);box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1082,24 +1090,7 @@ html { scroll-behavior: smooth; }
         <p class="fs-sub-dark reveal-up delay-2">Yüzlerce çeşit arasından önceden elediğimiz,<br>mekanınıza uyacağına inandığımız modelleri<br>evinizde deneyimliyorsunuz.</p>
       </div>
       <div class="split-visual reveal-right delay-1">
-        <div class="fabric-showcase">
-          <div class="fabric-item">
-            <div class="fabric-swatch" style="background:linear-gradient(135deg,#f8f4ee,#e8ddd0)"></div>
-            <span>Krem Tül</span>
-          </div>
-          <div class="fabric-item">
-            <div class="fabric-swatch" style="background:linear-gradient(135deg,#e8e0d8,#d4c9b0)"></div>
-            <span>İpek Tül</span>
-          </div>
-          <div class="fabric-item">
-            <div class="fabric-swatch" style="background:linear-gradient(135deg,#f0ece6,#ddd4c4)"></div>
-            <span>Nakışlı Tül</span>
-          </div>
-          <div class="fabric-item">
-            <div class="fabric-swatch" style="background:linear-gradient(135deg,#e0ddd8,#c8c0b0)"></div>
-            <span>Simli Tül</span>
-          </div>
-        </div>
+        <div class="fabric-showcase" id="step3-tul-showcase"></div>
       </div>
     </div>
   </section>
@@ -2261,6 +2252,29 @@ function switchTab(tab,btn){
   selTab=tab;
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');renderProducts();
+}
+
+function renderStep3Tuller(){
+  const showcase=el('step3-tul-showcase');
+  if(!showcase)return;
+  const items=T.length>0?T.slice(0,4):[];
+  if(items.length===0){
+    showcase.innerHTML=`
+      <div class="fabric-item"><div class="fabric-swatch" style="background:linear-gradient(135deg,#f8f4ee,#e8ddd0)"></div><span>Krem Tül</span></div>
+      <div class="fabric-item"><div class="fabric-swatch" style="background:linear-gradient(135deg,#e8e0d8,#d4c9b0)"></div><span>İpek Tül</span></div>
+      <div class="fabric-item"><div class="fabric-swatch" style="background:linear-gradient(135deg,#f0ece6,#ddd4c4)"></div><span>Nakışlı Tül</span></div>
+      <div class="fabric-item"><div class="fabric-swatch" style="background:linear-gradient(135deg,#e0ddd8,#c8c0b0)"></div><span>Simli Tül</span></div>`;
+    return;
+  }
+  showcase.innerHTML=items.map(t=>{
+    const img=t.imgs&&t.imgs[0]?t.imgs[0]:'';
+    const price=t.fiyat?`<span class="fabric-price">${t.fiyat} TL/m</span>`:'';
+    return `<div class="fabric-item" onclick="openProductDetail('tul',${T.indexOf(t)})" style="cursor:pointer;">
+      <div class="fabric-swatch" style="${img?`background:url('${img}') center/cover`:'background:linear-gradient(135deg,#f0ece6,#ddd4c4)'}"></div>
+      <span>${t.name}</span>
+      ${price}
+    </div>`;
+  }).join('');
 }
 function renderProducts(){
   let items=[];
@@ -3910,7 +3924,7 @@ function injectPixels(){
 
 // ===== INIT =====
 async function initApp(){
-  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();addOda();injectPixels();
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();addOda();injectPixels();
   try{
     const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
       sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
@@ -3937,7 +3951,7 @@ async function initApp(){
       if(d.P){P=d.P;lsSet(LS.P,P);}
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
-    window.__pixelsInjected=false;applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderGallery();renderBlog();injectPixels();
+    window.__pixelsInjected=false;applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
     console.log('✓ Supabase verisi yüklendi');
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
 }
