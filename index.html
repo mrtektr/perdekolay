@@ -315,17 +315,17 @@ footer{background:#1a1612;color:var(--stone);text-align:center;padding:2rem;font
 /* Panel */
 #admin-panel{display:none;position:fixed;inset:0;z-index:1500;}
 #admin-panel.open{display:flex;}
-.ap-sb{width:240px;min-height:100vh;background:#1a1612;border-right:1px solid rgba(212,200,176,.08);display:flex;flex-direction:column;flex-shrink:0;}
-.ap-brand{padding:1.8rem 1.5rem 1.2rem;border-bottom:1px solid rgba(212,200,176,.08);}
-.ap-brand-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--white);letter-spacing:.15em;}
-.ap-brand-logo span{color:var(--gold);}
-.ap-brand-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-top:.2rem;}
-.ap-nav{flex:1;padding:1rem 0;overflow-y:auto;}
-.ap-nav-section{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(158,144,128,.4);padding:.8rem 1.5rem .3rem;margin-top:.5rem;}
-.ap-ni{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.5rem;font-size:.78rem;font-weight:500;color:rgba(212,200,176,.45);cursor:pointer;transition:all .2s;border-left:2px solid transparent;}
-.ap-ni:hover{color:var(--sand);background:rgba(255,255,255,.03);}
-.ap-ni.active{color:var(--gold-light);border-left-color:var(--gold);background:rgba(184,150,90,.07);}
-.ap-ni-icon{font-size:.95rem;min-width:18px;text-align:center;}
+/* ap-sb removed */
+
+
+
+
+
+
+
+
+
+
 .ap-sb-footer{padding:1.2rem 1.5rem;border-top:1px solid rgba(212,200,176,.08);}
 .ap-back-btn{width:100%;background:transparent;border:1px solid rgba(212,200,176,.2);color:var(--stone);padding:.6rem;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
 .ap-back-btn:hover{border-color:var(--gold);color:var(--gold-light);}
@@ -1073,6 +1073,127 @@ html { scroll-behavior: smooth; }
   .product-visual{aspect-ratio:3/4;height:auto;}
   .product-info{padding:.7rem .8rem 1rem;}
 }
+
+/* ===== YENİ ADMİN PANEL ===== */
+#admin-panel{
+  display:none;position:fixed;inset:0;z-index:1500;
+  background:#0f0d0b;flex-direction:column;
+  font-family:'Jost',sans-serif;
+}
+
+/* Header */
+.aph{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.5rem;
+  background:#1a1612;
+  border-bottom:1px solid rgba(212,200,176,.1);
+  flex-shrink:0;gap:1rem;flex-wrap:wrap;
+  min-height:56px;
+}
+.aph-left{display:flex;align-items:center;gap:.8rem;flex-shrink:0;}
+.aph-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;
+  color:var(--white);letter-spacing:.2em;
+}
+.aph-logo span{color:var(--gold);}
+.aph-title{
+  font-size:.75rem;color:var(--stone);letter-spacing:.08em;
+  display:none;
+}
+@media(min-width:600px){.aph-title{display:block;}}
+
+/* Tab butonları */
+.aph-tabs{display:flex;gap:.3rem;flex-wrap:wrap;}
+.aph-tab{
+  padding:.45rem 1rem;
+  background:transparent;
+  border:1px solid rgba(212,200,176,.12);
+  color:rgba(212,200,176,.55);
+  cursor:pointer;font-size:.72rem;letter-spacing:.08em;
+  transition:all .2s;border-radius:2px;
+  font-family:'Jost',sans-serif;
+}
+.aph-tab:hover{color:var(--gold-light);border-color:rgba(184,150,90,.3);}
+.aph-tab.active{
+  background:rgba(184,150,90,.15);
+  color:var(--gold-light);
+  border-color:rgba(184,150,90,.4);
+}
+
+/* Sağ butonlar */
+.aph-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.aph-back{
+  display:none;align-items:center;gap:.4rem;
+  padding:.45rem 1rem;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(212,200,176,.15);
+  color:rgba(212,200,176,.7);
+  cursor:pointer;font-size:.72rem;font-family:'Jost',sans-serif;
+  transition:all .2s;
+}
+.aph-back:hover{color:var(--gold-light);}
+.aph-close{
+  padding:.45rem 1rem;
+  background:rgba(220,60,60,.15);
+  border:1px solid rgba(220,60,60,.25);
+  color:rgba(220,120,120,.8);
+  cursor:pointer;font-size:.72rem;font-family:'Jost',sans-serif;
+  transition:all .2s;
+}
+.aph-close:hover{background:rgba(220,60,60,.25);color:#f08080;}
+
+/* Ana içerik alanı */
+.ap-main{
+  flex:1;overflow-y:auto;
+  background:#141210;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Grup menü grid */
+.apg{padding:2rem 1.5rem;}
+.apg-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:1rem;
+  max-width:800px;
+}
+.apg-card{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.8rem;padding:1.5rem 1rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(212,200,176,.1);
+  cursor:pointer;transition:all .2s;
+  font-family:'Jost',sans-serif;color:var(--sand);
+}
+.apg-card:hover{
+  background:rgba(184,150,90,.1);
+  border-color:rgba(184,150,90,.3);
+  transform:translateY(-2px);
+}
+.apg-card span{font-size:2rem;line-height:1;}
+.apg-card b{font-size:.75rem;font-weight:400;letter-spacing:.08em;text-align:center;}
+
+/* Sayfa içeriği */
+.ap-page{display:none;padding:1.5rem;}
+.ap-page.active{display:block;}
+.ap-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.5rem;padding-bottom:1rem;
+  border-bottom:1px solid rgba(212,200,176,.08);
+}
+.ap-page-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--sand);}
+.ap-page-sub{font-size:.72rem;color:var(--stone);margin-top:.2rem;}
+
+/* Mobil */
+@media(max-width:500px){
+  .aph{padding:.6rem 1rem;}
+  .aph-tabs{gap:.2rem;}
+  .aph-tab{padding:.35rem .7rem;font-size:.68rem;}
+  .apg-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.7rem;}
+  .apg-card{padding:1.2rem .8rem;}
+  .apg-card span{font-size:1.6rem;}
+  .ap-page{padding:1rem;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1456,7 +1577,7 @@ html { scroll-behavior: smooth; }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#d0b9beb6bf90a0b5a2b4b5bbbfbcb1a9feb3bfbd"><span id="ct-email-display">info@perdekolay.com</span></a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#d0b9beb6bf90a0b5a2b4b5bbbfbcb1a9feb3bfbd"><span id="ct-email-display"><span class="__cf_email__" data-cfemail="41282f272e0131243325242a2e2d20386f222e2c">[email&#160;protected]</span></span></a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -1550,6 +1671,39 @@ html { scroll-behavior: smooth; }
     <div class="ap-sb-footer"><button class="ap-back-btn" onclick="closeAdminPanel()">← Siteye Dön</button></div>
   </aside>
   <main class="ap-main">
+    <!-- GRUP MENÜSÜ -->
+    <div class="apg" id="apg-urunler">
+      <div class="apg-grid">
+        <button class="apg-card" onclick="apPage('dashboard',this)"><span>📊</span><b>Genel Bakış</b></button>
+        <button class="apg-card" onclick="apPage('tuller',this)"><span>🌿</span><b>Tüller</b></button>
+        <button class="apg-card" onclick="apPage('kumaslar',this)"><span>🧵</span><b>Kumaşlar</b></button>
+        <button class="apg-card" onclick="apPage('fiyatlar',this)"><span>💰</span><b>Fiyat Ayarları</b></button>
+        <button class="apg-card" onclick="apPage('fonkumas',this)"><span>🪟</span><b>Fon Kumaşları</b></button>
+      </div>
+    </div>
+    <div class="apg" id="apg-site" style="display:none;">
+      <div class="apg-grid">
+        <button class="apg-card" onclick="apPage('anasayfa',this)"><span>🏠</span><b>Ana Sayfa</b></button>
+        <button class="apg-card" onclick="apPage('adimlar',this)"><span>🔢</span><b>İş Akışı</b></button>
+        <button class="apg-card" onclick="apPage('bolumler',this)"><span>📝</span><b>Bölüm Başlıkları</b></button>
+        <button class="apg-card" onclick="apPage('galeri',this)"><span>🖼️</span><b>Galeri</b></button>
+        <button class="apg-card" onclick="apPage('blog',this)"><span>✍️</span><b>Blog Yazıları</b></button>
+        <button class="apg-card" onclick="apPage('iletisim',this)"><span>📞</span><b>İletişim</b></button>
+      </div>
+    </div>
+    <div class="apg" id="apg-tasarim" style="display:none;">
+      <div class="apg-grid">
+        <button class="apg-card" onclick="apPage('tema',this)"><span>🎨</span><b>Tema & Renkler</b></button>
+        <button class="apg-card" onclick="apPage('metin',this)"><span>🔤</span><b>Buton & Menü</b></button>
+        <button class="apg-card" onclick="apPage('sosyal',this)"><span>📱</span><b>Sosyal Medya</b></button>
+      </div>
+    </div>
+    <div class="apg" id="apg-sistem" style="display:none;">
+      <div class="apg-grid">
+        <button class="apg-card" onclick="apPage('pixels',this)"><span>📊</span><b>Piksel & Analiz</b></button>
+        <button class="apg-card" onclick="apPage('whatsapp',this)"><span>💬</span><b>WhatsApp</b></button>
+      </div>
+    </div>
 
     <!-- Dashboard -->
     <div class="ap-page active" id="ap-dashboard">
@@ -2073,7 +2227,7 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script><script>
+</script></script></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2824,14 +2978,59 @@ async function doLogin(){
   if(toHex(uh)==='8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'&&toHex(ph)==='8e70e131ae396d27fd27f25db50fcea339cd86839aced6a17182c3b115bab34b'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
-function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;position:fixed;inset:0;z-index:1500;';apPage('dashboard',document.querySelector('.ap-ni'));}
+function openAdminPanel(){
+  const ap=el('admin-panel');
+  if(ap)ap.style.cssText='display:flex;flex-direction:column;position:fixed;inset:0;z-index:1500;background:#0f0d0b;';
+  apGroup('urunler', document.querySelector('.aph-tab'));
+}
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
 
-function apPage(page,e){
+function apGroup(group, btn){
+  // Tab aktif
+  document.querySelectorAll('.aph-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  // Grup menülerini göster/gizle
+  ['urunler','site','tasarim','sistem'].forEach(g=>{
+    const el2=el('apg-'+g);
+    if(el2)el2.style.display=g===group?'block':'none';
+  });
+  // Tüm sayfaları gizle
   document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.ap-ni').forEach(i=>i.classList.remove('active'));
-  el('ap-'+page).classList.add('active');if(e)e.classList.add('active');
+  // Geri butonunu gizle, başlığı sıfırla
+  const back=el('aph-back');if(back)back.style.display='none';
+  const title=el('aph-title');if(title)title.textContent='Yönetim Paneli';
+}
+
+function apPage(page,e){
+  // Tüm sayfaları ve grup menülerini gizle
+  document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
+  ['urunler','site','tasarim','sistem'].forEach(g=>{
+    const el2=el('apg-'+g);if(el2)el2.style.display='none';
+  });
+  // Sayfayı göster
+  const pageEl=el('ap-'+page);
+  if(pageEl)pageEl.classList.add('active');
+  // Başlık ve geri butonu
+  const labels={
+    dashboard:'📊 Genel Bakış',tuller:'🌿 Tüller',kumaslar:'🧵 Kumaşlar',
+    fiyatlar:'💰 Fiyat Ayarları',fonkumas:'🪟 Fon Kumaşları',
+    anasayfa:'🏠 Ana Sayfa',adimlar:'🔢 İş Akışı Adımları',
+    bolumler:'📝 Bölüm Başlıkları',galeri:'🖼️ Galeri',blog:'✍️ Blog',
+    iletisim:'📞 İletişim',tema:'🎨 Tema & Renkler',metin:'🔤 Buton & Menü',
+    pixels:'📊 Piksel & Analiz',sosyal:'📱 Sosyal Medya',whatsapp:'💬 WhatsApp'
+  };
+  const title=el('aph-title');if(title)title.textContent=labels[page]||page;
+  const back=el('aph-back');if(back)back.style.display='flex';
   apRefresh(page);
+}
+
+function apBack(){
+  // Aktif gruba dön
+  const activeTab=document.querySelector('.aph-tab.active');
+  const group=activeTab?activeTab.textContent.includes('Ürün')?'urunler':
+    activeTab.textContent.includes('Site')?'site':
+    activeTab.textContent.includes('Tasarım')?'tasarim':'sistem':'urunler';
+  apGroup(group, activeTab);
 }
 
 function updateDashboard(){
@@ -3357,11 +3556,3 @@ async function initApp(){
     window.__pixelsInjected=false;
     applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
     injectProductSchema();injectBlogSchema();
-    console.log('✓ Supabase verisi yüklendi');
-  }catch(e){console.warn('Supabase baglanti hatasi:',e);}
-}
-
-document.addEventListener('DOMContentLoaded',()=>{initApp();});
-</script>
-</body>
-</html>
