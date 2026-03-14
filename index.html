@@ -1159,6 +1159,21 @@ html { scroll-behavior: smooth; }
   .apg-card span{font-size:1.6rem;}
   .ap-page{padding:1rem;}
 }
+
+/* ===== TEMA KARTLARı ===== */
+.theme-presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-top:.5rem;}
+.tp-card{
+  padding:1rem;cursor:pointer;
+  border:2px solid rgba(212,200,176,.1);
+  background:rgba(255,255,255,.03);
+  transition:all .2s;position:relative;
+}
+.tp-card:hover{border-color:rgba(184,150,90,.4);background:rgba(184,150,90,.07);}
+.tp-active{position:absolute;top:.5rem;right:.5rem;font-size:.65rem;color:var(--gold);letter-spacing:.08em;}
+.tp-card.tp-active{border-color:var(--gold);background:rgba(184,150,90,.1);}
+.tp-swatches{display:flex;gap:.3rem;margin-bottom:.6rem;}
+.tp-sw{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.1);}
+.tp-name{font-size:.72rem;color:var(--sand);letter-spacing:.06em;}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -2265,9 +2280,7 @@ function scrollToSection(id) {
 }
 
 // Init on load
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(initScrollExperience, 100);
-});
+
 
 
 // ===== STORAGE =====
@@ -3243,12 +3256,50 @@ function saveIletisim(){
 }
 
 // ===== TEMA =====
+// Hazır tema paletleri
+const TEMA_PALETLERI=[
+  {id:'klasik', ad:'Klasik Kum',       gold:'#b8965a',dark:'#2c2620',sand:'#f5f0e8',linen:'#ede7d8',silk:'#d4c9b0',stone:'#9e9080',white:'#fdfcf9'},
+  {id:'modern', ad:'Modern Antrasit',  gold:'#c9a96e',dark:'#1a1a2e',sand:'#f0eeea',linen:'#e4e0d8',silk:'#c8c0b4',stone:'#8a8278',white:'#fafaf8'},
+  {id:'sage',   ad:'Sage Yeşil',       gold:'#8a9e6e',dark:'#2a2e24',sand:'#f2f5ee',linen:'#e5ebe0',silk:'#c4cfbc',stone:'#7a8870',white:'#f8faf6'},
+  {id:'rosé',   ad:'Pembe Rosé',       gold:'#c4856a',dark:'#2e201e',sand:'#faf0ee',linen:'#f0e4e0',silk:'#ddc4bc',stone:'#9e8078',white:'#fdfaf9'},
+  {id:'navy',   ad:'Navy Mavi',        gold:'#c0a060',dark:'#1c2536',sand:'#eef0f4',linen:'#dde0e8',silk:'#b8bece',stone:'#7880a0',white:'#f8f9fc'},
+  {id:'noir',   ad:'Siyah & Altın',    gold:'#d4a830',dark:'#0a0a0a',sand:'#f8f4e8',linen:'#ede8d4',silk:'#c8c0a0',stone:'#888070',white:'#fdfcf5'},
+];
+
 function fillTema(){
   const f=(id,val)=>{const e=el(id);if(e)e.value=val||'';};
   f('c-gold',TH.gold||'#b8965a');f('c-dark',TH.dark||'#2c2620');
   f('c-sand',TH.sand||'#f5f0e8');f('c-linen',TH.linen||'#ede7d8');
   f('c-silk',TH.silk||'#d4c9b0');f('c-stone',TH.stone||'#9e9080');
   f('c-white',TH.white||'#fdfcf9');
+  // Tema kartlarını render et
+  const tp=el('theme-presets');
+  if(!tp)return;
+  tp.innerHTML=TEMA_PALETLERI.map(t=>{
+    const aktif=TH.gold===t.gold&&TH.dark===t.dark;
+    return '<div class="tp-card'+(aktif?' tp-active':'')+'" data-tid="'+t.id+'" onclick="temaSec(this.dataset.tid)">'+
+      '<div class="tp-swatches">'+
+        '<div class="tp-sw" style="background:'+t.dark+'"></div>'+
+        '<div class="tp-sw" style="background:'+t.sand+'"></div>'+
+        '<div class="tp-sw" style="background:'+t.gold+'"></div>'+
+        '<div class="tp-sw" style="background:'+t.silk+'"></div>'+
+      '</div>'+
+      '<div class="tp-name">'+t.ad+'</div>'+
+      (aktif?'<div class="tp-aktif">✓ Aktif</div>':'')+
+    '</div>';
+  }).join('');
+}
+
+function temaSec(id){
+  const t=TEMA_PALETLERI.find(p=>p.id===id);
+  if(!t)return;
+  TH={...TH,...t};
+  delete TH.id; delete TH.ad;
+  lsSet(LS.TH,TH);
+  applyTheme();
+  fillTema();
+  sbSaveAyarlar();
+  apToast(t.ad+' teması uygulandı ✓');
 }
 function saveTema(){
   TH.gold=el('c-gold')?.value||TH.gold;
@@ -3494,7 +3545,7 @@ function injectPixels(){
 }
 
 async function initApp(){
-  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();renderOdalar();injectPixels();
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
   try{
     const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
       sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
@@ -3520,12 +3571,17 @@ async function initApp(){
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
     window.__pixelsInjected=false;
-    applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();renderOdalar();injectPixels();
+    applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
     injectProductSchema();injectBlogSchema();    console.log('✓ Supabase verisi yüklendi');
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
 }
 
-document.addEventListener('DOMContentLoaded',()=>{initApp();});
+document.addEventListener('DOMContentLoaded',()=>{
+  initApp();
+  setTimeout(initScrollExperience, 100);
+  // Hesaplayıcı oda-list DOM'da hazır olduktan sonra render et
+  setTimeout(()=>{ const ol=el('oda-list'); if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];} renderOdalar(); }, 300);
+});
 </script>
 </body>
 </html>
