@@ -72,9 +72,22 @@ nav a:hover{color:var(--dark);}
 .hero h1 em{font-style:italic;color:var(--accent);}
 .hero-sub{margin-top:1.8rem;font-size:.9rem;font-weight:300;color:rgba(240,235,225,.8);line-height:1.8;max-width:440px;opacity:0;animation:fadeUp .8s .6s forwards;}
 .hero-actions{margin-top:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .8s forwards;}
-.btn-gold{background:var(--accent);color:white;border:none;padding:.9rem 2.4rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.btn-gold{background:var(--accent);color:var(--dark);border:none;padding:.9rem 2.4rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
 .btn-gold:hover{background:var(--dark);}
-.btn-ghost{background:transparent;color:var(--dark);border:1px solid var(--silk);padding:.9rem 2.4rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s;}
+.btn-ghost{
+  background:transparent;
+  color:rgba(245,240,232,.9);
+  border:1px solid rgba(245,240,232,.45);
+  padding:.9rem 2.4rem;
+  font-family:'Jost',sans-serif;font-size:.8rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  transition:all .25s;
+}
+.btn-ghost:hover{
+  background:rgba(245,240,232,.1);
+  border-color:rgba(245,240,232,.8);
+  color:#fff;
+}
 .btn-ghost:hover{border-color:var(--dark);}
 .hero-video-wrap{position:absolute;inset:0;width:100%;height:100%;background:var(--dark);opacity:0;animation:fadeIn 1s 0.3s forwards;overflow:hidden;z-index:0;}
 .hero-video-wrap iframe{position:absolute;top:50%;left:50%;width:177.78vh;min-width:100%;height:56.25vw;min-height:100%;transform:translate(-50%,-50%);border:none;pointer-events:none;}
@@ -1174,6 +1187,57 @@ html { scroll-behavior: smooth; }
 .tp-swatches{display:flex;gap:.3rem;margin-bottom:.6rem;}
 .tp-sw{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.1);}
 .tp-name{font-size:.72rem;color:var(--sand);letter-spacing:.06em;}
+
+/* ===== HERO BADGES ===== */
+.hero-sub-badges{
+  display:flex;flex-wrap:wrap;gap:.6rem;
+  margin-top:1.2rem;
+}
+.hero-badge{
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.35rem .9rem;
+  border:1px solid rgba(184,150,90,.45);
+  color:var(--gold-light);
+  background:rgba(184,150,90,.08);
+}
+@media(max-width:580px){
+  .hero-sub-badges{justify-content:center;}
+}
+
+/* ===== HERO SİSTEM ADIM VURGUSU ===== */
+.hero-steps{
+  display:flex;align-items:center;gap:.6rem;
+  margin:1.8rem 0 2rem;
+  flex-wrap:wrap;justify-content:center;
+}
+.hero-step{
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  min-width:80px;
+}
+.hero-step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;font-weight:300;
+  color:var(--gold-light);line-height:1;
+}
+.hero-step-line{
+  width:32px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(184,150,90,.6),transparent);
+}
+.hero-step-text{
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,235,225,.65);text-align:center;line-height:1.6;
+}
+.hero-step-arrow{
+  color:rgba(184,150,90,.4);font-size:.9rem;
+  margin-bottom:1.2rem;flex-shrink:0;
+}
+@media(max-width:580px){
+  .hero-steps{gap:.4rem;}
+  .hero-step{min-width:65px;}
+  .hero-step-num{font-size:1.3rem;}
+  .hero-step-text{font-size:.58rem;}
+  .hero-step-arrow{font-size:.75rem;margin-bottom:.8rem;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1324,9 +1388,37 @@ html { scroll-behavior: smooth; }
     <div class="fs-bg fs-bg-dark-pattern"></div>
     <div class="fs-overlay fs-overlay-dark" style="background:rgba(20,15,10,.45);"></div>
     <div class="fs-content fs-content-center">
-      <div class="fs-eyebrow reveal-up" id="hero-eyebrow">✦ Kadıköy · Perde & Kumaş Atölyesi</div>
-      <h1 class="fs-headline reveal-up delay-1" id="hero-title">Evinize<br><em>Zarafet</em><br>Getiriyoruz.</h1>
-      <p class="fs-sub reveal-up delay-2" id="hero-sub">Siz seçin, biz dikelim, biz takalım.</p>
+      <div class="fs-eyebrow reveal-up" id="hero-eyebrow">✦ Özel Seçim Kumaş & Tül Koleksiyonu</div>
+      <h1 class="fs-headline reveal-up delay-1" id="hero-title">Mekanınıza Konforla<br><em>Zarafet</em> Katın.</h1>
+      <p class="fs-sub reveal-up delay-2" id="hero-sub">Onlarca katalogda kaybolmayın. En güzel tüllerle evinize geliyoruz — kendi ışığınızda, mobilyalarınızla uyum içinde hayalinizdeki perdeyi birlikte seçiyoruz.</p>
+
+      <!-- SİSTEM ADIM VURGUSU -->
+      <div class="hero-steps reveal-up delay-2">
+        <div class="hero-step">
+          <div class="hero-step-num">01</div>
+          <div class="hero-step-line"></div>
+          <div class="hero-step-text">Evinize<br>Geliyoruz</div>
+        </div>
+        <div class="hero-step-arrow">→</div>
+        <div class="hero-step">
+          <div class="hero-step-num">02</div>
+          <div class="hero-step-line"></div>
+          <div class="hero-step-text">Tülleri<br>Deniyorsunuz</div>
+        </div>
+        <div class="hero-step-arrow">→</div>
+        <div class="hero-step">
+          <div class="hero-step-num">03</div>
+          <div class="hero-step-line"></div>
+          <div class="hero-step-text">Özel<br>Dikiyoruz</div>
+        </div>
+        <div class="hero-step-arrow">→</div>
+        <div class="hero-step">
+          <div class="hero-step-num">04</div>
+          <div class="hero-step-line"></div>
+          <div class="hero-step-text">Ücretsiz<br>Takıyoruz</div>
+        </div>
+      </div>
+
       <div class="fs-actions reveal-up delay-3">
         <button class="btn-gold" onclick="scrollToSection('story-step1')">Nasıl Çalışıyoruz</button>
         <button class="btn-ghost" onclick="scrollToSection('products-section')">Ürünleri Gör</button>
