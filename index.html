@@ -2392,7 +2392,8 @@ let TUL_OPT=T.map(t=>({label:t.name,fiyat:t.fiyat}));
 const BUZGU=[{label:"1'e 3 (Standart)",oran:3},{label:"1'e 2.5 (Hafif)",oran:2.5}];
 const FON_ENLER=[{cm:60},{cm:90},{cm:100}];
 let FON_KUMASLAR=[{label:'Keten',fiyat:600},{label:'Soft',fiyat:800},{label:'Kadife',fiyat:1000}];
-let odalar=[],odaSayac=0,selTab='tumu';
+let odaSayac=1,selTab='tumu';
+let odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];
 
 // ===== HELPERS =====
 function sTo(sel){document.querySelector(sel)?.scrollIntoView({behavior:'smooth'});}
@@ -3493,7 +3494,7 @@ function injectPixels(){
 }
 
 async function initApp(){
-  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();addOda();injectPixels();
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();renderOdalar();injectPixels();
   try{
     const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
       sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
@@ -3519,7 +3520,7 @@ async function initApp(){
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
     window.__pixelsInjected=false;
-    applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
+    applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();renderOdalar();injectPixels();
     injectProductSchema();injectBlogSchema();    console.log('✓ Supabase verisi yüklendi');
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
 }
