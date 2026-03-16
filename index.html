@@ -2537,7 +2537,13 @@ function applyTheme(){
 }
 
 function applySettings(){
-  // Hero
+  // Hero — eski değerleri otomatik güncelle
+  const _oldTitles=['Evinize<br><em>Zarafet</em><br>Getiriyoruz.','Mekanınıza Konforla<br><em>Zarafet</em> Katın.'];
+  const _oldSubs=['Siz seçin, biz dikelim, biz takalım.','Onlarca katalogda kaybolmayın. En güzel tüllerle evinize geliyoruz — kendi ışığınızda, mobilyalarınızla uyum içinde hayalinizdeki perdeyi birlikte seçiyoruz.'];
+  const _oldEyebrows=['✦ Kadıköy · Perde & Kumaş Atölyesi','✦ Özel Seçim Kumaş & Tül Koleksiyonu'];
+  if(_oldTitles.includes(S.heroTitle))S.heroTitle=DS.heroTitle;
+  if(_oldSubs.includes(S.heroSub))S.heroSub=DS.heroSub;
+  if(_oldEyebrows.includes(S.heroEyebrow))S.heroEyebrow=DS.heroEyebrow;
   el('hero-eyebrow').textContent=S.heroEyebrow;
   el('hero-title').innerHTML=S.heroTitle;
   el('hero-sub').textContent=S.heroSub;
@@ -2663,9 +2669,8 @@ function applyTexts(){
   const cb1=el('ct-btn1');if(cb1)cb1.textContent=TX.ctBtn1||'💬 WhatsApp ile Yaz';
   const cb2=el('ct-btn2');if(cb2)cb2.textContent=TX.ctBtn2||'📅 Randevu Al';
   // Header logo
-  const hl=document.querySelector('.header-logo');
-  if(hl)hl.textContent=S.logo||'PERLA';
-  const hl=el('header-logo-el');if(hl)hl.textContent=S.logo||'Perdekolay';
+  const hl=el('header-logo-el')||document.querySelector('.header-logo');
+  if(hl)hl.textContent=S.logo||'Perdekolay';
 }
 
 function el(id){return document.getElementById(id);}
