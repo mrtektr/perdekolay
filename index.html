@@ -8,7 +8,7 @@
 
 <!-- ===== PRIMARY SEO ===== -->
 <title>Perdekolay Kadıköy | Perde & Tül — Ölçülü Dikim, Ücretsiz Montaj İstanbul</title>
-<meta name="description" content="Kadıköy'de ölçülü perde, tül ve fon perde. Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A — Ücretsiz ölçü alma ve montaj. Kadife, keten, simli tül modelleri.">
+<meta name="description" content="Kadıköy'de perdeyi evinize getiriyoruz! Kendi ışığınızda seçin, 5 günde dikip ücretsiz takalım. Randevu: 0507 885 94 55 — Perdekolay">>
 <meta name="keywords" content="perde istanbul, tül perde, fon perde, ölçülü perde, perde montaj istanbul, perde kadıköy, kadife perde, keten perde, perde fiyatları, perdekolay">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Perdekolay">
@@ -1238,6 +1238,10 @@ html { scroll-behavior: smooth; }
   .hero-step-text{font-size:.58rem;}
   .hero-step-arrow{font-size:.75rem;margin-bottom:.8rem;}
 }
+
+
+  .contact-map iframe{height:180px;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1349,7 +1353,7 @@ html { scroll-behavior: smooth; }
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
   {"@type":"LocalBusiness","@id":"https://www.perdekolay.com/#business",
-   "name":"Perdekolay","telephone":"+905078859455","priceRange":"₺₺",
+   "name":"Perdekolay","telephone":"+905078859455","priceRange":"₺₺","hasMap":"https://maps.app.goo.gl/coFuVbbTGKWPoD6k9","sameAs":["https://maps.app.goo.gl/coFuVbbTGKWPoD6k9"],
    "address":{"@type":"PostalAddress","streetAddress":"Şemsettin Günaltay Caddesi, Kaptan Arif Sokak No:61/A","addressLocality":"Kadıköy","addressRegion":"İstanbul","addressCountry":"TR"},
    "geo":{"@type":"GeoCoordinates","latitude":40.9700999,"longitude":29.083736},
    "areaServed":[{"@type":"AdministrativeArea","name":"Kadıköy","containedIn":"İstanbul"}],
@@ -1370,7 +1374,7 @@ html { scroll-behavior: smooth; }
 
 <!-- HEADER -->
 <header id="site-header">
-  <div class="header-logo" id="header-logo-el">PERLA</div>
+  <div class="header-logo" id="header-logo-el">Perdekolay</div>
   <nav class="header-nav">
     <a class="nav-link" onclick="scrollToSection('story')">Hikayemiz</a>
     <a class="nav-link" onclick="scrollToSection('products-section')">Ürünler</a>
@@ -1388,9 +1392,9 @@ html { scroll-behavior: smooth; }
     <div class="fs-bg fs-bg-dark-pattern"></div>
     <div class="fs-overlay fs-overlay-dark" style="background:rgba(20,15,10,.45);"></div>
     <div class="fs-content fs-content-center">
-      <div class="fs-eyebrow reveal-up" id="hero-eyebrow">✦ Özel Seçim Kumaş & Tül Koleksiyonu</div>
-      <h1 class="fs-headline reveal-up delay-1" id="hero-title">Mekanınıza Konforla<br><em>Zarafet</em> Katın.</h1>
-      <p class="fs-sub reveal-up delay-2" id="hero-sub">Onlarca katalogda kaybolmayın. En güzel tüllerle evinize geliyoruz — kendi ışığınızda, mobilyalarınızla uyum içinde hayalinizdeki perdeyi birlikte seçiyoruz.</p>
+      <div class="fs-eyebrow reveal-up" id="hero-eyebrow">✦ Perdenizi Görerek, Evinizde Seçin</div>
+      <h1 class="fs-headline reveal-up delay-1" id="hero-title">Perdenizi <em>Evinizde</em><br>Deneyimleyin.</h1>
+      <p class="fs-sub reveal-up delay-2" id="hero-sub">Mağazada değil, <strong style="color:rgba(240,235,225,.95);font-weight:400;">kendi evinizde</strong> — kendi ışığınızda, mobilyalarınızın yanında görüp beğenip alın. Tahmin yok, hayal kırıklığı yok.</p>
 
       <!-- SİSTEM ADIM VURGUSU -->
       <div class="hero-steps reveal-up delay-2">
@@ -2421,7 +2425,7 @@ const DS={
   heroVideo:'',heroEyebrow:'✦ El Seçimi Kumaş & Tül Koleksiyonu',
   heroTitle:'Mekanınıza <em>Zarafet</em><br>Katın.',
   heroSub:"Özel ölçü kesimi, ithal kumaşlar ve Türkiye'nin en ince tülleri ile hayalinizdeki perdeyi birlikte tasarlayalım.",
-  logo:'PERLA',siteTitle:'PERLA — Perde & Kumaş',bgText:'PERLA',
+  logo:'Perdekolay',siteTitle:'PERLA — Perde & Kumaş',bgText:'PERLA',
   tel:'05078859455',wa:'05078859455',email:'info@perla.com.tr',adres:'Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A Kadıköy / İstanbul',
   waMsg:'Merhaba, perde hakkında bilgi almak istiyorum.',
   footer:'© 2025 PERLA Perde & Kumaş — Tüm hakları saklıdır.',
@@ -2661,6 +2665,7 @@ function applyTexts(){
   // Header logo
   const hl=document.querySelector('.header-logo');
   if(hl)hl.textContent=S.logo||'PERLA';
+  const hl=el('header-logo-el');if(hl)hl.textContent=S.logo||'Perdekolay';
 }
 
 function el(id){return document.getElementById(id);}
