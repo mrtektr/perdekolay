@@ -2715,6 +2715,62 @@ function renderStep3Tuller(){
     </div>`;
   }).join('');
 }
+
+// ===== PRODUCT & BLOG SCHEMA =====
+function injectProductSchema(){
+  const old=document.getElementById('schema-products');
+  if(old)old.remove();
+  const items=[...T.map(p=>({...p,cat:'Tül Perde'})),...K.map(p=>({...p,cat:'Kumaş Perde'}))];
+  if(!items.length)return;
+  const schema={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Ürün Koleksiyonu",
+    "itemListElement":items.map((p,i)=>({
+      "@type":"ListItem","position":i+1,
+      "item":{
+        "@type":"Product",
+        "name":p.name,
+        "description":p.desc||p.name,
+        "category":p.cat,
+        "brand":{"@type":"Brand","name":"Perdekolay"},
+        "offers":{"@type":"Offer","price":p.fiyat||0,"priceCurrency":"TRY","availability":"https://schema.org/InStock","areaServed":"Kadıköy"}
+      }
+    }))
+  };
+  const s=document.createElement('script');
+  s.type='application/ld+json';
+  s.id='schema-products';
+  s.textContent=JSON.stringify(schema);
+  document.head.appendChild(s);
+}
+
+function injectBlogSchema(){
+  const old=document.getElementById('schema-blog');
+  if(old)old.remove();
+  if(!BL.length)return;
+  const schema={
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "name":"Perdekolay Blog",
+    "itemListElement":BL.map((b,i)=>({
+      "@type":"ListItem","position":i+1,
+      "item":{
+        "@type":"BlogPosting",
+        "headline":b.title,
+        "description":b.summary||b.title,
+        "author":{"@type":"Organization","name":"Perdekolay"},
+        "publisher":{"@type":"Organization","name":"Perdekolay","url":"https://www.perdekolay.com"}
+      }
+    }))
+  };
+  const s=document.createElement('script');
+  s.type='application/ld+json';
+  s.id='schema-blog';
+  s.textContent=JSON.stringify(schema);
+  document.head.appendChild(s);
+}
+
 function renderProducts(){
   let items=[];
   if(selTab==='tumu'){
