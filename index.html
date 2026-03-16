@@ -1479,6 +1479,88 @@ body { color: var(--dark); background: var(--sand); }
 .sf input::placeholder, .sf textarea::placeholder { color: rgba(158,144,128,.5) !important; }
 .hint { color: var(--stone) !important; }
 .sc-save { background: var(--gold) !important; color: var(--dark) !important; font-weight:500; }
+
+/* ===== ADMİN PANELİ - ZORLA OKUNABILIR ===== */
+#admin-panel, #admin-panel * { box-sizing: border-box; }
+
+/* Header bar */
+.aph { background: #1e1a15 !important; border-bottom: 1px solid rgba(255,255,255,.1) !important; }
+.aph-logo { color: #f5f0e8 !important; font-size:1.2rem !important; }
+.aph-logo span { color: #d4b278 !important; }
+.aph-title { color: #c8bfb0 !important; font-size:.8rem !important; }
+
+/* Tab butonları */
+.aph-tab {
+  color: #d4c9b0 !important;
+  border-color: rgba(255,255,255,.2) !important;
+  background: rgba(255,255,255,.05) !important;
+  font-size: .78rem !important;
+  padding: .5rem 1.1rem !important;
+}
+.aph-tab:hover { color: #f0e8d8 !important; background: rgba(255,255,255,.1) !important; }
+.aph-tab.active { color: #f5f0e8 !important; background: rgba(184,150,90,.25) !important; border-color: #b8965a !important; }
+
+/* Geri / Kapat */
+.aph-back { color: #c8bfb0 !important; border-color: rgba(255,255,255,.2) !important; display:flex !important; }
+.aph-back:hover { color: #f5f0e8 !important; }
+.aph-close { color: #f08080 !important; border-color: rgba(255,100,100,.3) !important; background: rgba(200,60,60,.15) !important; }
+
+/* Ana içerik */
+.ap-main { background: #141210 !important; }
+
+/* Grup kartları */
+.apg { padding: 2rem 1.5rem !important; }
+.apg-card {
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: #e8e0d4 !important;
+  padding: 1.5rem 1rem !important;
+}
+.apg-card:hover { background: rgba(184,150,90,.18) !important; border-color: #b8965a !important; color: #f5f0e8 !important; }
+.apg-card span { font-size: 2rem !important; }
+.apg-card b { color: #e8e0d4 !important; font-size: .8rem !important; font-weight: 500 !important; }
+
+/* Sayfa başlık */
+.ap-topbar { border-bottom: 1px solid rgba(255,255,255,.08) !important; padding-bottom: 1rem !important; margin-bottom: 1.5rem !important; }
+.ap-page-title { color: #f5f0e8 !important; font-size: 1.5rem !important; }
+.ap-page-sub { color: #9e9080 !important; font-size: .75rem !important; }
+
+/* Kart ve form */
+.sc-card {
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+.sc-card h4 { color: #f0e8d8 !important; font-size: .9rem !important; margin-bottom: 1rem !important; font-weight: 500 !important; }
+.sc-card p, .sc-card .hint { color: #9e9080 !important; font-size: .78rem !important; }
+.sc-card label, .sf label { color: #c8bfb0 !important; font-size: .72rem !important; letter-spacing: .12em !important; text-transform: uppercase !important; display: block !important; margin-bottom: .4rem !important; }
+.sc-card input, .sc-card textarea, .sc-card select,
+.sf input, .sf textarea, .sf select {
+  color: #f0e8d8 !important;
+  background: rgba(255,255,255,.08) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  padding: .7rem .9rem !important;
+  width: 100% !important;
+  font-size: .88rem !important;
+}
+.sc-card input:focus, .sf input:focus { border-color: #b8965a !important; outline: none !important; }
+.sc-card input::placeholder, .sf input::placeholder { color: rgba(158,144,128,.5) !important; }
+.sc-save {
+  background: #b8965a !important;
+  color: #2c2620 !important;
+  border: none !important;
+  padding: .8rem 2rem !important;
+  font-size: .78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: .15em !important;
+  cursor: pointer !important;
+  margin-top: 1rem !important;
+}
+.sc-save:hover { background: #d4b278 !important; }
+
+/* Nav bölüm başlıkları */
+.ap-nav-section { color: #7a6e64 !important; font-size: .62rem !important; letter-spacing: .25em !important; text-transform: uppercase !important; padding: 1.2rem 1.5rem .4rem !important; }
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1890,7 +1972,7 @@ body { color: var(--dark); background: var(--sand); }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#553c3b333a1525302731303e3a39342c7b363a38"><span class="__cf_email__" data-cfemail="6a03040c052a1a0f180e0f0105060b1344090507">[email&#160;protected]</span></a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -2540,7 +2622,7 @@ body { color: var(--dark); background: var(--sand); }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script></script><script>
+</script></script></script></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -4017,13 +4099,4 @@ async function initApp(){
 document.addEventListener('DOMContentLoaded',()=>{
   initApp();
   setTimeout(initScrollExperience, 100);
-  // Hesaplayıcı oda-list DOM'da hazır ol
-  setTimeout(()=>{
-    const ol=el('oda-list');
-    if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];}
-    renderOdalar();
-  },300);
-});
-</script>
-</body>
-</html>
+  // Hesaplayıcı oda-list DOM'da 
