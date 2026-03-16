@@ -1972,7 +1972,7 @@ body { color: var(--dark); background: var(--sand); }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#553c3b333a1525302731303e3a39342c7b363a38"><span class="__cf_email__" data-cfemail="6a03040c052a1a0f180e0f0105060b1344090507">[email&#160;protected]</span></a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -2622,7 +2622,7 @@ body { color: var(--dark); background: var(--sand); }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+</script></script></script></script></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -4099,4 +4099,13 @@ async function initApp(){
 document.addEventListener('DOMContentLoaded',()=>{
   initApp();
   setTimeout(initScrollExperience, 100);
-  // Hesaplayıcı oda-list DOM'da 
+  // Hesaplayıcı oda-list DOM'da hazır olunca
+  setTimeout(()=>{
+    const ol=el('oda-list');
+    if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];}
+    renderOdalar();
+  },300);
+});
+</script>
+</body>
+</html>
