@@ -1242,6 +1242,84 @@ html { scroll-behavior: smooth; }
 
   .contact-map iframe{height:180px;}
 }
+
+/* ===== KONTRAST DÜZELTMELERİ ===== */
+
+/* Hesaplayıcı - koyu arka plan üzerinde */
+.fiyat-satir-label{color:var(--silk) !important;}
+.fiyat-satir-val{color:var(--sand) !important;font-weight:500;}
+.fiyat-toplam-label{color:var(--silk) !important;}
+.fiyat-toplam-val{color:var(--gold-light) !important;}
+.fiyat-empty{color:var(--stone);}
+.calc-kornish-title{color:var(--sand) !important;}
+.calc-kornish-badge{color:var(--gold-light) !important;}
+.calc-note{color:var(--stone);}
+
+/* İletişim bölümü - koyu arka plan */
+.ct-item strong{color:var(--silk);}
+.ct-item p, .ct-item a{color:var(--stone);}
+.ct-icon{color:var(--gold);}
+.contact-info .ct-item p a{color:var(--silk);text-decoration:none;}
+.contact-info .ct-item p a:hover{color:var(--gold-light);}
+
+/* Ürün kartı - açık arka plan */
+.product-name{color:var(--dark);}
+.product-price{color:var(--gold);}
+.product-overlay-btn{color:var(--white) !important;background:var(--dark) !important;}
+
+/* Section başlıkları - tutarlı */
+.section-tag{color:var(--gold);}
+.section-title{color:var(--dark);}
+.section-title em{color:var(--gold);}
+.section-sub{color:var(--stone);}
+
+/* Calc sol panel - koyu bg */
+.oda-label{color:var(--silk) !important;}
+.oda-title{color:var(--sand) !important;}
+.oda-price-label{color:var(--stone) !important;}
+.oda-price-val{color:var(--gold-light) !important;}
+
+/* Fon perde bilgi satırı */
+.fon-row .oda-label{color:var(--silk) !important;}
+
+/* Ürün detay modal - açık arka plan */
+.pd-name{color:var(--dark);}
+.pd-desc{color:var(--stone);}
+.pd-feat{color:var(--dark) !important;}
+
+/* Blog bölümü - açık arka plan */
+.blog-card-title{color:var(--dark);}
+.blog-card-excerpt{color:var(--stone);}
+
+/* Galeri */
+.gallery-label{color:var(--dark) !important;}
+
+/* Process items - koyu arka plan */
+.process-name{color:var(--sand) !important;}
+.process-desc{color:var(--silk) !important;}
+.process-num{color:var(--gold) !important;}
+
+/* Korniş kutusu */
+.kornish-price-display{color:var(--sand) !important;}
+
+/* ===== DİNAMİK TEMA KONTRAST ===== */
+/* Koyu arka plan (calc, contact, hero steps) */
+.calc-section .section-title{color:var(--on-dark);}
+.calc-section .section-sub{color:var(--on-dark-sub);}
+.contact-section .section-title{color:var(--on-dark);}
+.contact-section .section-tag{color:var(--gold);}
+.fiyat-satir-label{color:var(--on-dark-sub) !important;}
+.fiyat-satir-val{color:var(--on-dark) !important;}
+.fiyat-toplam-val{color:var(--gold-light) !important;}
+.oda-label{color:var(--on-dark-sub) !important;}
+.oda-title{color:var(--on-dark) !important;}
+
+/* Açık arka plan (products, gallery, blog) */
+.products-section .section-title{color:var(--on-light);}
+.gallery-section .section-title{color:var(--on-light);}
+.blog-section .section-title{color:var(--on-light);}
+.product-name{color:var(--on-light);}
+.blog-card-title{color:var(--on-light);}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1653,7 +1731,7 @@ html { scroll-behavior: smooth; }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#2c45424a436c5c495e48494743404d55024f4341"><span class="__cf_email__" data-cfemail="f69f989099b686938492939d999a978fd895999b">[email&#160;protected]</span></a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -2303,7 +2381,7 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script><script>
+</script></script></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2534,6 +2612,11 @@ function applyTheme(){
   r.setProperty('--dark',TH.dark);r.setProperty('--sand',TH.sand);
   r.setProperty('--linen',TH.linen);r.setProperty('--silk',TH.silk);
   r.setProperty('--stone',TH.stone);r.setProperty('--white',TH.white);
+  // Koyu section'lar için daima okunabilir renkler
+  r.setProperty('--on-dark', TH.sand);      // koyu arka plan üzerinde metin
+  r.setProperty('--on-dark-sub', TH.silk);  // koyu arka plan üzerinde ikincil metin
+  r.setProperty('--on-light', TH.dark);     // açık arka plan üzerinde metin
+  r.setProperty('--on-light-sub', TH.stone);// açık arka plan üzerinde ikincil metin
 }
 
 function applySettings(){
@@ -3776,15 +3859,4 @@ document.addEventListener('DOMContentLoaded',()=>{
   initApp();
   setTimeout(initScrollExperience, 100);
   // Hesaplayıcı oda-list DOM'da hazır ol
-  setTimeout(()=>{
-    const ol=el('oda-list');
-    if(ol && odalar.length===0){
-      odaSayac=1;
-      odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];
-    }
-    renderOdalar();
-  }, 300);
-});
-</script>
-</body>
-</html>
+  setTimeout
