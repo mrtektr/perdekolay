@@ -3264,7 +3264,7 @@ function dragDrop(e,toIdx,tip){
   list.splice(toIdx,0,moved);
   lsSet(tip==='tul'?LS.T:LS.K,list);
   renderUrunTable(tip);renderProducts();
-  toast('Sıralama güncellendi ✓');
+  apToast('Sıralama güncellendi ✓');
   dragSrcIdx=null;
 }
 
@@ -3326,14 +3326,14 @@ async function saveUrun(){
     else{const r=await sbInsert(table,u);if(r&&r[0])list.push({...u,...r[0]});else list.push(u);}
   }catch(e){if(editIdx!==null)list[editIdx]=u;else list.push(u);}
   lsSet(editTip==='tul'?LS.T:LS.K,list);
-  closeUrunModal();renderUrunTable(editTip);toast(`Ürün ${editIdx!==null?'güncellendi':'eklendi'} ✓`);
+  closeUrunModal();renderUrunTable(editTip);apToast(`Ürün ${editIdx!==null?'güncellendi':'eklendi'} ✓`);
 }
 async function deleteUrun(tip,idx){
   const list=tip==='tul'?T:K;
   if(list.length<=1){alert('En az 1 ürün olmalıdır.');return;}
   if(!confirm(`"${list[idx].name}" silinecek?`))return;
   if(list[idx].id){try{await sbDelete(tip==='tul'?'tul':'kumas',list[idx].id);}catch(e){}}
-  list.splice(idx,1);lsSet(tip==='tul'?LS.T:LS.K,list);renderUrunTable(tip);toast('Silindi ✓');
+  list.splice(idx,1);lsSet(tip==='tul'?LS.T:LS.K,list);renderUrunTable(tip);apToast('Silindi ✓');
 }
 
 // ===== FİYATLAR =====
@@ -3350,9 +3350,9 @@ function renderFiyatlar(){
       <p class="hint" style="margin-top:.5rem;">Orijinal: 450 TL/m — Bu fiyat indirimli olarak gösterilir.</p>
       <button class="sc-save" onclick="saveKornishF()">💾 Kaydet</button></div>`;
 }
-function saveTulF(){T.forEach((t,i)=>{const v=parseFloat(el(`pft-${i}`)?.value);if(v>0)t.fiyat=v;});lsSet(LS.T,T);toast('Tül fiyatları kaydedildi ✓');}
-function saveKumasF(){K.forEach((k,i)=>{const v=parseFloat(el(`pfk-${i}`)?.value);if(v>0)k.fiyat=v;});lsSet(LS.K,K);toast('Kumaş fiyatları kaydedildi ✓');}
-function saveKornishF(){const v=parseFloat(el('pfkn')?.value);if(v>0){KN=v;lsSet(LS.KN,KN);el('kornish-display').textContent=KN+' TL/m';toast('Korniş fiyatı kaydedildi ✓');}}
+function saveTulF(){T.forEach((t,i)=>{const v=parseFloat(el(`pft-${i}`)?.value);if(v>0)t.fiyat=v;});lsSet(LS.T,T);apToast('Tül fiyatları kaydedildi ✓');}
+function saveKumasF(){K.forEach((k,i)=>{const v=parseFloat(el(`pfk-${i}`)?.value);if(v>0)k.fiyat=v;});lsSet(LS.K,K);apToast('Kumaş fiyatları kaydedildi ✓');}
+function saveKornishF(){const v=parseFloat(el('pfkn')?.value);if(v>0){KN=v;lsSet(LS.KN,KN);el('kornish-display').textContent=KN+' TL/m';apToast('Korniş fiyatı kaydedildi ✓');}}
 
 // ===== PIXELS =====
 function fillPixels(){
@@ -3567,11 +3567,11 @@ async function toggleSection(sec,val){
   if(sec==='gallery')S.showGallery=val;
   else if(sec==='blog')S.showBlog=val;
   lsSet(LS.S,S);applySettings();await sbSaveAyarlar();
-  toast((val?'Gösterildi':'Gizlendi')+' ✓');
+  apToast((val?'Gösterildi':'Gizlendi')+' ✓');
 }
-function saveHeroVideo(){S.heroVideo=el('set-video').value.trim();lsSet(LS.S,S);applySettings();toast('Video kaydedildi ✓');}
-function saveHeroText(){S.heroEyebrow=el('set-eyebrow').value;S.heroTitle=el('set-htitle').value;S.heroSub=el('set-hsub').value;lsSet(LS.S,S);applySettings();toast('Hero metinleri kaydedildi ✓');}
-function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set-stitle').value;S.bgText=el('set-bgtext').value;lsSet(LS.S,S);applySettings();toast('Site bilgileri kaydedildi ✓');}
+function saveHeroVideo(){S.heroVideo=el('set-video').value.trim();lsSet(LS.S,S);applySettings();apToast('Video kaydedildi ✓');}
+async function saveHeroText(){S.heroEyebrow=el('set-eyebrow').value;S.heroTitle=el('set-htitle').value;S.heroSub=el('set-hsub').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();apToast('Hero metinleri kaydedildi ✓');}
+function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set-stitle').value;S.bgText=el('set-bgtext').value;lsSet(LS.S,S);applySettings();apToast('Site bilgileri kaydedildi ✓');}
 
 // ===== ADIMLAR =====
 function fillAdimlar(){
@@ -3723,6 +3723,18 @@ function injectPixels(){
   }
 }
 
+
+function apToast(msg,type){
+  let t=document.getElementById('ap-toast-el');
+  if(!t){t=document.createElement('div');t.id='ap-toast-el';
+    t.style.cssText='position:fixed;bottom:2rem;right:2rem;z-index:9999;padding:.8rem 1.5rem;font-size:.8rem;letter-spacing:.1em;pointer-events:none;transition:opacity .3s;';
+    document.body.appendChild(t);}
+  t.style.background=type==='err'?'rgba(180,60,60,.95)':'rgba(44,38,32,.95)';
+  t.style.color=type==='err'?'#ffaaaa':'var(--gold-light,#d4b278)';
+  t.style.border=type==='err'?'1px solid rgba(180,60,60,.5)':'1px solid rgba(184,150,90,.3)';
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';},3000);
+}
 async function initApp(){
   applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
   try{
@@ -3763,8 +3775,15 @@ async function initApp(){
 document.addEventListener('DOMContentLoaded',()=>{
   initApp();
   setTimeout(initScrollExperience, 100);
-  // Hesaplayıcı oda-list DOM'da hazır olduktan sonra render et
-  setTimeout(()=>{ const ol=el('oda-list'); if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];} renderOdalar(); }, 300);
+  // Hesaplayıcı oda-list DOM'da hazır ol
+  setTimeout(()=>{
+    const ol=el('oda-list');
+    if(ol && odalar.length===0){
+      odaSayac=1;
+      odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];
+    }
+    renderOdalar();
+  }, 300);
 });
 </script>
 </body>
