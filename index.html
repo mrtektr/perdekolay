@@ -1243,7 +1243,7 @@ html { scroll-behavior: smooth; }
   .contact-map iframe{height:180px;}
 }
 
-/* ===== KONTRAST DÜZELTMELERİ ===== */
+
 
 /* Hesaplayıcı - koyu arka plan üzerinde */
 .fiyat-satir-label{color:var(--silk) !important;}
@@ -1302,7 +1302,7 @@ html { scroll-behavior: smooth; }
 /* Korniş kutusu */
 .kornish-price-display{color:var(--sand) !important;}
 
-/* ===== DİNAMİK TEMA KONTRAST ===== */
+
 /* Koyu arka plan (calc, contact, hero steps) */
 .calc-section .section-title{color:var(--on-dark);}
 .calc-section .section-sub{color:var(--on-dark-sub);}
@@ -1320,6 +1320,165 @@ html { scroll-behavior: smooth; }
 .blog-section .section-title{color:var(--on-light);}
 .product-name{color:var(--on-light);}
 .blog-card-title{color:var(--on-light);}
+
+/* ============================================================
+   KAPSAMLI KONTRAST DÜZELTMELERİ
+   Kural: arka plan rengine göre metin rengi
+   ============================================================ */
+
+/* BODY - genel sayfa */
+body { color: var(--dark); background: var(--sand); }
+
+/* ── KOYU ARKA PLAN BÖLÜMLERİ (calc, contact, hero, steps) ── */
+.calc-section,
+.contact-section { background: var(--dark); }
+
+.calc-section *,
+.contact-section * { color: var(--silk); }
+
+.calc-section strong,
+.contact-section strong { color: var(--sand); }
+
+.calc-section a,
+.contact-section a { color: var(--gold-light); }
+
+.section-tag { color: var(--gold) !important; }
+.calc-section .section-title,
+.contact-section .section-title { color: var(--sand) !important; }
+.calc-section .section-sub,
+.contact-section .section-sub { color: var(--silk) !important; }
+
+/* Hesaplayıcı özel */
+.oda-card { background: rgba(255,255,255,.04); border-color: rgba(212,200,176,.12); }
+.oda-title { color: var(--sand) !important; }
+.oda-label { color: var(--silk) !important; }
+.oda-input, .oda-select { color: var(--sand) !important; background: rgba(255,255,255,.06) !important; }
+.oda-price-label { color: var(--stone) !important; }
+.oda-price-val { color: var(--gold-light) !important; }
+.fiyat-satir-label { color: var(--silk) !important; }
+.fiyat-satir-val { color: var(--sand) !important; font-weight:500; }
+.fiyat-toplam-label { color: var(--silk) !important; }
+.fiyat-toplam-val { color: var(--gold-light) !important; }
+.fiyat-empty { color: var(--stone) !important; }
+.calc-note { color: var(--stone) !important; }
+.calc-add-btn { color: var(--gold-light) !important; }
+.calc-kornish-title { color: var(--sand) !important; }
+.calc-kornish-badge { color: var(--gold-light) !important; }
+.kornish-price-display { color: var(--sand) !important; }
+.fiyat-cta { color: var(--dark) !important; background: var(--gold) !important; }
+
+/* ── AÇIK ARKA PLAN BÖLÜMLERİ (products, gallery, blog) ── */
+.products-section { background: var(--white); }
+.gallery-section { background: var(--linen); }
+.blog-section { background: var(--sand); }
+
+.products-section .section-title,
+.gallery-section .section-title,
+.blog-section .section-title { color: var(--dark) !important; }
+
+.products-section .section-sub,
+.gallery-section .section-sub,
+.blog-section .section-sub { color: var(--stone) !important; }
+
+/* Ürün kartları */
+.product-name { color: var(--dark) !important; }
+.product-price { color: var(--gold) !important; }
+.product-desc { color: var(--stone) !important; }
+.product-overlay-btn { background: var(--dark) !important; color: var(--sand) !important; }
+
+/* Galeri */
+.gallery-label { background: var(--dark) !important; color: var(--sand) !important; }
+
+/* Blog kartları */
+.blog-card-title { color: var(--dark) !important; }
+.blog-card-excerpt { color: var(--stone) !important; }
+.blog-card-date { color: var(--stone) !important; }
+
+/* ── ÜRÜN DETAY MODAL ── */
+#pd-modal { background: rgba(20,15,10,.95) !important; }
+.pd-box { background: var(--white); }
+.pd-info-wrap { color: var(--dark) !important; background: var(--white); }
+.pd-name { color: var(--dark) !important; }
+.pd-type { color: var(--stone) !important; }
+.pd-price { color: var(--gold) !important; }
+.pd-desc { color: var(--stone) !important; }
+.pd-feat { color: var(--dark) !important; }
+.pd-feat-icon { color: var(--gold) !important; }
+.pd-cta { background: var(--gold) !important; color: var(--dark) !important; }
+.pd-cta-sec { border-color: rgba(44,38,32,.25) !important; color: var(--dark) !important; }
+.pd-play { color: var(--gold) !important; }
+
+/* ── BLOG MODAL ── */
+#blog-modal { background: rgba(245,240,232,.97) !important; }
+.blog-box-content,
+.blog-box-body { color: var(--dark) !important; }
+.blog-box-body h1,.blog-box-body h2,.blog-box-body h3 { color: var(--dark) !important; }
+.blog-box-body p { color: var(--stone) !important; }
+
+/* ── ADMİN PANELİ ── */
+#admin-panel { background: #0f0d0b; }
+.ap-main { background: #141210; color: var(--sand); }
+.sc-card { background: rgba(255,255,255,.04); color: var(--sand); }
+.sc-card h4 { color: var(--sand) !important; }
+.sc-card label { color: var(--silk) !important; }
+.sc-card input,
+.sc-card textarea,
+.sc-card select { color: var(--sand) !important; background: rgba(255,255,255,.06) !important; border-color: rgba(212,200,176,.18) !important; }
+.sc-card p,.sc-card .hint { color: var(--stone) !important; }
+.sf label { color: var(--silk) !important; }
+.ap-topbar { border-color: rgba(212,200,176,.08) !important; }
+.ap-page-title { color: var(--sand) !important; }
+.ap-page-sub { color: var(--stone) !important; }
+.apg-card { color: var(--sand) !important; background: rgba(255,255,255,.04); }
+.apg-card:hover { background: rgba(184,150,90,.1) !important; }
+.sc-save { background: var(--gold) !important; color: var(--dark) !important; }
+
+/* ── FON SATIRI ── */
+.fon-row { border-color: rgba(184,150,90,.2) !important; }
+
+/* ── İLETİŞİM ── */
+.ct-item strong { color: var(--silk) !important; }
+.ct-item p { color: var(--stone) !important; }
+.ct-item a { color: var(--gold-light) !important; }
+.contact-social .social-label { color: var(--gold) !important; }
+.social-hint { color: var(--stone) !important; }
+
+
+/* ===== ÜRÜN DETAY MODALİ KONTRAST (koyu arka plan) ===== */
+.pd-info-wrap { color: var(--sand) !important; }
+.pd-name { color: var(--sand) !important; }
+.pd-type { color: var(--stone) !important; }
+.pd-price { color: var(--gold-light) !important; }
+.pd-price small { color: var(--stone) !important; }
+.pd-desc { color: var(--silk) !important; }
+.pd-divider { border-color: rgba(212,200,176,.15) !important; }
+.pd-feat { color: var(--silk) !important; }
+.pd-feat-icon { color: var(--gold) !important; }
+.pd-cta { background: var(--gold) !important; color: var(--dark) !important; }
+.pd-cta-sec { color: var(--silk) !important; border-color: rgba(212,200,176,.3) !important; }
+.pd-play { color: var(--gold-light) !important; border-color: rgba(184,150,90,.4) !important; }
+
+/* ===== ADMİN HEADER KONTRAST ===== */
+.aph { background: #1a1612; }
+.aph-tab { color: rgba(212,200,176,.85) !important; }
+.aph-tab.active { color: var(--gold-light) !important; }
+.aph-logo { color: #f5f0e8 !important; }
+.apg-card b { color: rgba(212,200,176,.9) !important; }
+.apg-card span { filter: brightness(1.2); }
+
+/* ===== ADMİN SAYFA İÇERİK ===== */
+.sc-card { background: rgba(255,255,255,.04) !important; border-color: rgba(212,200,176,.1) !important; }
+.sc-card h4 { color: var(--sand) !important; font-size:.9rem; }
+.sf label { color: rgba(212,200,176,.8) !important; font-size:.72rem; letter-spacing:.1em; }
+.sf input, .sf textarea, .sf select,
+.sc-card input, .sc-card textarea, .sc-card select {
+  color: var(--sand) !important;
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(212,200,176,.2) !important;
+}
+.sf input::placeholder, .sf textarea::placeholder { color: rgba(158,144,128,.5) !important; }
+.hint { color: var(--stone) !important; }
+.sc-save { background: var(--gold) !important; color: var(--dark) !important; font-weight:500; }
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
