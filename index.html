@@ -1653,7 +1653,7 @@ html { scroll-behavior: smooth; }
     <div class="contact-info">
       <div class="ct-item"><span class="ct-icon">📍</span><div><strong>Adres</strong><p id="ct-adres-el">Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A<br>Kadıköy / İstanbul</p></div></div>
       <div class="ct-item"><span class="ct-icon">📞</span><div><strong>Telefon</strong><p><a id="ct-tel-el" href="tel:05078859455">0507 885 94 55</a></p></div></div>
-      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="/cdn-cgi/l/email-protection#d0b9beb6bf90a0b5a2b4b5bbbfbcb1a9feb3bfbd"><span id="ct-email-display"><span class="__cf_email__" data-cfemail="41282f272e0131243325242a2e2d20386f222e2c">[email&#160;protected]</span></span></a></p></div></div>
+      <div class="ct-item"><span class="ct-icon">✉️</span><div><strong>E-posta</strong><p><a id="ct-email-el" href="mailto:info@perdekolay.com">info@perdekolay.com</a></p></div></div>
       <div class="ct-item"><span class="ct-icon">💬</span><div><strong>WhatsApp</strong><p><button class="wa-btn" id="ct-btn1" onclick="openWA()" style="padding:.6rem 1.5rem;font-size:.8rem;margin-top:.3rem;">WhatsApp ile Yaz</button></p></div></div>
     </div>
     <div class="contact-social">
@@ -2303,7 +2303,7 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+</script></script></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2897,6 +2897,27 @@ function closePdModal(e){
 }
 
 // ===== GALLERY =====
+function renderBlog(){
+  const grid=el('blog-grid');
+  if(!grid)return;
+  if(!BL.length){grid.innerHTML='<p style="color:var(--stone);text-align:center;padding:2rem;">Henüz yazı eklenmemiş.</p>';return;}
+  grid.innerHTML=BL.map((p,i)=>{
+    const hi=p.img&&p.img.length>10;
+    return `<article class="blog-card" onclick="openBlogDetail(${i})" itemscope itemtype="https://schema.org/BlogPosting">
+      <div class="blog-card-img">
+        ${hi?`<img loading="lazy" src="${p.img}" alt="${p.title}">`:`<div class="blog-card-emoji">${p.emoji||'📝'}</div>`}
+        <span class="blog-card-cat">${p.cat||'Blog'}</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-date">${p.tarih||''} · ${p.okuma||3} dk okuma</div>
+        <div class="blog-card-title" itemprop="headline">${p.title}</div>
+        <div class="blog-card-excerpt">${p.excerpt||''}</div>
+        <span class="blog-card-read">Devamını Oku →</span>
+      </div>
+    </article>`;
+  }).join('');
+}
+
 function renderGallery(){
   el('gallery-grid').innerHTML=G.slice(0,5).map(g=>`
     <div class="gallery-item">
@@ -3729,6 +3750,11 @@ async function initApp(){
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
     window.__pixelsInjected=false;
+    // Hero metinlerini güncelle
+    if(!S.heroTitle||S.heroTitle.includes('Evinize<br><em>Zarafet</em>')||S.heroTitle.includes('Mekanınıza Konforla')){
+      S.heroTitle=DS.heroTitle;S.heroEyebrow=DS.heroEyebrow;S.heroSub=DS.heroSub;
+      lsSet(LS.S,S);
+    }
     applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
     injectProductSchema();injectBlogSchema();    console.log('✓ Supabase verisi yüklendi');
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
