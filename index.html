@@ -2622,7 +2622,7 @@ body { color: var(--dark); background: var(--sand); }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script></script></script></script><script>
+</script></script></script></script></script></script></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -4099,7 +4099,7 @@ async function initApp(){
 document.addEventListener('DOMContentLoaded',()=>{
   initApp();
   setTimeout(initScrollExperience, 100);
-  // Hesaplayıcı oda-list DOM'da hazır olunca
+  // Hesaplayici oda-list icin setTimeout
   setTimeout(()=>{
     const ol=el('oda-list');
     if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];}
