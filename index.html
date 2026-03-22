@@ -37,8 +37,11 @@
 <meta name="twitter:image" content="https://www.perdekolay.com/og-image.jpg">
 
 <!-- ===== PERFORMANS ===== -->
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://wa.me">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
@@ -2677,6 +2680,93 @@ function updateDashboard(){
   if(el('st-wa'))el('st-wa').textContent=S.wa?'Aktif':'—';
 }
 
+
+
+function renderFonKumasAdmin(){
+  // Enler
+  const enInput = document.getElementById('fon-enler-input');
+  if(enInput) enInput.value = FON_ENLER.map(e=>e.cm).join(',');
+  // Kumaşlar
+  const list = document.getElementById('fon-kumas-list');
+  if(!list) return;
+  list.innerHTML = FON_KUMASLAR.map((k,i)=>`
+    <div style="display:grid;grid-template-columns:1fr 110px auto;gap:.7rem;align-items:center;margin-bottom:.8rem;">
+      <input type="text" value="${k.label}" placeholder="Kumaş adı"
+        style="background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.55rem .8rem;font-family:'Jost',sans-serif;font-size:.85rem;outline:none;"
+        oninput="FON_KUMASLAR[${i}].label=this.value">
+      <input type="number" value="${k.fiyat}" placeholder="TL/m"
+        style="background:rgba(255,255,255,.05);border:1px solid rgba(212,200,176,.15);color:var(--gold-light);padding:.55rem .8rem;font-family:monospace;font-size:.88rem;outline:none;text-align:right;"
+        oninput="FON_KUMASLAR[${i}].fiyat=parseInt(this.value)||0">
+      <button class="tbl-btn del" onclick="deleteFonKumas(${i})" style="padding:.4rem .7rem;">✕</button>
+    </div>`).join('')+
+    `<button class="sc-save" style="width:100%;margin-top:.5rem;" onclick="saveFonKumaslar()">💾 Kumaşları Kaydet</button>`;
+}
+
+function renderGaleriAdmin(){
+  el('gal-grid-admin').innerHTML=G.map((g,i)=>`
+    <div class="gal-item-admin">
+      ${g.img?`<img loading="lazy" src="${g.img}" alt="${g.label}">`:`<span>${g.emoji}</span>`}
+      <div class="gal-hover">
+        <label style="background:var(--gold);color:white;padding:.38rem .8rem;font-size:.68rem;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;position:relative;display:inline-block;">
+          📷 Görsel Yükle
+          <input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer;" onchange="uploadGalImg(${i},this)">
+        </label>
+        <input type="text" value="${g.label}" placeholder="Etiket" style="background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2);color:white;padding:.3rem .6rem;font-size:.7rem;text-align:center;width:130px;outline:none;" onchange="updateGalLabel(${i},this.value)">
+        ${g.img?`<button onclick="removeGalImg(${i})" style="background:rgba(200,60,50,.8);color:white;border:none;padding:.3rem .8rem;font-size:.7rem;cursor:pointer;">✕ Sil</button>`:''}
+      </div>
+    </div>`).join('')+
+    (G.length<6?`<div class="gal-add"><span style="font-size:2rem;">＋</span><span>Yeni Görsel Ekle</span><input type="file" accept="image/*" onchange="addGalImg(this)"></div>`:'');
+}
+
+function renderBlogAdmin(){
+  const c=el('blog-admin-list');
+  if(!c)return;
+  if(!BL.length){c.innerHTML='<div class="ap-empty">Henüz yazı yok.</div>';return;}
+  c.innerHTML=BL.map((p,i)=>`
+    <div class="drag-row">
+      <div class="drag-info">
+        <div class="drag-name">${p.title}</div>
+        <div class="drag-meta"><span class="badge badge-green">${p.cat}</span> · ${p.tarih} · ${p.okuma} dk</div>
+      </div>
+      <div class="drag-actions">
+        <button class="tbl-btn" onclick="openBlogModal(${i})">✏️ Düzenle</button>
+        <button class="tbl-btn del" onclick="deleteBlog(${i})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderUrunTable(tip){
+  const list=tip==='tul'?T:K;
+  const containerId=tip==='tul'?'tul-tbody':'kumas-tbody';
+  const c=el(containerId);
+  c.innerHTML=list.map((u,i)=>{
+    const coverImg=u.imgs&&u.imgs.length>0?u.imgs[0]:(u.img&&u.img.length>10?u.img:'');
+    const imgCount=u.imgs&&u.imgs.length>0?u.imgs.length:(u.img&&u.img.length>10?1:0);
+    return `<div class="drag-row" draggable="true" data-idx="${i}" data-tip="${tip}"
+        ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dragDrop(event,${i},'${tip}')" ondragend="dragEnd(event)">
+      <span class="drag-handle" title="Sırala">⠿</span>
+      ${coverImg?`<img class="drag-img" src="${coverImg}" alt="${u.name}">`:`<div class="drag-emoji">${u.emoji}</div>`}
+      <div class="drag-info">
+        <div class="drag-name">${u.name}</div>
+        <div class="drag-meta">
+          <span class="badge ${u.tag?'badge-green':'badge-gray'}">${u.tag||'Etiket yok'}</span>
+          ${imgCount>0?`<span class="st-ok" style="margin-left:.5rem;">📸 ${imgCount} görsel</span>`:'<span class="st-warn" style="margin-left:.5rem;">📸 Görsel yok</span>'}
+          ${u.video?'<span class="st-ok" style="margin-left:.4rem;">▶ Video</span>':''}
+        </div>
+      </div>
+      <div class="drag-price">${u.fiyat.toLocaleString('tr-TR')} TL/m</div>
+      <div class="drag-actions">
+        <button class="tbl-btn" onclick="openUrunModal('${tip}',${i})">✏️ Düzenle</button>
+        <button class="tbl-btn del" onclick="deleteUrun('${tip}',${i})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+  updateDashboard();
+}
+
+// Drag-drop
+let dragSrcIdx=null;
+
 function apRefresh(page){
   if(page==='dashboard'){updateDashboard();}
   if(page==='tuller')renderUrunTable('tul');
@@ -2727,7 +2817,7 @@ function renderUrunTable(tip){
 }
 
 // Drag-drop
-let dragSrcIdx=null;
+dragSrcIdx=null;
 function dragStart(e){dragSrcIdx=parseInt(e.currentTarget.dataset.idx);e.currentTarget.classList.add('dragging');}
 function dragEnd(e){e.currentTarget.classList.remove('dragging');document.querySelectorAll('.drag-row').forEach(r=>r.classList.remove('drag-over'));}
 function dragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
