@@ -517,7 +517,19 @@ footer { background: var(--dark); color: rgba(255,255,255,.5); text-align: cente
 .delay-3 { transition-delay: .36s !important; }
 
 /* ── WA BUTONU ── */
-.admin-trigger { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; background: rgba(30,26,22,.7); color: rgba(255,255,255,.4); border: 1px solid rgba(255,255,255,.1); padding: .45rem .9rem; font-size: .65rem; font-family: var(--font-body); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: all .2s; backdrop-filter: blur(8px); }
+.admin-trigger {
+  position: fixed; bottom: 1.2rem; right: 1.2rem; z-index: 200;
+  background: rgba(255,255,255,.85);
+  color: #9e9080;
+  border: 1px solid #e0dbd4;
+  padding: .35rem .8rem;
+  font-size: .6rem; font-family: var(--font-body);
+  letter-spacing: .12em; text-transform: uppercase;
+  cursor: pointer; border-radius: 4px;
+  transition: all .2s;
+  box-shadow: 0 2px 8px rgba(30,26,22,.12);
+}
+.admin-trigger:hover { color: #b8965a; border-color: #b8965a; background: #fff; }
 .admin-trigger:hover { color: var(--accent); border-color: rgba(184,150,90,.4); }
 
 /* ── BLOG MODALİ ── */
@@ -711,6 +723,16 @@ footer { background: var(--dark); color: rgba(255,255,255,.5); text-align: cente
   .oda-row { grid-template-columns: 1fr 1fr; }
 }
 
+
+@media(max-width:600px){
+  .admin-trigger{
+    bottom:.8rem; right:.8rem;
+    padding:.3rem .6rem;
+    font-size:.55rem;
+    opacity:.6;
+  }
+  .admin-trigger:hover{ opacity:1; }
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -3338,6 +3360,10 @@ async function initApp(){
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
+  // Gizli admin URL kontrolu
+  if(window.location.hash.includes('zp25(as(')){
+    setTimeout(()=>openAdminLogin(),500);
+  }
   initApp();
   setTimeout(initScrollExperience, 100);
   //
