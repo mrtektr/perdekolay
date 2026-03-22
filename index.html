@@ -1186,6 +1186,50 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
       <div id="blog-admin-list"></div>
     </div>
 
+
+    <!-- Piksel & Analiz -->
+    <div class="ap-page" id="ap-pixels">
+      <div class="ap-topbar"><div><h1 class="ap-page-title">Piksel & Analiz</h1><p class="ap-page-sub">GTM, GA4 ve Meta Pixel entegrasyonları</p></div></div>
+      <div class="sc-grid">
+        <div class="sc-card sc-full">
+          <h4>🏷️ Google Tag Manager (GTM)</h4>
+          <div class="sf">
+            <label>GTM Container ID</label>
+            <input type="text" id="px-gtm" placeholder="GTM-XXXXXXX">
+          </div>
+          <div id="st-gtm" class="st-warn">— Eklenmemiş</div>
+        </div>
+        <div class="sc-card sc-full">
+          <h4>📊 Google Analytics 4 (GA4)</h4>
+          <p class="hint" style="margin-bottom:.8rem;">GTM kullanıyorsanız bu alanı boş bırakın, GA4'ü GTM içinden ekleyin.</p>
+          <div class="sf">
+            <label>GA4 Measurement ID</label>
+            <input type="text" id="px-ga4" placeholder="G-XXXXXXXXXX">
+          </div>
+          <div id="st-ga4" class="st-warn">— Eklenmemiş</div>
+        </div>
+        <div class="sc-card sc-full">
+          <h4>📘 Meta Pixel</h4>
+          <div class="sf">
+            <label>Meta Pixel ID</label>
+            <input type="text" id="px-meta" placeholder="123456789012345">
+          </div>
+          <div id="st-meta" class="st-warn">— Eklenmemiş</div>
+        </div>
+        <div class="sc-card sc-full">
+          <button class="sc-save" onclick="savePixels()">💾 Kaydet & Aktifleştir</button>
+        </div>
+        <div class="sc-card sc-full">
+          <h4>🔴 Canlı Event Takibi</h4>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;">
+            <p class="hint">Son 20 event</p>
+            <button onclick="clearEventLog()" style="font-size:.72rem;padding:.3rem .7rem;border:1px solid rgba(212,200,176,.2);background:transparent;color:var(--stone);cursor:pointer;">Temizle</button>
+          </div>
+          <div id="event-log" style="background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.12);padding:.8rem;font-size:.72rem;font-family:monospace;max-height:200px;overflow-y:auto;color:var(--silk);"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- WhatsApp -->
     <div class="ap-page" id="ap-whatsapp">
       <div class="ap-topbar"><div><h1 class="ap-page-title">WhatsApp Ayarları</h1><p class="ap-page-sub">Yönlendirme mesajlarını özelleştir</p></div></div>
@@ -1248,7 +1292,7 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 <div class="ap-toast" id="ap-toast"></div>
 
 </script>
-<script>
+</script><script>
 
 // ===== SCROLL EXPERIENCE =====
 
@@ -2098,6 +2142,82 @@ function openAdminPanel(){
 }
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
 
+
+// ===== PIXELS =====
+function fillPixels(){
+  const g=el('px-gtm');if(g)g.value=S.gtmId||'';
+  const ga=el('px-ga4');if(ga)ga.value=S.ga4Id||'';
+  const m=el('px-meta');if(m)m.value=S.metaPixelId||'';
+  updatePixelStatus();
+}
+
+function updatePixelStatus(){
+  const set=(id,val)=>{const e=el(id);if(!e)return;e.textContent=val?'✓ Aktif: '+val:'— Eklenmemiş';e.className=val?'st-ok':'st-warn';};
+  set('st-gtm',S.gtmId);set('st-ga4',S.ga4Id);set('st-meta',S.metaPixelId);
+}
+
+function savePixels(){
+  const g=el('px-gtm');const ga=el('px-ga4');const m=el('px-meta');
+  S.gtmId=g?g.value.trim():'';
+  S.ga4Id=ga?ga.value.trim():'';
+  S.metaPixelId=m?m.value.trim():'';
+  lsSet(LS.S,S);
+  window.__pixelsInjected=false;
+  injectPixels();
+  updatePixelStatus();
+  sbSaveAyarlar();
+  apToast('Piksel ayarları kaydedildi ✓');
+}
+
+function clearEventLog(){const e=el('event-log');if(e)e.innerHTML='';}
+
+function injectPixels(){
+  if(window.__pixelsInjected)return;
+  window.__pixelsInjected=true;
+  // GTM
+  if(S.gtmId&&S.gtmId.startsWith('GTM-')){
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',S.gtmId);
+  }
+  // GA4
+  if(S.ga4Id&&S.ga4Id.startsWith('G-')&&!S.gtmId){
+    const sc=document.createElement('script');
+    sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+S.ga4Id;
+    document.head.appendChild(sc);
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){dataLayer.push(arguments);};
+    gtag('js',new Date());gtag('config',S.ga4Id);
+  }
+  // Meta Pixel
+  if(S.metaPixelId){
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init',S.metaPixelId);window.fbq('track','PageView');
+  }
+}
+
+function trackEvent(name,params={}){
+  // GA4
+  if(window.gtag)gtag('event',name,params);
+  if(window.dataLayer)dataLayer.push({event:name,...params});
+  // Meta Pixel
+  const metaMap={whatsapp_click:'Contact',fiyat_hesapla:'Lead',urun_goruntule:'ViewContent'};
+  if(window.fbq&&metaMap[name])fbq('track',metaMap[name],params);
+  // Event log
+  const log=el('event-log');
+  if(log){
+    const d=new Date().toLocaleTimeString('tr-TR');
+    log.innerHTML=`<div class="ev-item">[${d}] ${name} ${JSON.stringify(params).slice(0,60)}</div>`+log.innerHTML;
+    const items=log.querySelectorAll('.ev-item');
+    if(items.length>20)items[items.length-1].remove();
+  }
+}
+
 function apGroup(group, btn){
   // Tab aktif
   document.querySelectorAll('.aph-tab').forEach(t=>t.classList.remove('active'));
@@ -2778,7 +2898,7 @@ function apToast(msg,type){
   clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';},3000);
 }
 async function initApp(){
-  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
+  applyTheme();applySettings();applyTexts();renderProcess();renderProducts();injectPixels();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
   try{
     const [tulData,kumasData,fonData,galeriData,blogData,ayarData]=await Promise.all([
       sbGet('tul'),sbGet('kumas'),sbGet('fon_kumas'),sbGet('galeri'),sbGet('blog'),sbGetOne('ayarlar','id',1)
@@ -2822,14 +2942,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
   initApp();
   setTimeout(initScrollExperience, 100);
-  //
   setTimeout(()=>{
     const ol=el('oda-list');
     if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];}
     renderOdalar();
   },300);
 });
-
 </script>
 </body>
 </html>
