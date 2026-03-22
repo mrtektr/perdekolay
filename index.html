@@ -1958,16 +1958,15 @@ function openWA(msg){
   const raw=S.wa||'05078859455';
   const n=raw.replace(/[^0-9]/g,'');
   const num='90'+n.slice(-10);
-  const text=msg||S.waMsg||'Merhaba, perde hakkinda bilgi almak istiyorum.';
+  const text=msg||S.waMsg||'Merhaba, perde hakkında bilgi almak istiyorum.';
   trackEvent('whatsapp_click',{
     method: msg ? 'fiyat_teklifi' : 'genel',
     page_location: window.location.href
   });
-  // GA4 dönüşüm için teşekkür sayfasına yönlendir, sonra WA aç
+  // Mesajı sessionStorage'a kaydet, teşekkürler sayfasında göster
+  sessionStorage.setItem('wa_num', num);
+  sessionStorage.setItem('wa_msg', text);
   window.location.href='/tesekkurler.html';
-  setTimeout(()=>{
-    window.open('https://wa.me/'+num+'?text='+encodeURIComponent(text),'_blank');
-  }, 300);
 }
 function openProductWA(tab,idx){
   const p=(tab==='tul'?T:K)[idx];
