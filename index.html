@@ -1,4 +1,45 @@
-<!DOCTYPE html>
+<!DOC
+
+<!-- BLOG EDIT MODAL -->
+<div class="ap-mo" id="blog-edit-modal">
+  <div class="ap-modal" style="max-width:680px;">
+    <button class="ap-mc" onclick="el('blog-edit-modal').classList.remove('open')">✕</button>
+    <h3 id="bm-heading">Blog Yazısı</h3>
+    <div class="ap-fr">
+      <div class="ap-fg"><label>Başlık *</label><input type="text" id="bm-title" placeholder="Yazı başlığı"></div>
+      <div class="ap-fg"><label>Kategori</label>
+        <select id="bm-cat" style="background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.6rem;font-family:'Jost',sans-serif;outline:none;">
+          <option>Rehber</option><option>Bakım</option><option>Dekorasyon</option><option>İpuçları</option><option>Haberler</option>
+        </select>
+      </div>
+    </div>
+    <div class="ap-fr">
+      <div class="ap-fg"><label>Emoji / İkon</label><input type="text" id="bm-emoji" placeholder="📝"></div>
+      <div class="ap-fg"><label>Tarih</label><input type="date" id="bm-tarih"></div>
+      <div class="ap-fg"><label>Okuma Süresi (dk)</label><input type="number" id="bm-okuma" min="1" max="30" value="3"></div>
+    </div>
+    <div class="ap-fg"><label>Kısa Özet (kartlarda görünür)</label><textarea id="bm-excerpt" rows="2" placeholder="Yazının kısa özeti..."></textarea></div>
+    <div class="ap-fg">
+      <label>📸 Kapak Görseli</label>
+      <div class="img-upload">
+        <div style="font-size:2rem;">📷</div>
+        <p>Tıkla veya sürükle</p>
+        <input type="file" accept="image/*" onchange="handleBmImg(this)">
+        <img class="img-prev" id="bm-img-prev" src="" alt="" style="display:none;">
+      </div>
+    </div>
+    <div class="ap-fg">
+      <label>📄 İçerik (HTML destekler: &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;)</label>
+      <textarea id="bm-body" rows="10" placeholder="&lt;h3&gt;Başlık&lt;/h3&gt;&lt;p&gt;İçerik...&lt;/p&gt;" style="font-family:monospace;font-size:.8rem;"></textarea>
+    </div>
+    <div class="ap-ma">
+      <button class="ap-cancel" onclick="el('blog-edit-modal').classList.remove('open')">İptal</button>
+      <button class="ap-save" onclick="saveBlog()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+TYPE html>
 <html lang="tr" prefix="og: https://ogp.me/ns#">
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪟</text></svg>">
@@ -557,6 +598,107 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
   .sf-row{grid-template-columns:1fr;}
 }
 
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  /* Header */
+  #site-header{padding:.8rem 4vw;}
+  .header-nav{display:none;}
+  
+  /* Hero */
+  .hero{padding:5rem 5vw 3rem;}
+  .hero h1{font-size:2.2rem;}
+  .hero-steps{gap:.3rem;padding:.8rem;}
+  .hero-step{min-width:60px;}
+  .hero-step-num{font-size:1.2rem;}
+  .hero-step-text{font-size:.55rem;}
+  .hero-step-arrow{display:none;}
+  
+  /* Scroll sections */
+  .fs-section{min-height:auto;padding:4rem 5vw 3rem;}
+  .fs-content{padding:4rem 5vw 3rem;}
+  .fs-headline{font-size:2rem;}
+  .fs-headline-dark{font-size:1.8rem;}
+  .fs-content-split{grid-template-columns:1fr;gap:2rem;}
+  .fs-content-reverse{direction:ltr;}
+  .split-visual{order:-1;}
+  
+  /* Ürünler */
+  .products-section{padding:4rem 4vw;}
+  .products-grid{grid-template-columns:1fr 1fr;gap:.6rem;}
+  .product-visual{height:180px;}
+  .product-info{padding:.7rem .8rem;}
+  .product-name{font-size:.82rem;}
+  
+  /* Galeri */
+  .gallery-section{padding:4rem 4vw;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gallery-item:nth-child(1){grid-row:span 1;}
+  
+  /* Blog */
+  .blog-section{padding:4rem 4vw;}
+  .blog-grid{grid-template-columns:1fr;}
+  
+  /* Hesaplayıcı */
+  .calc-section{padding:4rem 4vw;}
+  .calc-layout{grid-template-columns:1fr;}
+  .calc-right{position:static;}
+  .oda-row{grid-template-columns:1fr 1fr;}
+  .calc-kornish-row{grid-template-columns:1fr;}
+  
+  /* İletişim */
+  .contact-section{padding:4rem 4vw;}
+  .contact-grid{grid-template-columns:1fr;}
+  
+  /* Footer */
+  footer{padding:2rem 4vw;}
+  
+  /* Ürün detay modal */
+  .pd-box{grid-template-columns:1fr;padding:3rem .75rem 2rem;}
+  .pd-slider{aspect-ratio:1/1;}
+  .pd-visual-wrap{position:static;}
+  .pd-info-wrap{padding:1.2rem;}
+  .pd-name{font-size:1.5rem;}
+  .pd-actions{flex-direction:column;}
+  .pd-cta,.pd-cta-sec,.pd-play{width:100%;text-align:center;}
+  
+  /* Admin */
+  .aph{padding:.6rem 1rem;gap:.5rem;}
+  .aph-tabs{gap:.2rem;}
+  .aph-tab{padding:.3rem .6rem;font-size:.7rem;}
+  .aph-title{display:none;}
+  .apg{padding:1rem;}
+  .apg-grid{grid-template-columns:repeat(3,1fr);gap:.5rem;}
+  .apg-card{padding:1rem .6rem;gap:.5rem;}
+  .apg-card span{font-size:1.5rem;}
+  .apg-card b{font-size:.68rem;}
+  .ap-page{padding:1rem;}
+  .sc-grid{grid-template-columns:1fr;}
+  .sf-row{grid-template-columns:1fr;}
+}
+
+@media(max-width:360px){
+  .apg-grid{grid-template-columns:repeat(2,1fr);}
+  .products-grid{grid-template-columns:1fr;}
+}
+
+.ap-modal{background:#1e1a15;border:1px solid rgba(212,200,176,.15);padding:2.5rem;width:580px;max-width:95vw;max-height:90vh;overflow-y:auto;position:relative;}
+.ap-mc{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--stone);font-size:1.2rem;cursor:pointer;}
+
+/* Blog Edit Modal */
+.ap-mo{display:none;position:fixed;inset:0;background:rgba(20,16,12,.85);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.ap-mo.open{display:flex;}
+.ap-modal{background:#1e1a16;border:1px solid rgba(212,200,176,.15);padding:2rem;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
+.ap-mc{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--stone);cursor:pointer;font-size:1.2rem;}
+.ap-mc:hover{color:var(--gold);}
+.ap-fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.ap-fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem;}
+.ap-fg label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);}
+.ap-fg input,.ap-fg select,.ap-fg textarea{background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.18);color:var(--sand);padding:.65rem .9rem;font-family:'Jost',sans-serif;font-size:.88rem;outline:none;}
+.ap-fg textarea{resize:vertical;min-height:120px;}
+.bm-img{width:100%;height:160px;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;margin-bottom:.8rem;}
+.bm-img img{width:100%;height:100%;object-fit:cover;}
+@media(max-width:600px){.ap-fr{grid-template-columns:1fr;}}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -2312,6 +2454,21 @@ function renderGaleriAdmin(){
     (G.length<6?`<div class="gal-add"><span style="font-size:2rem;">＋</span><span>Yeni Görsel Ekle</span><input type="file" accept="image/*" onchange="addGalImg(this)"></div>`:'');
 }
 
+function renderBmImg(){
+  const prev=el('bm-img-prev');
+  if(bmImgSrc&&bmImgSrc.length>10){prev.src=bmImgSrc;prev.style.display='block';}
+  else prev.style.display='none';
+}
+
+function handleBmImg(input){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{bmImgSrc=e.target.result;renderBmImg();};
+  r.readAsDataURL(file);
+}
+
+
+
 function renderBlogAdmin(){
   const c=el('blog-admin-list');
   if(!c)return;
@@ -2328,6 +2485,86 @@ function renderBlogAdmin(){
       </div>
     </div>`).join('');
 }
+
+
+function openBlogModal(idx){
+  editBlogIdx=idx!==undefined?idx:null;
+  const p=editBlogIdx!==null?BL[editBlogIdx]:{};
+  el('bm-title').value=p.title||'';
+  el('bm-cat').value=p.cat||'Rehber';
+  el('bm-emoji').value=p.emoji||'📝';
+  el('bm-tarih').value=p.tarih||new Date().toISOString().slice(0,10);
+  el('bm-okuma').value=p.okuma||3;
+  el('bm-excerpt').value=p.excerpt||'';
+  el('bm-body').value=p.body||'';
+  bmImgSrc=p.img||'';
+  renderBmImg();
+  el('blog-edit-modal').classList.add('open');
+}
+let bmImgSrc='';
+
+function saveBlog(){
+  const title=el('bm-title').value.trim();
+  if(!title){alert('Başlık zorunludur.');return;}
+  const p={
+    id:editBlogIdx!==null?BL[editBlogIdx].id:Date.now(),
+    title,cat:el('bm-cat').value,emoji:el('bm-emoji').value||'📝',
+    tarih:el('bm-tarih').value,okuma:parseInt(el('bm-okuma').value)||3,
+    excerpt:el('bm-excerpt').value.trim(),body:el('bm-body').value.trim(),img:bmImgSrc
+  };
+  if(editBlogIdx!==null)BL[editBlogIdx]=p;else BL.unshift(p);
+  lsSet(LS.BL,BL);
+  el('blog-edit-modal').classList.remove('open');
+  renderBlogAdmin();renderBlog();
+  toast(`Yazı ${editBlogIdx!==null?'güncellendi':'eklendi'} ✓`);
+}
+
+function deleteBlog(i){
+  if(!confirm('Bu yazı silinsin mi?'))return;
+  BL.splice(i,1);lsSet(LS.BL,BL);
+  renderBlogAdmin();renderBlog();toast('Silindi ✓');
+}
+
+// ===== SECRET ADMIN URL =====
+(function(){
+  const path=window.location.pathname+window.location.search+window.location.hash;
+  if(path.includes('/zp25(as(')||window.location.href.includes('zp25(as(')){
+    history.replaceState(null,'','/');
+    setTimeout(openAdminLogin,300);
+  }
+  // Also listen for hash change
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash==='#zp25(as('){
+      history.replaceState(null,'','/');
+      openAdminLogin();
+    }
+  });
+})();
+
+// ===== SECRET ADMIN URL =====
+(function(){
+  if(window.location.href.indexOf('zp25')!==-1){
+    history.replaceState(null,'','/');
+    setTimeout(openAdminLogin,400);
+  }
+  window.addEventListener('hashchange',function(){
+    if(window.location.hash.indexOf('zp25')!==-1){
+      history.replaceState(null,'',window.location.pathname);
+      openAdminLogin();
+    }
+  });
+})();
+
+// ===== INIT =====
+applyTheme();
+applySettings();
+applyTexts();
+renderProcess();
+renderProducts();
+renderGallery();
+renderBlog();
+addOda();
+
 
 function renderUrunTable(tip){
   const list=tip==='tul'?T:K;
