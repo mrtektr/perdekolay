@@ -1210,33 +1210,22 @@ footer { background: var(--dark); color: rgba(255,255,255,.5); text-align: cente
 
 <!-- ADMIN PANEL -->
 <div id="admin-panel">
-  <aside class="ap-sb">
-    <div class="ap-brand"><div class="ap-brand-logo">PERLA<span>.</span></div><div class="ap-brand-sub">Yönetim Paneli</div></div>
-    <nav class="ap-nav">
-      <div class="ap-nav-section">Genel</div>
-      <div class="ap-ni active" onclick="apPage('dashboard',this)"><span class="ap-ni-icon">📊</span>Genel Bakış</div>
-      <div class="ap-nav-section">Ürünler</div>
-      <div class="ap-ni" onclick="apPage('tuller',this)"><span class="ap-ni-icon">🌿</span>Tüller</div>
-      <div class="ap-ni" onclick="apPage('kumaslar',this)"><span class="ap-ni-icon">🧵</span>Kumaşlar</div>
-      <div class="ap-ni" onclick="apPage('fiyatlar',this)"><span class="ap-ni-icon">💰</span>Fiyat Ayarları</div>
-      <div class="ap-ni" onclick="apPage('fonkumas',this)"><span class="ap-ni-icon">🪟</span>Fon Kumaşları</div>
-      <div class="ap-nav-section">İçerik</div>
-      <div class="ap-ni" onclick="apPage('anasayfa',this)"><span class="ap-ni-icon">🏠</span>Ana Sayfa</div>
-      <div class="ap-ni" onclick="apPage('adimlar',this)"><span class="ap-ni-icon">🔢</span>Nasıl Çalışıyoruz</div>
-      <div class="ap-ni" onclick="apPage('bolumler',this)"><span class="ap-ni-icon">📝</span>Bölüm Başlıkları</div>
-      <div class="ap-ni" onclick="apPage('galeri',this)"><span class="ap-ni-icon">🖼️</span>Galeri</div>
-      <div class="ap-ni" onclick="apPage('blog',this)"><span class="ap-ni-icon">✍️</span>Blog Yazıları</div>
-      <div class="ap-ni" onclick="apPage('iletisim',this)"><span class="ap-ni-icon">📞</span>İletişim</div>
-      <div class="ap-nav-section">Görünüm</div>
-      <div class="ap-ni" onclick="apPage('tema',this)"><span class="ap-ni-icon">🎨</span>Tema & Renkler</div>
-      <div class="ap-ni" onclick="apPage('metin',this)"><span class="ap-ni-icon">🔤</span>Buton & Menü Metinleri</div>
-      <div class="ap-nav-section">Sistem</div>
-      <div class="ap-ni" onclick="apPage('pixels',this)"><span class="ap-ni-icon">📊</span>Piksel & Analiz</div>
-      <div class="ap-ni" onclick="apPage('sosyal',this)"><span class="ap-ni-icon">📱</span>Sosyal Medya</div>
-      <div class="ap-ni" onclick="apPage('whatsapp',this)"><span class="ap-ni-icon">💬</span>WhatsApp Ayarları</div>
-    </nav>
-    <div class="ap-sb-footer"><button class="ap-back-btn" onclick="closeAdminPanel()">← Siteye Dön</button></div>
-  </aside>
+  <div class="aph">
+    <div class="aph-left">
+      <div class="aph-logo">PERLA<span>.</span></div>
+      <div class="aph-title" id="aph-title">Yönetim Paneli</div>
+    </div>
+    <div class="aph-tabs" id="aph-tabs">
+      <button class="aph-tab active" onclick="apGroup('urunler',this)">🛍 Ürünler</button>
+      <button class="aph-tab" onclick="apGroup('site',this)">🏠 Site</button>
+      <button class="aph-tab" onclick="apGroup('tasarim',this)">🎨 Tasarım</button>
+      <button class="aph-tab" onclick="apGroup('sistem',this)">⚙️ Sistem</button>
+    </div>
+    <div class="aph-right">
+      <button class="aph-back" id="aph-back" onclick="apBack()" style="display:none;">← Geri</button>
+      <button class="aph-close" onclick="closeAdminPanel()">✕ Kapat</button>
+    </div>
+  </div>
   <main class="ap-main">
     <!-- GRUP MENÜSÜ -->
     <div class="apg" id="apg-urunler">
@@ -2638,7 +2627,7 @@ async function doLogin(){
 }
 function openAdminPanel(){
   const ap=el('admin-panel');
-  if(ap)ap.style.cssText='display:flex;flex-direction:column;position:fixed;inset:0;z-index:1500;background:#0f0d0b;';
+  if(ap)ap.style.cssText='display:flex;flex-direction:column;position:fixed;inset:0;z-index:1500;background:#f5f3f0;';
   apGroup('urunler', document.querySelector('.aph-tab'));
 }
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
