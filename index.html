@@ -889,7 +889,7 @@ nav a:hover{color:var(--gold);}
   <nav id="main-nav">
     <a id="nav-1" onclick="sTo('.products-section');closeMobileNav()">Ürünler</a>
     <a id="nav-2" onclick="sTo('.calc-section');closeMobileNav()">Fiyat Hesapla</a>
-    <a id="nav-3" onclick="sTo('.blog-section');closeMobileNav()">Blog</a>
+    <a id="nav-3" onclick="window.location.href='/blog.html'">Blog</a>
     <a id="nav-4" onclick="sTo('.contact-section');closeMobileNav()">İletişim</a>
   </nav>
   <div class="header-right">
@@ -1877,9 +1877,14 @@ function applySettings(){
 }
 
 function applyTexts(){
-  ['nav-1','nav-2','nav-3','nav-4'].forEach((id,i)=>{
-    const keys=['nav1','nav2','nav3','nav4'];
-    const x=el(id);if(x&&TX[keys[i]])x.textContent=TX[keys[i]];
+  // Nav linkleri sabit - TX'ten güncelleme yapma
+  // (Supabase'deki eski değerler karışmasın)
+  const navMap={
+    'nav-1':'Ürünler','nav-2':'Fiyat Hesapla',
+    'nav-3':'Blog','nav-4':'İletişim'
+  };
+  Object.entries(navMap).forEach(([id,txt])=>{
+    const x=el(id);if(x)x.textContent=txt;
   });
   const hcta=el('header-cta-btn');if(hcta)hcta.textContent=TX.hcta||'💬 WhatsApp';
   const hb1=el('hero-btn1');if(hb1)hb1.textContent=TX.btn1||'Fiyat Hesapla';
@@ -2117,13 +2122,47 @@ function closePdModal(e){
 }
 
 // ===== GALLERY =====
+
+function openBlogDetail(i){
+  const p=BL[i];
+  if(!p)return;
+  const bm=el('blog-modal');
+  const bimg=el('blog-box-img');
+  const bcont=el('blog-box-content');
+  if(!bm)return;
+  if(bimg){
+    bimg.innerHTML=p.img&&p.img.length>10
+      ?`<img src="${p.img}" alt="${p.title}" style="width:100%;max-height:340px;object-fit:cover;">`
+      :`<div style="width:100%;height:160px;background:var(--linen);display:flex;align-items:center;justify-content:center;font-size:4rem;">${p.emoji||'📝'}</div>`;
+  }
+  if(bcont){
+    bcont.innerHTML=`
+      <div style="max-width:720px;margin:0 auto;padding:2rem 1.5rem;">
+        <div style="font-size:.7rem;color:var(--stone);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem;">${p.cat||'Blog'} · ${p.tarih||''} · ${p.okuma||3} dk okuma</div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--dark);margin-bottom:1.5rem;line-height:1.3;">${p.title}</h1>
+        <div style="font-size:.95rem;color:var(--stone);line-height:1.9;">${p.body||p.excerpt||''}</div>
+        <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--silk);">
+          <button onclick="openWA()" style="background:var(--gold);color:#fff;border:none;padding:.8rem 2rem;font-family:'Jost',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">💬 Randevu Al</button>
+        </div>
+      </div>`;
+  }
+  bm.style.cssText='display:block;position:fixed;inset:0;background:rgba(245,240,232,.97);z-index:9000;overflow-y:auto;';
+  document.body.style.overflow='hidden';
+}
+
+function closeBlogModal(e){
+  if(e&&e.target!==el('blog-modal'))return;
+  const bm=el('blog-modal');
+  if(bm)bm.style.display='none';
+  document.body.style.overflow='';
+}
 function renderBlog(){
   const grid=el('blog-grid');
   if(!grid)return;
   if(!BL.length){grid.innerHTML='<p style="color:var(--stone);text-align:center;padding:2rem;">Henüz yazı eklenmemiş.</p>';return;}
   grid.innerHTML=BL.map((p,i)=>{
     const hi=p.img&&p.img.length>10;
-    return `<article class="blog-card" onclick="openBlogDetail(${i})" itemscope itemtype="https://schema.org/BlogPosting">
+    return `<article class="blog-card" onclick="window.location.href='/blog.html'" itemscope itemtype="https://schema.org/BlogPosting">
       <div class="blog-card-img">
         ${hi?`<img loading="lazy" src="${p.img}" alt="${p.title}">`:`<div class="blog-card-emoji">${p.emoji||'📝'}</div>`}
         <span class="blog-card-cat">${p.cat||'Blog'}</span>

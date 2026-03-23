@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Perde Rehberi — Perdekolay Kadikoy</title>
+  <meta name="description" content="Perde secimi, bakimi ve dekorasyon ipuclari. Perdekolay uzman ekibinden pratik rehberler.">
+  <link rel="canonical" href="https://www.perdekolay.com/blog.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%232c2620'/><text y='72' x='50' text-anchor='middle' font-size='62' font-family='Georgia,serif' fill='%23b8965a'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5R2QDMR1BJ"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js',new Date());gtag('config','G-5R2QDMR1BJ');
+  </script>
+  <style>
+    :root{--dark:#2c2620;--sand:#f5f0e8;--linen:#ede7d8;--silk:#d4c9b0;--stone:#9e9080;--gold:#b8965a;--gold-light:#d4b278;--white:#fdfcf9;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Jost',sans-serif;background:var(--sand);color:var(--dark);line-height:1.7;}
+    header{position:sticky;top:0;z-index:100;background:rgba(245,240,232,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,90,.15);display:flex;align-items:center;justify-content:space-between;padding:.9rem 5vw;}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--dark);text-decoration:none;}
+    .logo span{color:var(--gold);}
+    .back-link{font-size:.78rem;color:var(--stone);text-decoration:none;transition:color .2s;}
+    .back-link:hover{color:var(--gold);}
+    .wa-btn-h{background:var(--gold);color:#fff;border:none;padding:.5rem 1.2rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;text-decoration:none;}
+    .blog-hero{background:var(--dark);padding:5rem 5vw 4rem;text-align:center;}
+    .blog-hero-tag{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+    .blog-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:300;color:var(--sand);margin-bottom:.8rem;}
+    .blog-hero p{font-size:.95rem;color:rgba(212,200,176,.7);max-width:480px;margin:0 auto;}
+    .filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;padding:1.2rem 5vw;background:var(--white);border-bottom:1px solid rgba(184,150,90,.1);position:sticky;top:57px;z-index:90;}
+    .filter-btn{padding:.38rem .9rem;border-radius:20px;border:1px solid var(--silk);background:transparent;font-family:'Jost',sans-serif;font-size:.76rem;font-weight:600;color:var(--stone);cursor:pointer;transition:all .2s;}
+    .filter-btn.active,.filter-btn:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+    .post-count{margin-left:auto;font-size:.75rem;color:var(--stone);}
+    .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;padding:3rem 5vw;max-width:1200px;margin:0 auto;}
+    .blog-card{background:var(--white);border:1px solid var(--linen);cursor:pointer;transition:all .3s;display:block;text-decoration:none;}
+    .blog-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(44,38,32,.1);border-color:rgba(184,150,90,.3);}
+    .blog-card-img{width:100%;aspect-ratio:16/9;background:var(--linen);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;}
+    .blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+    .blog-card:hover .blog-card-img img{transform:scale(1.04);}
+    .blog-emoji{font-size:3rem;}
+    .blog-cat{position:absolute;top:.6rem;left:.6rem;font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--dark);color:var(--gold-light);padding:.25rem .6rem;}
+    .blog-card-body{padding:1.2rem;}
+    .blog-meta{font-size:.7rem;color:var(--stone);margin-bottom:.5rem;}
+    .blog-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--dark);line-height:1.3;margin-bottom:.6rem;}
+    .blog-excerpt{font-size:.84rem;color:var(--stone);line-height:1.7;margin-bottom:.8rem;}
+    .blog-read{font-size:.75rem;font-weight:600;color:var(--gold);}
+    .detail-overlay{display:none;position:fixed;inset:0;background:rgba(245,240,232,.98);z-index:500;overflow-y:auto;}
+    .detail-overlay.open{display:block;}
+    .detail-close{position:fixed;top:1rem;right:1rem;z-index:501;width:42px;height:42px;background:var(--white);border:1px solid var(--silk);color:var(--dark);cursor:pointer;font-size:1.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(44,38,32,.1);}
+    .detail-close:hover{background:var(--dark);color:var(--white);}
+    .detail-inner{max-width:720px;margin:0 auto;padding:4rem 5vw 5rem;}
+    .detail-meta{font-size:.72rem;color:var(--stone);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;}
+    .detail-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--dark);margin-bottom:1.5rem;line-height:1.2;}
+    .detail-img{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:2rem;}
+    .detail-body{font-size:.96rem;color:var(--stone);line-height:1.9;}
+    .detail-body h2,.detail-body h3{font-family:'Cormorant Garamond',serif;color:var(--dark);margin:1.8rem 0 .6rem;font-weight:400;}
+    .detail-body h2{font-size:1.6rem;}.detail-body h3{font-size:1.3rem;}
+    .detail-body p{margin-bottom:1.2rem;}
+    .detail-body ul,.detail-body ol{padding-left:1.5rem;margin-bottom:1.2rem;}
+    .detail-body li{margin-bottom:.4rem;}
+    .detail-cta{margin-top:3rem;padding:2rem;background:var(--dark);text-align:center;}
+    .detail-cta p{color:var(--silk);font-size:.9rem;margin-bottom:1rem;}
+    .detail-cta a{display:inline-block;background:var(--gold);color:#fff;padding:.85rem 2.5rem;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:700;text-decoration:none;}
+    .loading{text-align:center;padding:5rem;color:var(--stone);font-size:.9rem;}
+    .empty{text-align:center;padding:5rem 2rem;color:var(--stone);}
+    footer{background:var(--dark);color:rgba(212,200,176,.5);text-align:center;padding:2.5rem 5vw;font-size:.78rem;}
+    footer a{color:var(--gold-light);text-decoration:none;}
+    @media(max-width:900px){.blog-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:580px){.blog-grid{grid-template-columns:1fr;gap:1rem;padding:1.5rem 4vw;}.filter-bar{top:53px;}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">Perdekolay<span>.</span></a>
+  <a href="/" class="back-link">&#8592; Ana Sayfa</a>
+  <a href="/tesekkurler.html" class="wa-btn-h" onclick="sessionStorage.setItem('wa_msg','Merhaba, perde hakkinda bilgi almak istiyorum.')">&#128172; WhatsApp</a>
+</header>
+
+<div class="blog-hero">
+  <div class="blog-hero-tag">&#10022; Perde Rehberi</div>
+  <h1>Bilgi <em>Koesesi</em></h1>
+  <p>Dogru perde secimi, bakim ipuclari ve dekorasyon fikirleri</p>
+</div>
+
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-btn active" onclick="filterBy('tumu',this)">Tumu</button>
+  <span class="post-count" id="post-count"></span>
+</div>
+
+<main id="blog-main"><div class="loading">Yukleniyor...</div></main>
+
+<div class="detail-overlay" id="detail-overlay">
+  <button class="detail-close" onclick="closeDetail()">&#10005;</button>
+  <div class="detail-inner" id="detail-inner"></div>
+</div>
+
+<footer>
+  <p style="margin-bottom:.5rem;"><a href="/">perdekolay.com</a> &middot; Kadikoy, Istanbul</p>
+  &copy; 2025 Perdekolay &mdash; Tum haklari saklidir.
+</footer>
+
+<script>
+var SB_URL='https://pytcoilrbjokizjascya.supabase.co';
+var SB_KEY='sb_publishable_w1pJ83Cv87Si-xI5PrE6ZQ_DZr5JiuN';
+var posts=[];
+var activeFilter='tumu';
+
+var DEFAULT_POSTS=[
+  {id:1,title:"Dogru Perde Nasil Secilir?",cat:"Rehber",emoji:"window",img:"",
+   excerpt:"Evinize uygun perdeyi secmek icin dikkat etmeniz gereken 5 temel nokta.",
+   body:"<h3>Odanin Isigini Dusunun</h3><p>Guney cepheli odalarda isi ve isik kontrolu icin fon perde tercih edin.</p><h3>Kumasa Agirligi Onemli</h3><p>Yuksek tavanli mekanlarda agir kadife perdeler derinlik hissi yaratir.</p>",
+   tarih:"2025-01-15",okuma:3},
+  {id:2,title:"Perde Bakimi ve Yikama Rehberi",cat:"Bakim",emoji:"star",img:"",
+   excerpt:"Perdelerinizin omrunu uzatmak icin dogru bakim ve yikama teknikleri.",
+   body:"<h3>Tul Perdeler</h3><p>Tul perdeler 30 derecede hassas programda yikanabilir.</p><h3>Fon Perdeler</h3><p>Kadife perdeler kuru temizleme onerilir.</p>",
+   tarih:"2025-01-20",okuma:2},
+  {id:3,title:"Fon Perde ile Tulu Birlikte Kullanmak",cat:"Dekorasyon",emoji:"home",img:"",
+   excerpt:"Katmanli perde sistemi ile hem estetik hem fonksiyonel mekanlar yaratIn.",
+   body:"<h3>Katmanli Sistem Nedir?</h3><p>Tul ve fon perdenin birlikte kullanildigi bu sistem hem mahremiyet hem isik kontrolu saglar.</p>",
+   tarih:"2025-02-01",okuma:4}
+];
+
+function loadPosts(){
+  fetch(SB_URL+'/rest/v1/blog?select=*&order=id.desc',{
+    headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}
+  }).then(function(r){return r.json();})
+  .then(function(data){
+    if(data&&data.length>0){posts=data;}
+    else{posts=DEFAULT_POSTS;}
+    buildFilters();
+    renderPosts();
+  }).catch(function(){
+    posts=DEFAULT_POSTS;
+    buildFilters();
+    renderPosts();
+  });
+}
+
+function buildFilters(){
+  var cats=[];
+  posts.forEach(function(p){if(p.cat&&cats.indexOf(p.cat)<0)cats.push(p.cat);});
+  var bar=document.getElementById('filter-bar');
+  var countEl=document.getElementById('post-count');
+  cats.forEach(function(cat){
+    var btn=document.createElement('button');
+    btn.className='filter-btn';
+    btn.textContent=cat;
+    btn.onclick=function(){filterBy(cat,btn);};
+    bar.insertBefore(btn,countEl);
+  });
+  updateCount();
+}
+
+function filterBy(cat,btn){
+  activeFilter=cat;
+  var btns=document.querySelectorAll('.filter-btn');
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove('active');
+  if(btn)btn.classList.add('active');
+  renderPosts();
+  updateCount();
+}
+
+function updateCount(){
+  var filtered=activeFilter==='tumu'?posts:posts.filter(function(p){return p.cat===activeFilter;});
+  var el=document.getElementById('post-count');
+  if(el)el.textContent=filtered.length+' yazi';
+}
+
+function renderPosts(){
+  var filtered=activeFilter==='tumu'?posts:posts.filter(function(p){return p.cat===activeFilter;});
+  var main=document.getElementById('blog-main');
+  if(!filtered||!filtered.length){
+    main.innerHTML='<div class="empty"><p>Bu kategoride yazi bulunamadi.</p></div>';
+    return;
+  }
+  var html='<div class="blog-grid">';
+  for(var i=0;i<filtered.length;i++){
+    var p=filtered[i];
+    var realIdx=posts.indexOf(p);
+    var hasImg=p.img&&p.img.length>10;
+    html+='<article class="blog-card" onclick="openPost('+realIdx+')">';
+    html+='<div class="blog-card-img">';
+    if(hasImg){html+='<img loading="lazy" src="'+p.img+'" alt="'+p.title+'">';}
+    else{html+='<div class="blog-emoji">'+(p.emoji||'&#128196;')+'</div>';}
+    html+='<span class="blog-cat">'+(p.cat||'Blog')+'</span>';
+    html+='</div>';
+    html+='<div class="blog-card-body">';
+    html+='<div class="blog-meta">'+(p.tarih||'')+' &middot; '+(p.okuma||3)+' dk okuma</div>';
+    html+='<div class="blog-title">'+p.title+'</div>';
+    html+='<div class="blog-excerpt">'+(p.excerpt||'')+'</div>';
+    html+='<span class="blog-read">Devamini Oku &rarr;</span>';
+    html+='</div></article>';
+  }
+  html+='</div>';
+  main.innerHTML=html;
+}
+
+function openPost(i){
+  var p=posts[i];
+  if(!p)return;
+  var inner=document.getElementById('detail-inner');
+  var html='<div class="detail-meta">'+(p.cat||'Blog')+' &middot; '+(p.tarih||'')+' &middot; '+(p.okuma||3)+' dk okuma</div>';
+  html+='<h1 class="detail-title">'+p.title+'</h1>';
+  if(p.img&&p.img.length>10){html+='<img class="detail-img" src="'+p.img+'" alt="'+p.title+'">';}
+  html+='<div class="detail-body">'+(p.body||p.excerpt||'')+'</div>';
+  html+='<div class="detail-cta"><p>Perdenizi evinizde gorerek secin &mdash; ucretsiz olcu ve montaj</p>';
+  html+='<a href="/tesekkurler.html" onclick="sessionStorage.setItem(&quot;wa_msg&quot;,&quot;Merhaba, perde hakkinda bilgi almak istiyorum.&quot;)">&#128172; Randevu Al</a></div>';
+  inner.innerHTML=html;
+  var overlay=document.getElementById('detail-overlay');
+  overlay.classList.add('open');
+  overlay.scrollTop=0;
+  document.body.style.overflow='hidden';
+  if(window.gtag)gtag('event','blog_read',{post_title:p.title});
+}
+
+function closeDetail(){
+  document.getElementById('detail-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDetail();});
+
+loadPosts();
+</script>
+</body>
+</html>
