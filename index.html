@@ -699,6 +699,69 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 .bm-img{width:100%;height:160px;background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;margin-bottom:.8rem;}
 .bm-img img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:600px){.ap-fr{grid-template-columns:1fr;}}
+
+/* ===== HEADER RESPONSIVE ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 5vw;
+  background:rgba(245,240,232,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(184,150,90,.12);
+  transition:box-shadow .3s;
+}
+header.scrolled{box-shadow:0 2px 16px rgba(44,38,32,.1);}
+.logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:300;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dark);cursor:pointer;
+}
+.logo span{color:var(--gold);}
+nav{display:flex;gap:2rem;align-items:center;}
+nav a{
+  font-size:.75rem;font-weight:500;color:var(--stone);
+  cursor:pointer;transition:color .2s;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;
+}
+nav a:hover{color:var(--gold);}
+.header-right{display:flex;align-items:center;gap:.8rem;}
+.header-cta{
+  background:var(--gold);color:#fff;border:none;
+  padding:.5rem 1.2rem;font-family:'Jost',sans-serif;
+  font-size:.78rem;font-weight:600;cursor:pointer;
+  transition:background .2s;white-space:nowrap;
+}
+.header-cta:hover{background:var(--gold-light);}
+
+/* Hamburger */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;
+  padding:.4rem;
+}
+.hamburger span{
+  display:block;width:24px;height:2px;
+  background:var(--dark);transition:all .3s;border-radius:2px;
+}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media(max-width:700px){
+  .hamburger{display:flex;}
+  nav{
+    display:none;
+    position:fixed;top:57px;left:0;right:0;bottom:0;
+    background:rgba(245,240,232,.98);
+    flex-direction:column;align-items:center;justify-content:center;
+    gap:2.5rem;z-index:99;
+    backdrop-filter:blur(12px);
+  }
+  nav.mobile-open{display:flex;}
+  nav a{font-size:1.1rem;letter-spacing:.12em;}
+  .header-cta{display:none;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -820,15 +883,19 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 
 <!-- HEADER -->
 <header>
-  <div class="logo" id="site-logo-el">PERLA<span>.</span></div>
-  <nav>
-    <a id="nav-1" onclick="sTo('.products-section')">Ürünler</a>
-    <a id="nav-2" onclick="sTo('.calc-section')">Fiyat Hesapla</a>
-    <a id="nav-blog" onclick="sTo('.blog-section')">Blog</a>
-    <a id="nav-3" onclick="sTo('.blog-section')">Blog</a>
-    <a id="nav-4" onclick="sTo('.contact-section')">İletişim</a>
+  <div class="logo" id="site-logo-el" id2="header-logo-el">Perdekolay<span>.</span></div>
+  <nav id="main-nav">
+    <a id="nav-1" onclick="sTo('.products-section');closeMobileNav()">Ürünler</a>
+    <a id="nav-2" onclick="sTo('.calc-section');closeMobileNav()">Fiyat Hesapla</a>
+    <a id="nav-3" onclick="sTo('.blog-section');closeMobileNav()">Blog</a>
+    <a id="nav-4" onclick="sTo('.contact-section');closeMobileNav()">İletişim</a>
   </nav>
-  <button class="header-cta" id="header-cta-btn" onclick="openWA()">💬 WhatsApp</button>
+  <div class="header-right">
+    <button class="header-cta" id="header-cta-btn" onclick="openWA()">💬 WhatsApp</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- HERO -->
@@ -1635,6 +1702,22 @@ let odaSayac=1,selTab='tumu';
 let odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];
 
 // ===== HELPERS =====
+
+function toggleMobileNav(){
+  const nav=el('main-nav');
+  const btn=el('hamburger');
+  if(!nav)return;
+  const open=nav.classList.toggle('mobile-open');
+  if(btn)btn.classList.toggle('active',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobileNav(){
+  const nav=el('main-nav');
+  const btn=el('hamburger');
+  if(nav)nav.classList.remove('mobile-open');
+  if(btn)btn.classList.remove('active');
+  document.body.style.overflow='';
+}
 function sTo(sel){document.querySelector(sel)?.scrollIntoView({behavior:'smooth'});}
 function ytId(url){const m=(url||'').match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null;}
 function ytThumb(url){const id=ytId(url);return id?`https://img.youtube.com/vi/${id}/hqdefault.jpg`:null;}
@@ -1804,8 +1887,8 @@ function applyTexts(){
   const cb1=el('ct-btn1');if(cb1)cb1.textContent=TX.ctBtn1||'💬 WhatsApp ile Yaz';
   const cb2=el('ct-btn2');if(cb2)cb2.textContent=TX.ctBtn2||'📅 Randevu Al';
   // Header logo
-  const hl=el('header-logo-el')||document.querySelector('.header-logo');
-  if(hl)hl.textContent=S.logo||'Perdekolay';
+  const hl=el('site-logo-el')||el('header-logo-el')||document.querySelector('.logo');
+  if(hl){const span=hl.querySelector('span');const txt=S.logo||'Perdekolay';hl.textContent=txt;if(span){hl.appendChild(span);}}
 }
 
 function el(id){return document.getElementById(id);}
@@ -2967,7 +3050,7 @@ async function toggleSection(sec,val){
 }
 function saveHeroVideo(){S.heroVideo=el('set-video').value.trim();lsSet(LS.S,S);applySettings();apToast('Video kaydedildi ✓');}
 async function saveHeroText(){S.heroEyebrow=el('set-eyebrow').value;S.heroTitle=el('set-htitle').value;S.heroSub=el('set-hsub').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();apToast('Hero metinleri kaydedildi ✓');}
-function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set-stitle').value;S.bgText=el('set-bgtext').value;lsSet(LS.S,S);applySettings();apToast('Site bilgileri kaydedildi ✓');}
+async function saveSiteInfo(){S.logo=el('set-logo').value||'Perdekolay';S.siteTitle=el('set-stitle').value;S.bgText=el('set-bgtext').value;lsSet(LS.S,S);applySettings();await sbSaveAyarlar();apToast('Site bilgileri kaydedildi ✓');}
 
 // ===== ADIMLAR =====
 function fillAdimlar(){
