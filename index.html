@@ -912,7 +912,7 @@ nav a:hover{color:var(--gold);}
   <div class="hero-video-wrap" id="hero-video-wrap">
     <div class="hero-video-placeholder"><span>🎬</span><p>Tanıtım Videosu</p></div>
   </div>
-  <div class="hero-bg-text" id="hero-bg-text">PERLA</div>
+  <div class="hero-bg-text" id="hero-bg-text">Perdekolay</div>
 </div>
 
 <!-- PROCESS -->
@@ -1622,7 +1622,7 @@ const DS={
   heroVideo:'',heroEyebrow:'✦ El Seçimi Kumaş & Tül Koleksiyonu',
   heroTitle:'Mekanınıza <em>Zarafet</em><br>Katın.',
   heroSub:"Özel ölçü kesimi, ithal kumaşlar ve Türkiye'nin en ince tülleri ile hayalinizdeki perdeyi birlikte tasarlayalım.",
-  logo:'Perdekolay',siteTitle:'PERLA — Perde & Kumaş',bgText:'PERLA',
+  logo:'Perdekolay',siteTitle:'PERLA — Perde & Kumaş',bgText:'Perdekolay',
   tel:'05078859455',wa:'05078859455',email:'info@perla.com.tr',adres:'Şemsettin Günaltay Cad. Kaptan Arif Sok. No:61/A Kadıköy / İstanbul',
   waMsg:'Merhaba, perde hakkında bilgi almak istiyorum.',
   footer:'© 2025 PERLA Perde & Kumaş — Tüm hakları saklıdır.',
@@ -3243,7 +3243,7 @@ async function initApp(){
     window.__pixelsInjected=false;
     // Hero metinlerini güncelle
     if(!S.heroTitle||S.heroTitle.includes('Evinize<br><em>Zarafet</em>')||S.heroTitle.includes('Mekanınıza Konforla')){
-      S.heroTitle=DS.heroTitle;S.heroEyebrow=DS.heroEyebrow;S.heroSub=DS.heroSub;
+      S.heroTitle=DS.heroTitle;S.heroEyebrow=DS.heroEyebrow;S.heroSub=DS.heroSub;if(S.bgText==='PERLA')S.bgText='Perdekolay';if(S.logo==='PERLA')S.logo='Perdekolay';
       lsSet(LS.S,S);
     }
     applyTheme();applySettings();applyTexts();renderProcess();renderProducts();renderStep3Tuller();renderGallery();renderBlog();injectPixels();
