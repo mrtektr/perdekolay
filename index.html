@@ -921,12 +921,7 @@ nav a:hover{color:var(--gold);}
 <section class="process-section">
   <div class="section-tag" id="proc-tag">Nasıl Çalışıyoruz</div>
   <div class="section-title" id="proc-title">Dört Adımda <em>Mükemmellik</em></div>
-  <div class="process-grid" id="process-grid">
-    <div class="process-item"><div class="process-num">01</div><div class="process-icon">📞</div><div class="process-name">Randevu Alın</div><div class="process-desc">WhatsApp veya telefon ile iletişime geçin.</div></div>
-    <div class="process-item"><div class="process-num">02</div><div class="process-icon">🏠</div><div class="process-name">Evinize Geliyoruz</div><div class="process-desc">Tülleri evinize getirip salonunuza asıyoruz.</div></div>
-    <div class="process-item"><div class="process-num">03</div><div class="process-icon">✂️</div><div class="process-name">Özel Dikim</div><div class="process-desc">Ölçünüze özel 3-5 iş gününde hazırlanır.</div></div>
-    <div class="process-item"><div class="process-num">04</div><div class="process-icon">🔧</div><div class="process-name">Ücretsiz Montaj</div><div class="process-desc">Ekibimiz gelir, takar, işiniz biter.</div></div>
-  </div>
+  <div class="process-grid" id="process-grid"></div>
 </section>
 
 <!-- PRODUCTS -->
@@ -1787,22 +1782,7 @@ function applySettings(){
   // Process
   const pt=el('proc-tag');if(pt)pt.textContent=S.procTag;
   const ptl=el('proc-title');if(ptl)ptl.innerHTML=S.procTitle;
-  // İş akışı adımları
-  [1,2,3,4,5,6].forEach(i=>{
-    const sec=el('story-step'+i);if(!sec)return;
-    const h2=sec.querySelector('h2');
-    const p=sec.querySelector('p.fs-sub,p.fs-sub-dark');
-    const bg=sec.querySelector('.fs-bg');
-    if(h2&&S['step'+i+'Title'])h2.innerHTML=S['step'+i+'Title'];
-    if(p&&S['step'+i+'Text'])p.innerHTML=S['step'+i+'Text'];
-    if(bg&&S['step'+i+'Bg']){
-      bg.style.backgroundImage=`url('${S['step'+i+'Bg']}')`;
-      bg.style.backgroundSize='cover';
-      bg.style.backgroundPosition='center';
-    } else if(bg){
-      bg.style.backgroundImage='';
-    }
-  });
+  // step verileri renderProcess() tarafından kullanılıyor
   // Sections
   ['prod-tag-el','prod-tag2-el'].forEach(e=>{const x=el(e);if(x)x.textContent=S.prodTag;});
   ['prod-title-el','prod-title2-el'].forEach(e=>{const x=el(e);if(x)x.innerHTML=S.prodTitle;});
@@ -1872,14 +1852,30 @@ function el(id){return document.getElementById(id);}
 // ===== PROCESS RENDER =====
 function renderProcess(){
   const pg=el('process-grid');if(!pg)return;
-  const data=(P&&P.length>0)?P:DP;
-  pg.innerHTML=data.map((p,i)=>`
-    <div class="process-item">
-      <div class="process-num">0${i+1}</div>
-      <div class="process-icon">${p.icon}</div>
-      <div class="process-name">${p.name}</div>
-      <div class="process-desc">${p.desc}</div>
-    </div>`).join('');
+  // S.step verileri varsa onları kullan, yoksa DP'ye dön
+  const steps=[1,2,3,4,5,6];
+  const hasStepData=S.step1Title&&S.step1Title.length>0;
+  if(hasStepData){
+    const icons=['🏠','🪟','👁️','✂️','🔧','✨'];
+    pg.innerHTML=steps.map(i=>{
+      const title=(S['step'+i+'Title']||'').replace(/<[^>]+>/g,'');
+      const text=S['step'+i+'Text']||'';
+      return '<div class="process-item">'+
+        '<div class="process-num">0'+i+'</div>'+
+        '<div class="process-icon">'+icons[i-1]+'</div>'+
+        '<div class="process-name">'+title+'</div>'+
+        '<div class="process-desc">'+text+'</div>'+
+        '</div>';
+    }).join('');
+  } else {
+    const data=(P&&P.length>0)?P:DP;
+    pg.innerHTML=data.map((p,i)=>'<div class="process-item">'+
+      '<div class="process-num">0'+(i+1)+'</div>'+
+      '<div class="process-icon">'+p.icon+'</div>'+
+      '<div class="process-name">'+p.name+'</div>'+
+      '<div class="process-desc">'+p.desc+'</div>'+
+      '</div>').join('');
+  }
 }
 
 // ===== PRODUCTS =====
