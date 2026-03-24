@@ -1902,7 +1902,9 @@ function el(id){return document.getElementById(id);}
 
 // ===== PROCESS RENDER =====
 function renderProcess(){
-  const pg=el('process-grid');if(!pg)return;pg.innerHTML=P.map((p,i)=>`
+  const pg=el('process-grid');if(!pg)return;
+  const data=(P&&P.length>0)?P:DP;
+  pg.innerHTML=data.map((p,i)=>`
     <div class="process-item">
       <div class="process-num">0${i+1}</div>
       <div class="process-icon">${p.icon}</div>
@@ -3278,7 +3280,7 @@ async function initApp(){
       }
       if(d.KN){KN=d.KN;lsSet(LS.KN,KN);}
       if(d.TX){TX={...DTX,...d.TX};lsSet(LS.TX,TX);}
-      if(d.P){P=d.P;lsSet(LS.P,P);}
+      if(d.P&&Array.isArray(d.P)&&d.P.length>0){P=d.P;lsSet(LS.P,P);}
       if(d.TH){TH={...TH,...d.TH};lsSet(LS.TH,TH);}
     }
     window.__pixelsInjected=false;
