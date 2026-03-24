@@ -762,6 +762,44 @@ nav a:hover{color:var(--gold);}
   nav a{font-size:1.1rem;letter-spacing:.12em;}
   .header-cta{display:none;}
 }
+
+/* ===== SCROLL EXPERIENCE ===== */
+.scroll-experience{}
+.fs-section{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.fs-bg{position:absolute;inset:0;}
+.fs-bg-dark{background:var(--dark);}
+.fs-bg-sand{background:var(--sand);}
+.fs-content{position:relative;z-index:2;width:100%;max-width:1100px;padding:6rem 5vw;margin:0 auto;}
+.fs-content-center{text-align:center;display:flex;flex-direction:column;align-items:center;}
+.fs-content-split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.fs-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.1;color:var(--sand);margin-bottom:1.5rem;}
+.fs-headline em{font-style:italic;color:var(--gold-light);}
+.fs-headline-dark{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,4.5vw,4rem);font-weight:300;line-height:1.15;color:var(--dark);margin-bottom:1rem;}
+.fs-headline-dark em{font-style:italic;color:var(--gold);}
+.fs-sub{font-size:1rem;font-weight:300;color:rgba(212,200,176,.8);line-height:1.9;max-width:560px;margin-bottom:2rem;}
+.fs-sub-dark{font-size:.95rem;color:var(--stone);line-height:1.9;margin-bottom:1.5rem;}
+.step-number{font-family:'Cormorant Garamond',serif;font-size:clamp(6rem,14vw,12rem);font-weight:300;color:rgba(184,150,90,.15);line-height:1;margin-bottom:-.5rem;}
+.step-number-dark{font-family:'Cormorant Garamond',serif;font-size:clamp(5rem,12vw,10rem);font-weight:300;color:rgba(184,150,90,.1);line-height:1;margin-bottom:-.3rem;}
+.step-chips{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
+.step-chip{padding:.4rem 1rem;border:1px solid rgba(184,150,90,.3);color:var(--gold-light);font-size:.72rem;letter-spacing:.1em;}
+.step-chips-dark{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;}
+.step-chip-dark{padding:.4rem 1rem;border:1px solid rgba(184,150,90,.25);color:var(--gold);font-size:.72rem;letter-spacing:.1em;}
+.step-checks{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem;align-items:flex-start;}
+.step-check{font-size:.9rem;color:rgba(212,200,176,.85);padding:.4rem 1rem;border-left:2px solid var(--gold);}
+.btn-gold-lg{padding:1rem 2.8rem;background:var(--gold);color:var(--dark);border:none;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .25s;margin-top:1.5rem;}
+.btn-gold-lg:hover{background:var(--gold-light);}
+.fabric-showcase{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.fabric-item{text-align:center;}
+.fabric-swatch{width:100%;aspect-ratio:3/4;border:1px solid rgba(184,150,90,.2);margin-bottom:.4rem;background:var(--linen);}
+.fabric-item span{font-size:.68rem;font-weight:600;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;}
+.fabric-price{display:block;font-size:.68rem;color:var(--gold);}
+@media(max-width:768px){
+  .fs-section{min-height:auto;padding:0;}
+  .fs-content{padding:4rem 5vw 3rem;}
+  .fs-content-split{grid-template-columns:1fr;gap:2rem;}
+  .fs-headline{font-size:clamp(2.5rem,9vw,4rem);}
+  .split-visual{order:-1;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -916,6 +954,86 @@ nav a:hover{color:var(--gold);}
   </div>
   <div class="hero-bg-text" id="hero-bg-text">Perdekolay</div>
 </div>
+
+
+<!-- SCROLL EXPERIENCE - İŞ AKIŞI ADIM BÖLÜMLERİ -->
+<div class="scroll-experience">
+
+  <!-- ADIM 1 -->
+  <section class="fs-section fs-step fs-dark" id="story-step1">
+    <div class="fs-bg fs-bg-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number">01</div>
+      <h2 class="fs-headline" id="step1-h">Evinize<br><em>geliyoruz.</em></h2>
+      <p class="fs-sub" id="step1-p">Randevu alıyorsunuz, biz geliyor ve mekanınızı yerinde görüyoruz.</p>
+      <div class="step-chips">
+        <span class="step-chip">📍 Kadıköy ve çevresi</span>
+        <span class="step-chip">🕐 Randevuya göre</span>
+        <span class="step-chip">💰 Ücretsiz ölçü alma</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADIM 2 -->
+  <section class="fs-section fs-step fs-light" id="story-step2">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split">
+      <div class="split-text">
+        <div class="step-number-dark">02</div>
+        <h2 class="fs-headline-dark" id="step2-h">En çok tercih edilen <em>tülleri</em> salonunuza asıyoruz.</h2>
+        <p class="fs-sub-dark" id="step2-p">Yüzlerce çeşit arasından önceden elediğimiz, mekanınıza uyacağına inandığımız modelleri evinizde deneyimliyorsunuz.</p>
+      </div>
+      <div class="split-visual" id="step3-tul-showcase">
+        <div class="fabric-showcase" id="step3-tul-showcase-inner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADIM 3 -->
+  <section class="fs-section fs-step fs-dark" id="story-step3">
+    <div class="fs-bg fs-bg-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number">03</div>
+      <h2 class="fs-headline" id="step3-h">Görüyorsunuz,<br><em>beğeniyorsunuz,</em><br>alıyorsunuz.</h2>
+      <p class="fs-sub" id="step3-p">Tahmin değil, gerçek. Evinizin ışığında, duvarlarınızın renginde görerek karar veriyorsunuz.</p>
+      <div class="step-checks">
+        <div class="step-check">✓ Evinizde deneyimleyin</div>
+        <div class="step-check">✓ Doğal ışıkla görün</div>
+        <div class="step-check">✓ Emin olarak seçin</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADIM 4 -->
+  <section class="fs-section fs-step fs-light" id="story-step4">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split">
+      <div class="split-text">
+        <div class="step-number-dark">04</div>
+        <h2 class="fs-headline-dark" id="step4-h">Ölçünüze özel <em>dikiyoruz.</em></h2>
+        <p class="fs-sub-dark" id="step4-p">Standart beden yok. Her perde, tam pencerenize göre kesilip dikilir.</p>
+        <div class="step-chips-dark">
+          <span class="step-chip-dark">✂️ Özel ölçü kesim</span>
+          <span class="step-chip-dark">🪡 El işi büzgü</span>
+          <span class="step-chip-dark">⏱️ 3-5 iş günü</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADIM 5 -->
+  <section class="fs-section fs-step fs-dark" id="story-step5">
+    <div class="fs-bg fs-bg-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number">05</div>
+      <h2 class="fs-headline" id="step5-h">Biz takıyoruz.<br><em>Ücretsiz.</em></h2>
+      <p class="fs-sub" id="step5-p">Matkap, vida, korniş… hepsi bizde. Siz sadece evinizde olun, gerisini biz halledelim.</p>
+      <button class="btn-gold-lg" onclick="openWA()">💬 Randevu Al — Ücretsiz</button>
+    </div>
+  </section>
+
+</div>
+<!-- END SCROLL EXPERIENCE -->
 
 <!-- PROCESS -->
 <section class="process-section">
@@ -1782,7 +1900,13 @@ function applySettings(){
   // Process
   const pt=el('proc-tag');if(pt)pt.textContent=S.procTag;
   const ptl=el('proc-title');if(ptl)ptl.innerHTML=S.procTitle;
-  // step verileri renderProcess() tarafından kullanılıyor
+  // İş akışı adımları - scroll sections
+  [1,2,3,4,5].forEach(function(i){
+    var h=el('step'+i+'-h');
+    var p=el('step'+i+'-p');
+    if(h&&S['step'+i+'Title'])h.innerHTML=S['step'+i+'Title'];
+    if(p&&S['step'+i+'Text'])p.innerHTML=S['step'+i+'Text'];
+  });
   // Sections
   ['prod-tag-el','prod-tag2-el'].forEach(e=>{const x=el(e);if(x)x.textContent=S.prodTag;});
   ['prod-title-el','prod-title2-el'].forEach(e=>{const x=el(e);if(x)x.innerHTML=S.prodTitle;});
@@ -1886,7 +2010,7 @@ function switchTab(tab,btn){
 }
 
 function renderStep3Tuller(){
-  const showcase=el('step3-tul-showcase');
+  const showcase=el('step3-tul-showcase-inner');
   if(!showcase)return;
   const items=T.length>0?T.slice(0,4):[];
   if(items.length===0){
