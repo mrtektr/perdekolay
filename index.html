@@ -800,6 +800,125 @@ nav a:hover{color:var(--gold);}
   .fs-headline{font-size:clamp(2.5rem,9vw,4rem);}
   .split-visual{order:-1;}
 }
+
+/* ===== SCROLL REVEAL & GEÇİŞ EFEKTLERİ ===== */
+
+/* Reveal up - aşağıdan yukarı */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+              transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Farklı gecikme değerleri */
+.reveal-section.delay-1 { transition-delay: 0.1s; }
+.reveal-section.delay-2 { transition-delay: 0.2s; }
+.reveal-section.delay-3 { transition-delay: 0.35s; }
+
+/* Section ayırıcı - ince çizgi efekti */
+.section-divider {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto;
+  transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+.section-divider.visible { width: 80%; }
+
+/* Hero parallax */
+.hero { will-change: transform; }
+
+/* Section başlık animasyonu */
+.section-tag, .section-title, .section-sub {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.section-animate .section-tag,
+.section-animate .section-title,
+.section-animate .section-sub {
+  opacity: 1;
+  transform: translateY(0);
+}
+.section-animate .section-title { transition-delay: 0.1s; }
+.section-animate .section-sub { transition-delay: 0.2s; }
+
+/* Ürün kartları stagger */
+.product-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              border-color 0.25s, box-shadow 0.25s;
+}
+.products-section.visible .product-card { opacity: 1; transform: translateY(0) scale(1); }
+.products-section.visible .product-card:nth-child(1) { transition-delay: 0.05s; }
+.products-section.visible .product-card:nth-child(2) { transition-delay: 0.12s; }
+.products-section.visible .product-card:nth-child(3) { transition-delay: 0.19s; }
+.products-section.visible .product-card:nth-child(4) { transition-delay: 0.26s; }
+.products-section.visible .product-card:nth-child(n+5) { transition-delay: 0.33s; }
+
+/* Process adımları stagger */
+.process-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.process-section.visible .process-item { opacity: 1; transform: translateY(0); }
+.process-section.visible .process-item:nth-child(1) { transition-delay: 0.1s; }
+.process-section.visible .process-item:nth-child(2) { transition-delay: 0.2s; }
+.process-section.visible .process-item:nth-child(3) { transition-delay: 0.3s; }
+.process-section.visible .process-item:nth-child(4) { transition-delay: 0.4s; }
+
+/* Blog kartları */
+.blog-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease,
+              border-color 0.3s, box-shadow 0.3s;
+}
+.blog-section.visible .blog-card { opacity: 1; transform: translateY(0); }
+.blog-section.visible .blog-card:nth-child(1) { transition-delay: 0.1s; }
+.blog-section.visible .blog-card:nth-child(2) { transition-delay: 0.2s; }
+.blog-section.visible .blog-card:nth-child(3) { transition-delay: 0.3s; }
+
+/* Galeri */
+.gallery-item {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.gallery-section.visible .gallery-item { opacity: 1; transform: scale(1); }
+.gallery-section.visible .gallery-item:nth-child(1) { transition-delay: 0.05s; }
+.gallery-section.visible .gallery-item:nth-child(2) { transition-delay: 0.15s; }
+.gallery-section.visible .gallery-item:nth-child(3) { transition-delay: 0.25s; }
+.gallery-section.visible .gallery-item:nth-child(4) { transition-delay: 0.35s; }
+
+/* Hesaplayıcı ve iletişim */
+.calc-section, .contact-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.calc-section.visible, .contact-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion - animasyonları kapat */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section, .section-tag, .section-title, .section-sub,
+  .product-card, .process-item, .blog-card, .gallery-item,
+  .calc-section, .contact-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1626,29 +1745,44 @@ nav a:hover{color:var(--gold);}
 // Header light/dark based on section
 function initScrollExperience() {
   const header = document.getElementById('site-header') || document.querySelector('header');
-  if(!header) return;
 
-  // Scroll → header shadow
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }, { passive: true });
+  // Header scroll gölgesi
+  if(header){
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
 
-  // Reveal animasyonları
-  const revealObserver = new IntersectionObserver((entries) => {
+  // Genel IntersectionObserver - visible class ekle
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && entry.target) {
+      if(entry.isIntersecting && entry.target){
         entry.target.classList.add('visible');
+        // Section başlıkları için de ekle
+        entry.target.classList.add('section-animate');
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
-  document.querySelectorAll('.reveal-up, .reveal-right').forEach(el => {
-    if(el) revealObserver.observe(el);
+  // Tüm section'ları izle
+  const targets = [
+    '.process-section','.products-section','.gallery-section',
+    '.blog-section','.calc-section','.contact-section',
+    '.hero-steps','.reveal-up','.reveal-right','.reveal-section'
+  ];
+  targets.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if(el) observer.observe(el);
+    });
   });
+
+  // Hero paralaks
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    if(!hero) return;
+    const scrolled = window.scrollY;
+    hero.style.backgroundPositionY = (scrolled * 0.3) + 'px';
+  }, { passive: true });
 }
 
 function scrollToSection(id) {
