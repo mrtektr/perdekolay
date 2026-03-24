@@ -1507,31 +1507,10 @@ nav a:hover{color:var(--gold);}
 
 // Header light/dark based on section
 function initScrollExperience() {
-  const header = document.getElementById('site-header');
-  const lightSections = document.querySelectorAll('.fs-step-light, .fs-problem, .fs-transition, .products-section, .gallery-section, .blog-section, .calc-section, .contact-section');
+  const header = document.getElementById('site-header') || document.querySelector('header');
+  if(!header) return;
 
-  // Intersection Observer for header style
-  const headerObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        header.classList.add('light-header');
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const darkSections = document.querySelectorAll('.fs-hero, .fs-step:not(.fs-step-light)');
-  const darkObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        header.classList.remove('light-header');
-      }
-    });
-  }, { threshold: 0.3 });
-
-  lightSections.forEach(s => headerObserver.observe(s));
-  darkSections.forEach(s => darkObserver.observe(s));
-
-  // Scroll → header background
+  // Scroll → header shadow
   window.addEventListener('scroll', () => {
     if (window.scrollY > 60) {
       header.classList.add('scrolled');
@@ -1540,33 +1519,18 @@ function initScrollExperience() {
     }
   }, { passive: true });
 
-  // Reveal animations on scroll
+  // Reveal animasyonları
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && entry.target) {
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.reveal-up, .reveal-right').forEach(el => {
-    revealObserver.observe(el);
+    if(el) revealObserver.observe(el);
   });
-
-  // Paralaks effect on bg elements
-  const parallaxBgs = document.querySelectorAll('.fs-bg-dark-pattern, .fs-bg-sand, .fs-bg-texture');
-  window.addEventListener('scroll', () => {
-    parallaxBgs.forEach(bg => {
-      const section = bg.closest('.fs-section');
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      const viewH = window.innerHeight;
-      if (rect.bottom < 0 || rect.top > viewH) return;
-      const progress = (viewH - rect.top) / (viewH + rect.height);
-      const offset = (progress - 0.5) * 80;
-      bg.style.transform = `translateY(${offset}px)`;
-    });
-  }, { passive: true });
 }
 
 function scrollToSection(id) {
