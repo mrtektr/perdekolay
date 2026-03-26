@@ -1657,7 +1657,7 @@ function hesapla(){
 function openAdminLogin(){el('admin-login').classList.add('open');el('lerr').textContent='';el('lu').value='';el('lp').value='';setTimeout(()=>el('lu').focus(),100);}
 function closeAdminLogin(){el('admin-login').classList.remove('open');}
 function doLogin(){
-  if(el('lu').value.trim()==='admin'&&el('lp').value==='perla2025'){closeAdminLogin();openAdminPanel();}
+  if(el('lu').value.trim()==='admin'&&el('lp').value==='Perde@Kadiköy#2025'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
 function openAdminPanel(){el('admin-panel').classList.add('open');apPage('dashboard',document.querySelector('.ap-ni'));}
