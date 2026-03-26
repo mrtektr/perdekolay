@@ -957,7 +957,7 @@ nav a:hover{color:var(--gold);}
 .fs-section {
   position: relative; min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
+  overflow: clip; /* clip yerine hidden kullanılırsa paralaks bloklanır */
 }
 .fs-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -1996,7 +1996,7 @@ function initScrollExperience() {
       const viewH = window.innerHeight;
       if (rect.bottom < 0 || rect.top > viewH) return;
       const progress = (viewH - rect.top) / (viewH + rect.height);
-      const offset = (progress - 0.5) * 80;
+      const offset = (progress - 0.5) * 120;
       bg.style.transform = `translateY(${offset}px)`;
     });
   }, { passive: true });
@@ -3741,7 +3741,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     setTimeout(()=>openAdminLogin(),500);
   }
   initApp();
-  setTimeout(initScrollExperience, 100);
+  setTimeout(initScrollExperience, 300);
   setTimeout(()=>{
     const ol=el('oda-list');
     if(ol&&odalar.length===0){odaSayac=1;odalar=[{id:1,genislik:'',tulIdx:0,buzguIdx:0,fonEn:null,fonKumasIdx:0,fonAdet:1}];}
