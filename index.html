@@ -105,7 +105,7 @@ nav a:hover{color:var(--dark);}
 .header-cta:hover{background:var(--accent);}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;padding:0 5vw;background:var(--sand);position:relative;overflow:clip;}
+.hero{min-height:100vh;display:flex;align-items:center;padding:0 5vw;background:var(--sand);position:relative;overflow:hidden;}
 .hero-bg-text{position:absolute;right:-2vw;bottom:-3vw;font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:300;color:rgba(184,150,90,.07);line-height:1;pointer-events:none;user-select:none;}
 .hero-content{position:relative;z-index:2;max-width:620px;}
 .hero-eyebrow{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards;}
@@ -615,7 +615,7 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
   .hero-step-arrow{display:none;}
   
   /* Scroll sections */
-  /* removed duplicate fs-section */
+  .fs-section{min-height:auto;padding:4rem 5vw 3rem;}
   .fs-content{padding:4rem 5vw 3rem;}
   .fs-headline{font-size:2rem;}
   .fs-headline-dark{font-size:1.8rem;}
@@ -765,8 +765,8 @@ nav a:hover{color:var(--gold);}
 
 /* ===== SCROLL EXPERIENCE ===== */
 .scroll-experience{}
-.fs-section{position:relative;min-height:100vh;display:flex;align-items:center;overflow:clip;}
-.fs-bg{position:absolute;inset:-15% 0;will-change:transform;}
+.fs-section{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.fs-bg{position:absolute;inset:0;}
 .fs-bg-dark{background:var(--dark);}
 .fs-bg-sand{background:var(--sand);}
 .fs-content{position:relative;z-index:2;width:100%;max-width:1100px;padding:6rem 5vw;margin:0 auto;}
@@ -794,7 +794,7 @@ nav a:hover{color:var(--gold);}
 .fabric-item span{font-size:.68rem;font-weight:600;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;}
 .fabric-price{display:block;font-size:.68rem;color:var(--gold);}
 @media(max-width:768px){
-  .fs-section{min-height:60vh;padding:3rem 5vw;}
+  .fs-section{min-height:auto;padding:0;}
   .fs-content{padding:4rem 5vw 3rem;}
   .fs-content-split{grid-template-columns:1fr;gap:2rem;}
   .fs-headline{font-size:clamp(2.5rem,9vw,4rem);}
@@ -1244,7 +1244,13 @@ nav a:hover{color:var(--gold);}
   </div>
 </section>
 
-
+<!-- BLOG -->
+<section class="blog-section" id="blog-section">
+  <div class="section-tag">Faydalı Bilgiler</div>
+  <div class="section-title">Perde <em>Rehberi</em></div>
+  <div class="section-sub">Perde seçimi, bakımı ve dekorasyon ipuçları hakkında uzman görüşleri.</div>
+  <div class="blog-grid" id="blog-grid"></div>
+</section>
 
 <!-- BLOG DETAIL MODAL -->
 <div class="blog-modal" id="blog-modal" onclick="closeBlogModal(event)">
@@ -1737,48 +1743,48 @@ nav a:hover{color:var(--gold);}
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
-function initScrollExperience(){
-  const header = document.getElementById('site-header')||document.querySelector('header');
+function initScrollExperience() {
+  const header = document.getElementById('site-header') || document.querySelector('header');
 
   // Header scroll gölgesi
   if(header){
-    window.addEventListener('scroll',()=>{
+    window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 60);
-    },{passive:true});
+    }, { passive: true });
   }
 
-  // Paralaks - fs-bg elementleri
-  const fsBgs = document.querySelectorAll('.fs-bg');
-  if(fsBgs.length > 0){
-    const doParallax = () => {
-      fsBgs.forEach(bg => {
-        const section = bg.parentElement;
-        if(!section) return;
-        const rect = section.getBoundingClientRect();
-        const vh = window.innerHeight;
-        if(rect.bottom < -100 || rect.top > vh + 100) return;
-        const progress = (vh - rect.top) / (vh + rect.height);
-        const offset = (progress - 0.5) * 120;
-        bg.style.transform = 'translateY(' + offset + 'px)';
-      });
-    };
-    window.addEventListener('scroll', doParallax, {passive:true});
-    doParallax(); // ilk render
-  }
-
-  // Reveal animasyonları
+  // Genel IntersectionObserver - visible class ekle
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting && entry.target){
         entry.target.classList.add('visible');
+        // Section başlıkları için de ekle
+        entry.target.classList.add('section-animate');
       }
     });
-  },{threshold:0.12});
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 
-  document.querySelectorAll(
-    '.products-section,.gallery-section,.blog-section,.calc-section,.contact-section,.process-section'
-  ).forEach(el=>{if(el)observer.observe(el);});
+  // Tüm section'ları izle
+  const targets = [
+    '.process-section','.products-section','.gallery-section',
+    '.blog-section','.calc-section','.contact-section',
+    '.hero-steps','.reveal-up','.reveal-right','.reveal-section'
+  ];
+  targets.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if(el) observer.observe(el);
+    });
+  });
+
+  // Hero paralaks
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    if(!hero) return;
+    const scrolled = window.scrollY;
+    hero.style.backgroundPositionY = (scrolled * 0.3) + 'px';
+  }, { passive: true });
 }
+
 function scrollToSection(id) {
   const el = document.getElementById(id) || document.querySelector('.' + id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
