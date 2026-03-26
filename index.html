@@ -919,6 +919,170 @@ nav a:hover{color:var(--gold);}
     transition: none !important;
   }
 }
+
+/* ===== PARALAKS EFEKTİ ===== */
+.hero { overflow: hidden; }
+
+.hero-parallax-bg {
+  position: absolute; inset: -20%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(184,150,90,.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(184,150,90,.05) 0%, transparent 50%);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.hero-parallax-circle {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+#hero-parallax-c1 {
+  width: 500px; height: 500px;
+  right: -100px; top: -100px;
+  background: radial-gradient(circle, rgba(184,150,90,.07) 0%, transparent 70%);
+}
+
+.hero-parallax-c2 {
+  width: 300px; height: 300px;
+  left: -80px; bottom: 50px;
+  background: radial-gradient(circle, rgba(184,150,90,.05) 0%, transparent 70%);
+}
+
+/* Hero content paralaks */
+.hero-content { will-change: transform; transition: transform 0.05s linear; }
+
+/* ===== SCROLL EXPERIENCE ===== */
+.fs-section {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.fs-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  will-change: transform;
+}
+.fs-bg-dark-pattern {
+  background: var(--dark);
+  background-image: 
+    radial-gradient(ellipse at 20% 80%, rgba(184,150,90,.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(184,150,90,.05) 0%, transparent 50%);
+}
+.fs-bg-sand {
+  background: var(--sand);
+  background-image:
+    radial-gradient(ellipse at 70% 30%, rgba(184,150,90,.12) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8965a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.fs-bg-texture {
+  background: var(--linen);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23b8965a' fill-opacity='0.05' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+.fs-overlay { position: absolute; inset: 0; pointer-events: none; }
+.fs-overlay-dark { background: rgba(20,15,10,.58); }
+.fs-overlay-light { background: rgba(245,240,232,.15); }
+
+/* Content layouts */
+.fs-content {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1200px;
+  padding: 8rem 6vw 6rem;
+}
+.fs-content-center { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.fs-content-split { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.fs-content-reverse { direction: rtl; }
+.fs-content-reverse > * { direction: ltr; }
+
+/* Typography */
+.fs-eyebrow {
+  font-size: .7rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--gold-light); margin-bottom: 1.5rem;
+}
+.fs-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 300; line-height: 1.05; color: #f5f0e8;
+  margin-bottom: 1.5rem;
+}
+.fs-headline em { font-style: italic; color: var(--gold-light); }
+.fs-headline-dark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  font-weight: 300; line-height: 1.1; color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+.fs-headline-dark em { font-style: italic; color: var(--gold); }
+.fs-sub {
+  font-size: 1rem; font-weight: 300; color: rgba(240,235,225,.75);
+  line-height: 1.9; max-width: 520px; margin-bottom: 2.5rem;
+}
+.fs-sub-dark {
+  font-size: .95rem; font-weight: 300; color: var(--stone);
+  line-height: 1.9; max-width: 480px; margin-bottom: 2rem;
+}
+.fs-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Step numbers */
+.step-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(6rem, 15vw, 14rem);
+  font-weight: 300; color: rgba(184,150,90,.15);
+  line-height: 1; margin-bottom: -1rem;
+  position: relative; z-index: 0;
+}
+.step-number-dark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  font-weight: 300; color: rgba(184,150,90,.12);
+  line-height: 1; margin-bottom: -.5rem;
+}
+
+/* Chips */
+.step-detail { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
+.step-chip {
+  padding: .45rem 1rem; border: 1px solid rgba(184,150,90,.3);
+  color: var(--gold-light); font-size: .72rem; letter-spacing: .12em;
+}
+.step-detail-dark { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; }
+.step-chip-dark {
+  padding: .45rem 1rem; border: 1px solid rgba(184,150,90,.25);
+  color: var(--gold); font-size: .72rem; letter-spacing: .12em;
+}
+
+/* Problem cards */
+.problem-card {
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(184,150,90,.15);
+  padding: 1.5rem; margin-bottom: 1rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  backdrop-filter: blur(8px);
+}
+.problem-icon { font-size: 1.5rem; flex-shrink: 0; }
+.problem-card p { color: var(--dark); font-size: .9rem; line-height: 1.6; margin: 0; }
+
+/* Fabric showcase */
+.fabric-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fabric-item { text-align: center; }
+.fabric-swatch {
+  width: 100%; aspect-ratio: 3/4;
+  border: 1px solid rgba(184,150,90,.2);
+  margin-bottom: .5rem;
+  transition: transform .3s;
+}
+.fabric-item:hover .fabric-swatch { transform: scale(1.02); }
+.fabric-item span { font-size: .7rem; letter-spacing: .12em; color: var(--stone); text-transform: uppercase; }
+
+/* Checkmarks */
+.checkmarks { display: flex; flex-direction: column; gap: .8rem; margin-top: 1rem; align-items: flex-start; }
+.checkmark-item {
+  font-size: .9rem; color: rgba(240,235,225,.9);
+  padding: .5rem 1.2rem; border-left: 2px solid var(--gold);
+}
+
+/* Window illustration */
+.measure-visual { position: relative; width: 260px; height: 320px; margin: 0 auto; }
+.window-illustrati
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1057,102 +1221,138 @@ nav a:hover{color:var(--gold);}
   </div>
 </header>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow" id="hero-eyebrow">✦ El Seçimi Kumaş & Tül Koleksiyonu</div>
-    <h1 id="hero-title">Mekanınıza <em>Zarafet</em><br>Katın.</h1>
-    <p class="hero-sub" id="hero-sub">Özel ölçü kesimi, ithal kumaşlar ve Türkiye'nin en ince tülleri ile hayalinizdeki perdeyi birlikte tasarlayalım.</p>
-    <div class="hero-actions">
-      <button class="btn-gold" id="hero-btn1" onclick="sTo('.calc-section')">Fiyat Hesapla</button>
-      <button class="btn-ghost" id="hero-btn2" onclick="sTo('.products-section')">Ürünleri Gör</button>
-    </div>
-  </div>
-  <div class="hero-video-wrap" id="hero-video-wrap">
-    <div class="hero-video-placeholder"><span>🎬</span><p>Tanıtım Videosu</p></div>
-  </div>
-  <div class="hero-bg-text" id="hero-bg-text">Perdekolay</div>
-</div>
-
-
-<!-- SCROLL EXPERIENCE - İŞ AKIŞI ADIM BÖLÜMLERİ -->
-<div class="scroll-experience">
-
-  <!-- ADIM 1 -->
-  <section class="fs-section fs-step fs-dark" id="story-step1">
-    <div class="fs-bg fs-bg-dark"></div>
+<!-- SCROLL EXPERIENCE -->
+<section class="fs-section fs-hero" id="story-hero">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark" style="background:rgba(20,15,10,.45);"></div>
     <div class="fs-content fs-content-center">
-      <div class="step-number">01</div>
-      <h2 class="fs-headline" id="step1-h">Evinize<br><em>geliyoruz.</em></h2>
-      <p class="fs-sub" id="step1-p">Randevu alıyorsunuz, biz geliyor ve mekanınızı yerinde görüyoruz.</p>
-      <div class="step-chips">
-        <span class="step-chip">📍 Kadıköy ve çevresi</span>
-        <span class="step-chip">🕐 Randevuya göre</span>
-        <span class="step-chip">💰 Ücretsiz ölçü alma</span>
-      </div>
+      
     </div>
-  </section>
+</section>
 
-  <!-- ADIM 2 -->
-  <section class="fs-section fs-step fs-light" id="story-step2">
-    <div class="fs-bg fs-bg-sand"></div>
+<section class="fs-section fs-problem" data-section="1" id="story-step1">
+    <div class="fs-bg fs-bg-texture"></div>
+    <div class="fs-overlay fs-overlay-light"></div>
     <div class="fs-content fs-content-split">
       <div class="split-text">
-        <div class="step-number-dark">02</div>
-        <h2 class="fs-headline-dark" id="step2-h">En çok tercih edilen <em>tülleri</em> salonunuza asıyoruz.</h2>
-        <p class="fs-sub-dark" id="step2-p">Yüzlerce çeşit arasından önceden elediğimiz, mekanınıza uyacağına inandığımız modelleri evinizde deneyimliyorsunuz.</p>
+        <div class="fs-eyebrow reveal-up" style="color:var(--gold);">Tanıdık mı geldi?</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">Yüzlerce çeşit<br>arasında <em>kaybolmak</em><br>zorunda değilsiniz.</h2>
+        <p class="fs-sub-dark reveal-up delay-2">Kumaş mağazasına girdiniz, seçenekler kafanızı karıştırdı. Evinize döndüğünüzde hangisinin uyacağından emin olamadınız.<br><br>Biz bunu biliyoruz. Bu yüzden farklı çalışıyoruz.</p>
       </div>
-      <div class="split-visual" id="step3-tul-showcase">
-        <div class="fabric-showcase" id="step3-tul-showcase-inner"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ADIM 3 -->
-  <section class="fs-section fs-step fs-dark" id="story-step3">
-    <div class="fs-bg fs-bg-dark"></div>
-    <div class="fs-content fs-content-center">
-      <div class="step-number">03</div>
-      <h2 class="fs-headline" id="step3-h">Görüyorsunuz,<br><em>beğeniyorsunuz,</em><br>alıyorsunuz.</h2>
-      <p class="fs-sub" id="step3-p">Tahmin değil, gerçek. Evinizin ışığında, duvarlarınızın renginde görerek karar veriyorsunuz.</p>
-      <div class="step-checks">
-        <div class="step-check">✓ Evinizde deneyimleyin</div>
-        <div class="step-check">✓ Doğal ışıkla görün</div>
-        <div class="step-check">✓ Emin olarak seçin</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ADIM 4 -->
-  <section class="fs-section fs-step fs-light" id="story-step4">
-    <div class="fs-bg fs-bg-sand"></div>
-    <div class="fs-content fs-content-split">
-      <div class="split-text">
-        <div class="step-number-dark">04</div>
-        <h2 class="fs-headline-dark" id="step4-h">Ölçünüze özel <em>dikiyoruz.</em></h2>
-        <p class="fs-sub-dark" id="step4-p">Standart beden yok. Her perde, tam pencerenize göre kesilip dikilir.</p>
-        <div class="step-chips-dark">
-          <span class="step-chip-dark">✂️ Özel ölçü kesim</span>
-          <span class="step-chip-dark">🪡 El işi büzgü</span>
-          <span class="step-chip-dark">⏱️ 3-5 iş günü</span>
+      <div class="split-visual reveal-right delay-1">
+        <div class="problem-card">
+          <div class="problem-icon">🏬</div>
+          <p>Mağazada beğendiğiniz, evde tutmadı</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">📏</div>
+          <p>Ölçü almak, montaj ayarlamak… hepsi sizin sorununuz oldu</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">😕</div>
+          <p>Yüzlerce çeşit arasından "doğru" olanı bulmak yordu</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ADIM 5 -->
-  <section class="fs-section fs-step fs-dark" id="story-step5">
-    <div class="fs-bg fs-bg-dark"></div>
+<section class="fs-section fs-step" data-section="2" id="story-step2">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
     <div class="fs-content fs-content-center">
-      <div class="step-number">05</div>
-      <h2 class="fs-headline" id="step5-h">Biz takıyoruz.<br><em>Ücretsiz.</em></h2>
-      <p class="fs-sub" id="step5-p">Matkap, vida, korniş… hepsi bizde. Siz sadece evinizde olun, gerisini biz halledelim.</p>
-      <button class="btn-gold-lg" onclick="openWA()">💬 Randevu Al — Ücretsiz</button>
+      <div class="step-number reveal-up">01</div>
+      <h2 class="fs-headline reveal-up delay-1"><em>Evinize</em> geliyoruz.</h2>
+      <p class="fs-sub reveal-up delay-2">Randevu alıyorsunuz, biz geliyor<br>ve mekanınızı yerinde görüyoruz.</p>
+      <div class="step-detail reveal-up delay-3">
+        <div class="step-chip">📍 Kadıköy ve çevresi</div>
+        <div class="step-chip">🕐 Randevuya göre</div>
+        <div class="step-chip">💰 Ücretsiz ölçü alma</div>
+      </div>
     </div>
   </section>
 
-</div>
-<!-- END SCROLL EXPERIENCE -->
+<section class="fs-section fs-step fs-step-light" data-section="3" id="story-step3">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split fs-content-reverse">
+      <div class="split-text">
+        <div class="step-number-dark reveal-up">02</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">En çok tercih<br>edilen <em>tülleri</em><br>salonunuza asıyoruz.</h2>
+        <p class="fs-sub-dark reveal-up delay-2">Yüzlerce çeşit arasından önceden elediğimiz,<br>mekanınıza uyacağına inandığımız modelleri<br>evinizde deneyimliyorsunuz.</p>
+      </div>
+      <div class="split-visual reveal-right delay-1">
+        <div class="fabric-showcase" id="step3-tul-showcase"></div>
+      </div>
+    </div>
+  </section>
+
+<section class="fs-section fs-step" data-section="4" id="story-step4">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number reveal-up">03</div>
+      <h2 class="fs-headline reveal-up delay-1">Görüyorsunuz,<br><em>beğeniyorsunuz,</em><br>alıyorsunuz.</h2>
+      <p class="fs-sub reveal-up delay-2">Tahmin değil, gerçek. Evinizin ışığında,<br>duvarlarınızın renginde görerek karar veriyorsunuz.<br>Binlerce seçenek yorgunluğu yok.</p>
+      <div class="checkmarks reveal-up delay-3">
+        <div class="checkmark-item">✓ Evinizde deneyimleyin</div>
+        <div class="checkmark-item">✓ Doğal ışıkta görün</div>
+        <div class="checkmark-item">✓ Emin olarak seçin</div>
+      </div>
+    </div>
+  </section>
+
+<section class="fs-section fs-step fs-step-light" data-section="5" id="story-step5">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-split">
+      <div class="split-text">
+        <div class="step-number-dark reveal-up">04</div>
+        <h2 class="fs-headline-dark reveal-up delay-1">Ölçünüze özel<br><em>dikiyoruz.</em></h2>
+        <p class="fs-sub-dark reveal-up delay-2">Standart beden yok. Her perde,<br>tam pencerenize göre kesilip<br>dikilir.</p>
+        <div class="step-detail-dark reveal-up delay-3">
+          <div class="step-chip-dark">✂️ Özel ölçü kesim</div>
+          <div class="step-chip-dark">🪡 El işi büzgü</div>
+          <div class="step-chip-dark">⏱️ 3-5 iş günü</div>
+        </div>
+      </div>
+      <div class="split-visual reveal-right delay-1">
+        <div class="measure-visual">
+          <div class="measure-line measure-h">
+            <span class="measure-label">Genişlik</span>
+          </div>
+          <div class="measure-line measure-v">
+            <span class="measure-label">Uzunluk</span>
+          </div>
+          <div class="window-illustration">
+            <div class="window-frame">
+              <div class="curtain-left"></div>
+              <div class="curtain-right"></div>
+              <div class="window-glass"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="fs-section fs-step" data-section="6" id="story-step6">
+    <div class="fs-bg fs-bg-dark-pattern"></div>
+    <div class="fs-overlay fs-overlay-dark"></div>
+    <div class="fs-content fs-content-center">
+      <div class="step-number reveal-up">05</div>
+      <h2 class="fs-headline reveal-up delay-1">Biz takıyoruz.<br><em>Ücretsiz.</em></h2>
+      <p class="fs-sub reveal-up delay-2">Matkap, vida, korniş… hepsi bizde.<br>Siz sadece evinizde olun,<br>gerisini biz halledelim.</p>
+      <button class="btn-gold-lg reveal-up delay-3" onclick="openWA()">💬 Randevu Al — Ücretsiz</button>
+    </div>
+  </section>
+
+<section class="fs-section fs-transition" data-section="7">
+    <div class="fs-bg fs-bg-sand"></div>
+    <div class="fs-content fs-content-center">
+      <div class="fs-eyebrow reveal-up" style="color:var(--gold);" id="prod-tag-el">Koleksiyonumuz</div>
+      <h2 class="fs-headline-dark reveal-up delay-1" id="prod-title-el">Seçilmiş <em>Ürünler</em></h2>
+      <p class="fs-sub-dark reveal-up delay-2" id="prod-sub-el">Her biri özenle seçilmiş tül ve kumaş modellerimiz</p>
+      <button class="btn-gold reveal-up delay-3" onclick="scrollToSection('products-section')">Ürünleri İncele ↓</button>
+    </div>
+  </section>
 
 <!-- PROCESS -->
 <section class="process-section">
@@ -1744,44 +1944,61 @@ nav a:hover{color:var(--gold);}
 
 // Header light/dark based on section
 function initScrollExperience() {
-  const header = document.getElementById('site-header') || document.querySelector('header');
+  const header = document.getElementById('site-header');
+  const lightSections = document.querySelectorAll('.fs-step-light, .fs-problem, .fs-transition, .products-section, .gallery-section, .blog-section, .calc-section, .contact-section');
 
-  // Header scroll gölgesi
-  if(header){
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
-  }
-
-  // Genel IntersectionObserver - visible class ekle
-  const observer = new IntersectionObserver((entries) => {
+  // Intersection Observer for header style
+  const headerObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if(entry.isIntersecting && entry.target){
-        entry.target.classList.add('visible');
-        // Section başlıkları için de ekle
-        entry.target.classList.add('section-animate');
+      if (entry.isIntersecting) {
+        if(header)header.classList.add('light-header');
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.3 });
 
-  // Tüm section'ları izle
-  const targets = [
-    '.process-section','.products-section','.gallery-section',
-    '.blog-section','.calc-section','.contact-section',
-    '.hero-steps','.reveal-up','.reveal-right','.reveal-section'
-  ];
-  targets.forEach(sel => {
-    document.querySelectorAll(sel).forEach(el => {
-      if(el) observer.observe(el);
+  const darkSections = document.querySelectorAll('.fs-hero, .fs-step:not(.fs-step-light)');
+  const darkObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if(header)header.classList.remove('light-header');
+      }
     });
+  }, { threshold: 0.3 });
+
+  lightSections.forEach(s => headerObserver.observe(s));
+  darkSections.forEach(s => darkObserver.observe(s));
+
+  // Scroll → header background
+  window.addEventListener('scroll', () => {
+    if(header){if(window.scrollY>60){header.classList.add('scrolled');}else{header.classList.remove('scrolled');}}
+  }, { passive: true });
+
+  // Reveal animations on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal-up, .reveal-right').forEach(el => {
+    revealObserver.observe(el);
   });
 
-  // Hero paralaks
+  // Paralaks effect on bg elements
+  const parallaxBgs = document.querySelectorAll('.fs-bg-dark-pattern, .fs-bg-sand, .fs-bg-texture');
   window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    if(!hero) return;
-    const scrolled = window.scrollY;
-    hero.style.backgroundPositionY = (scrolled * 0.3) + 'px';
+    parallaxBgs.forEach(bg => {
+      const section = bg.closest('.fs-section');
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewH) return;
+      const progress = (viewH - rect.top) / (viewH + rect.height);
+      const offset = (progress - 0.5) * 80;
+      bg.style.transform = `translateY(${offset}px)`;
+    });
   }, { passive: true });
 }
 
