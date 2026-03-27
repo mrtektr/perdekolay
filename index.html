@@ -2831,6 +2831,30 @@ async function doLogin(){
 function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;position:fixed;inset:0;z-index:1500;';apPage('dashboard',document.querySelector('.ap-ni'));}
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
 
+
+function apGroup(group, btn){
+  document.querySelectorAll('.aph-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  ['urunler','site','tasarim','sistem'].forEach(g=>{
+    const d=document.getElementById('apg-'+g);
+    if(d)d.style.display=(g===group)?'block':'none';
+  });
+  document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('ap-main').scrollTop=0;
+}
+
+function apBack(){
+  document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
+  const back=document.getElementById('aph-back');
+  if(back)back.style.display='none';
+}
+
+function apToast(msg){
+  let t=document.getElementById('ap-toast');
+  if(!t){t=document.createElement('div');t.id='ap-toast';t.className='ap-toast';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(()=>{t.style.opacity='0';},2500);
+}
 function apPage(page,e){
   document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ap-ni').forEach(i=>i.classList.remove('active'));
