@@ -1073,6 +1073,72 @@ html { scroll-behavior: smooth; }
   .product-visual{aspect-ratio:3/4;height:auto;}
   .product-info{padding:.7rem .8rem 1rem;}
 }
+
+/* ===== YENİ ADMİN PANEL ===== */
+#admin-panel{display:none;position:fixed;inset:0;z-index:1500;background:#f5f0e8;flex-direction:column;font-family:'Jost',sans-serif;}
+.aph{display:flex;align-items:center;gap:1rem;padding:.9rem 1.5rem;background:#fff;border-bottom:1px solid #e0dbd4;flex-shrink:0;flex-wrap:wrap;}
+.aph-brand{display:flex;align-items:center;gap:.6rem;margin-right:1rem;}
+.aph-logo{font-size:1rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#2c2620;}
+.aph-logo span{color:#b8965a;}
+.aph-sub{font-size:.72rem;color:#9e9080;}
+.aph-tabs{display:flex;gap:.4rem;flex:1;flex-wrap:wrap;}
+.aph-tab{padding:.45rem 1.1rem;background:#f5f0e8;border:1px solid #e0dbd4;color:#6b5f54;cursor:pointer;font-size:.78rem;font-weight:600;font-family:'Jost',sans-serif;border-radius:20px;transition:all .2s;}
+.aph-tab:hover{border-color:#b8965a;color:#b8965a;}
+.aph-tab.active{background:#b8965a;color:#fff;border-color:#b8965a;}
+.aph-close{padding:.45rem 1rem;background:#fee2e2;border:1px solid #fca5a5;color:#dc2626;cursor:pointer;font-size:.75rem;font-weight:700;font-family:'Jost',sans-serif;border-radius:4px;margin-left:auto;}
+.aph-close:hover{background:#fecaca;}
+.apg{padding:2rem 1.5rem;overflow-y:auto;}
+.apg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;max-width:800px;}
+.apg-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:1.5rem 1rem;background:#fff;border:1.5px solid #e0dbd4;cursor:pointer;transition:all .2s;border-radius:8px;font-family:'Jost',sans-serif;}
+.apg-card:hover{border-color:#b8965a;background:rgba(184,150,90,.05);transform:translateY(-2px);box-shadow:0 4px 12px rgba(44,38,32,.08);}
+.apg-card span{font-size:1.9rem;line-height:1;}
+.apg-card b{font-size:.78rem;font-weight:700;color:#2c2620;text-align:center;}
+/* ap-main içeriği */
+.ap-main{flex:1;overflow-y:auto;}
+.ap-page{display:none;padding:1.5rem;}
+.ap-page.active{display:block;}
+.ap-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1.5px solid #e0dbd4;}
+.ap-page-title{font-size:1.4rem;font-weight:300;color:#2c2620;}
+.ap-page-sub{font-size:.75rem;color:#9e9080;margin-top:.2rem;}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.sc-card{background:#fff;border:1px solid #e0dbd4;border-radius:8px;padding:1.3rem;}
+.sc-card.sc-full{grid-column:1/-1;}
+.sc-card h4{font-size:.85rem;font-weight:700;color:#2c2620;margin-bottom:.9rem;}
+.sf{margin-bottom:.8rem;}
+.sf label,.sc-card label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9e9080;margin-bottom:.3rem;}
+.sf input,.sf textarea,.sf select,.sc-card input,.sc-card textarea,.sc-card select{width:100%;background:#f5f0e8;border:1.5px solid #e0dbd4;color:#2c2620;padding:.6rem .85rem;font-family:'Jost',sans-serif;font-size:.87rem;border-radius:6px;outline:none;transition:border-color .2s;}
+.sf input:focus,.sc-card input:focus,.sf textarea:focus{border-color:#b8965a;}
+.sf-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.sc-save{background:#b8965a;color:#fff;border:none;padding:.65rem 1.6rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;border-radius:6px;margin-top:.8rem;transition:background .2s;}
+.sc-save:hover{background:#8a6e3e;}
+.hint{font-size:.75rem;color:#9e9080;line-height:1.7;}
+.ap-btn{background:#b8965a;color:#fff;border:none;padding:.5rem 1.1rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;border-radius:4px;}
+.ap-toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;padding:.75rem 1.4rem;background:#2c2620;color:#fff;font-size:.82rem;font-weight:600;border-radius:4px;pointer-events:none;transition:opacity .3s;box-shadow:0 4px 16px rgba(44,38,32,.25);opacity:0;}
+/* Tablo */
+.tbl-wrap{overflow-x:auto;}
+.tbl{width:100%;border-collapse:collapse;font-size:.82rem;}
+.tbl th{text-align:left;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9e9080;padding:.5rem .7rem;border-bottom:1.5px solid #e0dbd4;}
+.tbl td{padding:.65rem .7rem;border-bottom:1px solid #e0dbd4;color:#3d3530;}
+.tbl tr:hover td{background:#f5f0e8;}
+.tbl-btn{padding:.28rem .65rem;border:1px solid #e0dbd4;background:transparent;font-size:.72rem;font-weight:600;cursor:pointer;border-radius:4px;font-family:'Jost',sans-serif;color:#6b5f54;transition:all .2s;}
+.tbl-btn:hover{border-color:#b8965a;color:#b8965a;}
+.tbl-btn.del:hover{border-color:#e05555;color:#e05555;}
+.badge-green{background:#dcfce7;color:#15803d;font-size:.65rem;font-weight:700;padding:.18rem .5rem;border-radius:20px;}
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.dash-card{background:#fff;border:1px solid #e0dbd4;border-radius:8px;padding:1.1rem;}
+.dash-card-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9e9080;margin-bottom:.3rem;}
+.dash-card-val{font-size:1.8rem;font-weight:300;color:#2c2620;}
+@media(max-width:600px){
+  .aph-tabs{gap:.2rem;}
+  .aph-tab{padding:.35rem .7rem;font-size:.7rem;}
+  .apg-grid{grid-template-columns:repeat(3,1fr);gap:.6rem;}
+  .apg-card{padding:1rem .6rem;gap:.4rem;}
+  .apg-card span{font-size:1.5rem;}
+  .apg-card b{font-size:.68rem;}
+  .sc-grid{grid-template-columns:1fr;}
+  .sf-row{grid-template-columns:1fr;}
+  .dash-grid{grid-template-columns:1fr 1fr;}
+}
 </style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
@@ -1526,33 +1592,53 @@ html { scroll-behavior: smooth; }
 
 <!-- ADMIN PANEL -->
 <div id="admin-panel">
-  <aside class="ap-sb">
-    <div class="ap-brand"><div class="ap-brand-logo">PERLA<span>.</span></div><div class="ap-brand-sub">Yönetim Paneli</div></div>
-    <nav class="ap-nav">
-      <div class="ap-nav-section">Genel</div>
-      <div class="ap-ni active" onclick="apPage('dashboard',this)"><span class="ap-ni-icon">📊</span>Genel Bakış</div>
-      <div class="ap-nav-section">Ürünler</div>
-      <div class="ap-ni" onclick="apPage('tuller',this)"><span class="ap-ni-icon">🌿</span>Tüller</div>
-      <div class="ap-ni" onclick="apPage('kumaslar',this)"><span class="ap-ni-icon">🧵</span>Kumaşlar</div>
-      <div class="ap-ni" onclick="apPage('fiyatlar',this)"><span class="ap-ni-icon">💰</span>Fiyat Ayarları</div>
-      <div class="ap-ni" onclick="apPage('fonkumas',this)"><span class="ap-ni-icon">🪟</span>Fon Kumaşları</div>
-      <div class="ap-nav-section">İçerik</div>
-      <div class="ap-ni" onclick="apPage('anasayfa',this)"><span class="ap-ni-icon">🏠</span>Ana Sayfa</div>
-      <div class="ap-ni" onclick="apPage('adimlar',this)"><span class="ap-ni-icon">🔢</span>Nasıl Çalışıyoruz</div>
-      <div class="ap-ni" onclick="apPage('bolumler',this)"><span class="ap-ni-icon">📝</span>Bölüm Başlıkları</div>
-      <div class="ap-ni" onclick="apPage('galeri',this)"><span class="ap-ni-icon">🖼️</span>Galeri</div>
-      <div class="ap-ni" onclick="apPage('blog',this)"><span class="ap-ni-icon">✍️</span>Blog Yazıları</div>
-      <div class="ap-ni" onclick="apPage('iletisim',this)"><span class="ap-ni-icon">📞</span>İletişim</div>
-      <div class="ap-nav-section">Görünüm</div>
-      <div class="ap-ni" onclick="apPage('tema',this)"><span class="ap-ni-icon">🎨</span>Tema & Renkler</div>
-      <div class="ap-ni" onclick="apPage('metin',this)"><span class="ap-ni-icon">🔤</span>Buton & Menü Metinleri</div>
-      <div class="ap-nav-section">Sistem</div>
-      <div class="ap-ni" onclick="apPage('pixels',this)"><span class="ap-ni-icon">📊</span>Piksel & Analiz</div>
-      <div class="ap-ni" onclick="apPage('sosyal',this)"><span class="ap-ni-icon">📱</span>Sosyal Medya</div>
-      <div class="ap-ni" onclick="apPage('whatsapp',this)"><span class="ap-ni-icon">💬</span>WhatsApp Ayarları</div>
-    </nav>
-    <div class="ap-sb-footer"><button class="ap-back-btn" onclick="closeAdminPanel()">← Siteye Dön</button></div>
-  </aside>
+  <!-- YENİ ADMIN HEADER -->
+  <div class="aph">
+    <div class="aph-brand">
+      <span class="aph-logo">PERLA<span>.</span></span>
+      <span class="aph-sub">Yönetim Paneli</span>
+    </div>
+    <div class="aph-tabs">
+      <button class="aph-tab active" onclick="apGroup('urunler',this)">🛍 Ürünler</button>
+      <button class="aph-tab" onclick="apGroup('site',this)">🏠 Site</button>
+      <button class="aph-tab" onclick="apGroup('tasarim',this)">🎨 Tasarım</button>
+      <button class="aph-tab" onclick="apGroup('sistem',this)">⚙️ Sistem</button>
+    </div>
+    <button class="aph-close" onclick="closeAdminPanel()">✕ Kapat</button>
+  </div>
+  <!-- GRUP MENÜLERİ -->
+  <div class="apg" id="apg-urunler">
+    <div class="apg-grid">
+      <div class="apg-card" onclick="apPage('dashboard',this)"><span>📊</span><b>Genel Bakış</b></div>
+      <div class="apg-card" onclick="apPage('tuller',this)"><span>🌿</span><b>Tüller</b></div>
+      <div class="apg-card" onclick="apPage('kumaslar',this)"><span>🧵</span><b>Kumaşlar</b></div>
+      <div class="apg-card" onclick="apPage('fiyatlar',this)"><span>💰</span><b>Fiyatlar</b></div>
+      <div class="apg-card" onclick="apPage('fonkumas',this)"><span>🪟</span><b>Fon Kumaşları</b></div>
+    </div>
+  </div>
+  <div class="apg" id="apg-site" style="display:none">
+    <div class="apg-grid">
+      <div class="apg-card" onclick="apPage('anasayfa',this)"><span>🏠</span><b>Ana Sayfa</b></div>
+      <div class="apg-card" onclick="apPage('adimlar',this)"><span>1.2<br>3.4</span><b>İş Akışı</b></div>
+      <div class="apg-card" onclick="apPage('bolumler',this)"><span>📄</span><b>Bölüm Başlıkları</b></div>
+      <div class="apg-card" onclick="apPage('galeri',this)"><span>🖼️</span><b>Galeri</b></div>
+      <div class="apg-card" onclick="apPage('blog',this)"><span>🍕</span><b>Blog</b></div>
+      <div class="apg-card" onclick="apPage('iletisim',this)"><span>📞</span><b>İletişim</b></div>
+    </div>
+  </div>
+  <div class="apg" id="apg-tasarim" style="display:none">
+    <div class="apg-grid">
+      <div class="apg-card" onclick="apPage('tema',this)"><span>🎨</span><b>Tema</b></div>
+      <div class="apg-card" onclick="apPage('metin',this)"><span>🔤</span><b>Metinler</b></div>
+      <div class="apg-card" onclick="apPage('sosyal',this)"><span>📱</span><b>Sosyal Medya</b></div>
+    </div>
+  </div>
+  <div class="apg" id="apg-sistem" style="display:none">
+    <div class="apg-grid">
+      <div class="apg-card" onclick="apPage('pixels',this)"><span>📊</span><b>Piksel & Analiz</b></div>
+      <div class="apg-card" onclick="apPage('whatsapp',this)"><span>💬</span><b>WhatsApp</b></div>
+    </div>
+  </div>
   <main class="ap-main">
 
     <!-- Dashboard -->
@@ -2828,7 +2914,7 @@ async function doLogin(){
   if(toHex(uh)==='8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'&&toHex(ph)==='8e70e131ae396d27fd27f25db50fcea339cd86839aced6a17182c3b115bab34b'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
-function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;position:fixed;inset:0;z-index:1500;';apPage('dashboard',document.querySelector('.ap-ni'));}
+function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;flex-direction:column;position:fixed;inset:0;z-index:1500;background:#f5f0e8;';apPage('dashboard',document.querySelector('.ap-ni'));}
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
 
 
@@ -2840,7 +2926,6 @@ function apGroup(group, btn){
     if(d)d.style.display=(g===group)?'block':'none';
   });
   document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('ap-main').scrollTop=0;
 }
 
 function apBack(){
