@@ -1200,6 +1200,10 @@ html { scroll-behavior: smooth; }
   ]}
 ]}
 </script>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5R2QDMR1BJ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5R2QDMR1BJ');</script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%232c2620'/><text y='72' x='50' text-anchor='middle' font-size='62' font-family='Georgia,serif' fill='%23b8965a'>P</text></svg>">
 </head>
 <body>
 
@@ -2073,7 +2077,7 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+</script></script></script><script>
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2658,7 +2662,7 @@ function openWA(msg){
     method: msg ? 'fiyat_teklifi' : 'genel',
     page_location: window.location.href
   });
-  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(text),'_blank');
+  sessionStorage.setItem('wa_num',num);sessionStorage.setItem('wa_msg',text);window.location.href='/tesekkurler.html';
 }
 function openProductWA(tab,idx){
   const p=(tab==='tul'?T:K)[idx];
@@ -4196,4 +4200,6 @@ initApp();
       </div>
     </div>
     <div class="ap-fg">
-      <label>📄 İçerik 
+      <label>📄 İçerik
+</body>
+</html>
