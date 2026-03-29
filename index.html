@@ -2238,7 +2238,43 @@ function scrollToSection(id) {
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initScrollExperience, 100);
+  // Supabase'den tüm verileri yükle
+  loadAllFromSupabase();
 });
+
+async function loadAllFromSupabase(){
+  const H={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+  try{
+    // Tüller
+    const rT=await fetch(SB_URL+'/rest/v1/tul?select=*&order=sira.asc,id.asc',{headers:H});
+    if(rT.ok){const d=await rT.json();if(d&&d.length){T=d.map(p=>({imgs:[],video:'',...p}));lsSet(LS.T,T);}}
+    // Kumaşlar
+    const rK=await fetch(SB_URL+'/rest/v1/kumas?select=*&order=sira.asc,id.asc',{headers:H});
+    if(rK.ok){const d=await rK.json();if(d&&d.length){K=d.map(p=>({imgs:[],video:'',...p}));lsSet(LS.K,K);}}
+    // Ayarlar (S, TX, P, TH, KN, BL)
+    const rA=await fetch(SB_URL+'/rest/v1/ayarlar?id=eq.1&select=*',{headers:H});
+    if(rA.ok){
+      const d=await rA.json();
+      if(d&&d[0]&&d[0].data){
+        const dd=d[0].data;
+        if(dd.S&&typeof dd.S==='object'){S={...DS,...dd.S};lsSet(LS.S,S);}
+        if(dd.TX&&typeof dd.TX==='object'){TX={...DTX,...dd.TX};lsSet(LS.TX,TX);}
+        if(dd.P&&Array.isArray(dd.P)&&dd.P.length){P=dd.P;lsSet(LS.P,P);}
+        if(dd.TH&&typeof dd.TH==='object'){TH={...DTH,...dd.TH};lsSet(LS.TH,TH);}
+        if(dd.KN){KN=dd.KN;lsSet(LS.KN,KN);}
+        if(dd.BL&&Array.isArray(dd.BL)){BL=dd.BL;lsSet(LS.BL,BL);}
+      }
+    }
+    // Blog
+    const rB=await fetch(SB_URL+'/rest/v1/blog?select=*&order=id.desc',{headers:H});
+    if(rB.ok){const d=await rB.json();if(d&&d.length){BL=d;lsSet(LS.BL,BL);}}
+    console.log('✓ Supabase verisi yüklendi');
+    // Sayfayı güncelle
+    applyTheme();applySettings();applyTexts();
+    renderProducts();renderGallery();renderBlog();renderProcess();
+    renderOdalar();
+  }catch(e){console.warn('Supabase hatasi:',e);}
+}
 
 
 // ===== STORAGE =====
