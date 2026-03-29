@@ -2272,7 +2272,11 @@ async function loadAllFromSupabase(){
     // Sayfayı güncelle
     applyTheme();applySettings();applyTexts();
     renderProducts();renderGallery();renderBlog();renderProcess();
-    renderOdalar();
+    // Hesaplayıcı: odalar boşsa addOda, doluysa renderOdalar
+    if(typeof odalar!=='undefined'){
+      if(odalar.length===0){if(typeof addOda==='function')addOda();}
+      else{renderOdalar();}
+    }
   }catch(e){console.warn('Supabase hatasi:',e);}
 }
 
