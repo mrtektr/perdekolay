@@ -2948,7 +2948,7 @@ function closeAdminLogin(){const m=el('admin-login');if(m)m.style.display='none'
 async function doLogin(){
   const u=el('lu').value.trim(),p=el('lp').value;
   if(!u||!p){el('lerr').textContent='Kullanıcı adı ve şifre gerekli.';return;}
-  if(u==='admin'&&p==='Perde@Kadiköy#2025'){closeAdminLogin();openAdminPanel();}
+  if(u==='mrtek'&&p==='Sifrekolay1234567'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
 function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;flex-direction:column;position:fixed;inset:0;z-index:1500;background:#f5f0e8;';apPage('dashboard',document.querySelector('.ap-ni'));}
