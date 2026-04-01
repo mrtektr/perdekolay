@@ -198,10 +198,10 @@ nav a:hover{color:var(--dark);}
 .pd-name{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.1;}
 .pd-price{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--accent);margin:1.2rem 0;}
 .pd-price small{font-family:'Jost',sans-serif;font-size:.72rem;color:var(--stone);font-weight:400;display:block;margin-top:.2rem;}
-.pd-desc{font-size:.85rem;color:var(--stone);line-height:1.9;margin-bottom:1.8rem;font-weight:300;}
+.pd-desc{font-size:.85rem;color:#3d3530;line-height:1.9;margin-bottom:1.8rem;font-weight:300;}
 .pd-divider{border:none;border-top:1px solid var(--linen);margin:1.5rem 0;}
 .pd-features{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem;}
-.pd-feat{display:flex;align-items:center;gap:.7rem;font-size:.78rem;color:var(--stone);}
+.pd-feat{display:flex;align-items:center;gap:.7rem;font-size:.78rem;color:#3d3530;}
 .pd-feat-icon{color:var(--accent);font-size:.9rem;}
 .pd-actions{display:flex;flex-direction:column;gap:.8rem;}
 .pd-cta{width:100%;background:var(--dark);color:var(--white);border:none;padding:1rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
@@ -231,7 +231,7 @@ nav a:hover{color:var(--dark);}
 .calc-section{padding:7rem 5vw;background:var(--dark);color:var(--sand);}
 .calc-layout{display:grid;grid-template-columns:1fr 380px;gap:3rem;margin-top:3.5rem;align-items:start;}
 .oda-list{display:flex;flex-direction:column;gap:1.2rem;}
-.oda-card{background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.12);padding:1.5rem;}
+.oda-card{background:#fff;border:1px solid rgba(184,150,90,.15);padding:1.5rem;border-radius:8px;box-shadow:0 2px 8px rgba(44,38,32,.06);}
 .oda-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
 .oda-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--sand);}
 .oda-remove{background:none;border:none;color:var(--stone);cursor:pointer;font-size:.85rem;}
@@ -253,11 +253,11 @@ nav a:hover{color:var(--dark);}
 .fiyat-panel{background:rgba(255,255,255,.04);border:1px solid rgba(212,200,176,.15);padding:2rem;position:sticky;top:90px;}
 .fiyat-panel-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--white);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(212,200,176,.12);}
 .fiyat-satirlar{display:flex;flex-direction:column;gap:.9rem;margin-bottom:1.5rem;}
-.fiyat-satir{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;}
+.fiyat-satir{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--dark);}
 .fiyat-satir-label{color:var(--silk);}
 .fiyat-satir-val{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--sand);}
 .fiyat-divider{border:none;border-top:1px solid rgba(212,200,176,.12);margin:.5rem 0;}
-.fiyat-toplam{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;}
+.fiyat-toplam{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid rgba(184,150,90,.15);}
 .fiyat-toplam-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--silk);}
 .fiyat-toplam-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold-light);}
 .fiyat-empty{text-align:center;padding:2rem 0;font-size:.8rem;color:var(--stone);line-height:2;}
@@ -775,7 +775,7 @@ html { scroll-behavior: smooth; }
 .fiyat-toplam{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;}
 .fiyat-toplam-label{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);}
 .fiyat-toplam-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--gold);}
-#fiyat-icerik{background:rgba(255,255,255,.6);border:1px solid rgba(184,150,90,.15);padding:1.5rem;min-height:120px;backdrop-filter:blur(8px);}
+#fiyat-icerik{background:#fff;border:1px solid rgba(184,150,90,.2);padding:1.5rem;min-height:120px;border-radius:8px;}
 
 /* ===== KORNİŞ BOX ===== */
 .calc-kornish-box{
@@ -879,7 +879,7 @@ html { scroll-behavior: smooth; }
   gap:2rem;
 }
 .pd-visual-wrap{width:100%;}
-.pd-info-wrap{width:100%;overflow-y:auto;}
+.pd-info-wrap{width:100%;overflow-y:auto;background:#fff;padding:2rem;border-radius:8px;}
 
 @media(max-width:700px){
   .pd-box{
@@ -2838,6 +2838,12 @@ function odaChange(id,f,v){
 }
 function renderOdalar(){
   TUL_OPT=T.map(t=>({label:t.name,fiyat:t.fiyat}));
+  // K (kumaşlar) → FON_KUMASLAR formatına dönüştür
+  if(K&&K.length>0){FON_KUMASLAR.length=0;K.forEach(k=>FON_KUMASLAR.push({label:k.name,fiyat:k.fiyat||0}));}
+  if(K&&K.length>0){
+    FON_KUMASLAR.length=0;
+    K.forEach(k=>FON_KUMASLAR.push({label:k.name,fiyat:k.fiyat||0}));
+  }
   const ol=el('oda-list');if(!ol)return;
   ol.innerHTML=odalar.map(o=>{
     const f=odaFiyat(o);
