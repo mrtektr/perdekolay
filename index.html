@@ -458,7 +458,7 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 /* BLOG */
 .blog-section{padding:7rem 5vw;background:var(--sand);}
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;}@media(max-width:900px){.blog-grid{grid-template-columns:repeat(2,1fr);}}@media(max-width:600px){.blog-grid{grid-template-columns:1fr;}}
-.blog-card{background:var(--white);border:1px solid var(--silk);cursor:pointer;transition:all .25s;}
+.blog-card{background:#fff;border:1px solid rgba(184,150,90,.15);cursor:pointer;transition:all .25s;}
 .blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(44,38,32,.08);}
 .blog-card-img{height:200px;background:var(--linen);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
 .blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
@@ -466,18 +466,18 @@ table.tbl tr:hover td{background:rgba(255,255,255,.015);}
 .blog-card-emoji{font-size:3.5rem;}
 .blog-card-cat{position:absolute;top:.8rem;left:.8rem;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;background:var(--accent);color:white;padding:.25rem .6rem;}
 .blog-card-body{padding:1.4rem;}
-.blog-card-date{font-size:.65rem;color:var(--stone);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
-.blog-card-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;line-height:1.3;margin-bottom:.6rem;}
-.blog-card-excerpt{font-size:.78rem;color:var(--stone);line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.blog-card-date{font-size:.65rem;color:#6b5f54;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;}
+.blog-card-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;line-height:1.3;margin-bottom:.6rem;color:#2c2620;}
+.blog-card-excerpt{font-size:.78rem;color:#4a3f36;line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .blog-card-read{display:inline-block;margin-top:1rem;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:500;}
 /* Blog detail modal */
 .blog-modal{display:none;position:fixed;inset:0;z-index:600;background:rgba(44,38,32,.88);align-items:center;justify-content:center;padding:1.5rem;}
 .blog-modal.open{display:flex;}
-.blog-box{background:var(--white);width:780px;max-width:98vw;max-height:92vh;overflow-y:auto;position:relative;}
+.blog-box{background:#fff;width:780px;max-width:98vw;max-height:92vh;overflow-y:auto;position:relative;color:#2c2620;}
 .blog-box-img{height:320px;background:var(--linen);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .blog-box-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
 .blog-box-img-emoji{font-size:6rem;z-index:1;}
-.blog-box-content{padding:2.5rem;}
+.blog-box-content{padding:2.5rem;color:#2c2620;background:#fff;}
 .blog-box-cat{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
 .blog-box-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1.15;margin-bottom:.8rem;}
 .blog-box-meta{font-size:.7rem;color:var(--stone);margin-bottom:1.8rem;padding-bottom:1.2rem;border-bottom:1px solid var(--linen);}
@@ -1519,9 +1519,9 @@ html { scroll-behavior: smooth; }
 <!-- BLOG MODAL -->
 <div id="blog-modal" style="display:none;position:fixed;inset:0;background:rgba(20,15,10,.92);z-index:9000;overflow-y:auto;backdrop-filter:blur(6px);">
   <button onclick="closeBlogModal()" style="position:fixed;top:1.5rem;right:1.5rem;z-index:9001;width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;font-size:1.2rem;">✕</button>
-  <div style="max-width:760px;margin:4rem auto;padding:2rem;">
+  <div style="max-width:760px;margin:4rem auto;padding:2rem;background:#fff;border-radius:8px;">
     <div id="blog-box-img"></div>
-    <div id="blog-box-content"></div>
+    <div id="blog-box-content" style="color:#2c2620;background:#fff;padding:1.5rem;"></div>
   </div>
 </div>
 
@@ -2167,6 +2167,11 @@ function scrollToSection(id) {
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initScrollExperience, 100);
+  setTimeout(()=>{
+    if(typeof odalar!=='undefined'&&odalar.length===0&&typeof addOda==='function'){
+      addOda();
+    }
+  }, 600);
 });
 
 
