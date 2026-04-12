@@ -3135,7 +3135,21 @@ async function toggleSection(sec,val){
 }
 function saveHeroVideo(){S.heroVideo=el('set-video').value.trim();lsSet(LS.S,S);applySettings();toast('Video kaydedildi ✓');}
 function saveHeroText(){S.heroEyebrow=el('set-eyebrow').value;S.heroTitle=el('set-htitle').value;S.heroSub=el('set-hsub').value;lsSet(LS.S,S);applySettings();toast('Hero metinleri kaydedildi ✓');}
-function saveSiteInfo(){S.logo=el('set-logo').value||'PERLA';S.siteTitle=el('set-stitle').value;S.bgText=el('set-bgtext').value;lsSet(LS.S,S);applySettings();toast('Site bilgileri kaydedildi ✓');}
+async function saveSiteInfo(){
+  S.heroEyebrow=el('set-eyebrow')?.value||S.heroEyebrow;
+  S.heroTitle=el('set-htitle')?.value||S.heroTitle;
+  S.heroSub=el('set-hsub')?.value||S.heroSub;
+  S.heroVideo=el('set-video')?.value||'';
+  S.logo=el('set-logo')?.value||'PERLA';
+  S.siteTitle=el('set-stitle')?.value||S.siteTitle;
+  S.bgText=el('set-bgtext')?.value||S.bgText;
+  const togG=el('tog-gallery');if(togG)S.showGallery=togG.checked;
+  const togB=el('tog-blog');if(togB)S.showBlog=togB.checked;
+  lsSet(LS.S,S);
+  applySettings();
+  await sbSaveAyarlar();
+  toast('Site bilgileri kaydedildi ✓');
+}
 
 // ===== ADIMLAR =====
 function fillAdimlar(){
