@@ -198,7 +198,7 @@ nav a:hover{color:var(--dark);}
 .pd-name{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;line-height:1.1;}
 .pd-price{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--accent);margin:1.2rem 0;}
 .pd-price small{font-family:'Jost',sans-serif;font-size:.72rem;color:var(--stone);font-weight:400;display:block;margin-top:.2rem;}
-.pd-desc{font-size:.85rem;color:var(--stone);line-height:1.9;margin-bottom:1.8rem;font-weight:300;}
+.pd-desc{font-size:.85rem;color:#3d3530;line-height:1.9;margin-bottom:1.8rem;font-weight:300;}
 .pd-divider{border:none;border-top:1px solid var(--linen);margin:1.5rem 0;}
 .pd-features{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2rem;}
 .pd-feat{display:flex;align-items:center;gap:.7rem;font-size:.78rem;color:var(--stone);}
@@ -879,7 +879,7 @@ html { scroll-behavior: smooth; }
   gap:2rem;
 }
 .pd-visual-wrap{width:100%;}
-.pd-info-wrap{width:100%;overflow-y:auto;}
+.pd-info-wrap{width:100%;overflow-y:auto;background:#fff;padding:2rem;}
 
 @media(max-width:700px){
   .pd-box{
@@ -1073,7 +1073,8 @@ html { scroll-behavior: smooth; }
   .product-visual{aspect-ratio:3/4;height:auto;}
   .product-info{padding:.7rem .8rem 1rem;}
 }
-</style>
+
+.ap-toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;padding:.75rem 1.4rem;background:#2c2620;color:#fff;font-size:.82rem;border-radius:4px;pointer-events:none;transition:opacity .3s;opacity:0;}</style>
 
 <!-- ===== SCHEMA.ORG YAPISAL VERİ ===== -->
 <script type="application/ld+json">
@@ -1205,6 +1206,7 @@ html { scroll-behavior: smooth; }
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5R2QDMR1BJ');</script>
 </head>
 <body>
+
 
 <!-- HEADER -->
 <header id="site-header">
@@ -2076,7 +2078,21 @@ html { scroll-behavior: smooth; }
 
 <div class="ap-toast" id="ap-toast"></div>
 
-</script></script></script><script>
+</script></script></script>
+<script>
+
+function apGroup(group,btn){
+  document.querySelectorAll('.aph-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  ['urunler','site','tasarim','sistem'].forEach(g=>{
+    const d=document.getElementById('apg-'+g);
+    if(d)d.style.display=(g===group)?'block':'none';
+  });
+  document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
+}
+function apBack(){document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));}
+function apToast(msg){let t=document.getElementById('ap-toast');if(!t){t=document.createElement('div');t.id='ap-toast';t.className='ap-toast';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';},2500);}
+
 // ===== SCROLL EXPERIENCE =====
 
 // Header light/dark based on section
@@ -2821,27 +2837,12 @@ function closeAdminLogin(){const m=el('admin-login');if(m)m.style.display='none'
 async function doLogin(){
   const u=el('lu').value.trim(),p=el('lp').value;
   if(!u||!p){el('lerr').textContent='Kullanıcı adı ve şifre gerekli.';return;}
-  const uh=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(u));
-  const ph=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
-  const toHex=b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
-  if(toHex(uh)==='8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'&&toHex(ph)==='8e70e131ae396d27fd27f25db50fcea339cd86839aced6a17182c3b115bab34b'){closeAdminLogin();openAdminPanel();}
+  if(u==='mrtek'&&p==='Sifrekolay1234567'){closeAdminLogin();openAdminPanel();}
   else{el('lerr').textContent='Kullanıcı adı veya şifre hatalı.';el('lp').value='';}
 }
 function openAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.cssText='display:flex;position:fixed;inset:0;z-index:1500;';apPage('dashboard',document.querySelector('.ap-ni'));}
 function closeAdminPanel(){const ap=el('admin-panel');if(ap)ap.style.display='none';renderProducts();renderGallery();renderProcess();applySettings();applyTexts();}
 
-
-function apGroup(group,btn){
-  document.querySelectorAll('.aph-tab').forEach(t=>t.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  ['urunler','site','tasarim','sistem'].forEach(g=>{
-    const d=document.getElementById('apg-'+g);
-    if(d)d.style.display=(g===group)?'block':'none';
-  });
-  document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
-}
-function apBack(){document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));}
-function apToast(msg){let t=document.getElementById('ap-toast');if(!t){t=document.createElement('div');t.id='ap-toast';t.className='ap-toast';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';},2500);}
 function apPage(page,e){
   document.querySelectorAll('.ap-page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ap-ni').forEach(i=>i.classList.remove('active'));
@@ -3030,13 +3031,13 @@ async function toggleSection(sec,val){
 function saveHeroVideo(){S.heroVideo=el('set-video').value.trim();lsSet(LS.S,S);applySettings();toast('Video kaydedildi ✓');}
 function saveHeroText(){S.heroEyebrow=el('set-eyebrow').value;S.heroTitle=el('set-htitle').value;S.heroSub=el('set-hsub').value;lsSet(LS.S,S);applySettings();toast('Hero metinleri kaydedildi ✓');}
 async function saveSiteInfo(){
-  S.heroEyebrow=el('set-eyebrow')?.value||S.heroEyebrow;
-  S.heroTitle=el('set-htitle')?.value||S.heroTitle;
-  S.heroSub=el('set-hsub')?.value||S.heroSub;
-  S.heroVideo=el('set-video')?.value||'';
-  S.logo=el('set-logo')?.value||'PERLA';
-  S.siteTitle=el('set-stitle')?.value||S.siteTitle;
-  S.bgText=el('set-bgtext')?.value||S.bgText;
+  if(el('set-eyebrow'))S.heroEyebrow=el('set-eyebrow').value;
+  if(el('set-htitle'))S.heroTitle=el('set-htitle').value;
+  if(el('set-hsub'))S.heroSub=el('set-hsub').value;
+  if(el('set-video'))S.heroVideo=el('set-video').value||'';
+  if(el('set-logo'))S.logo=el('set-logo').value||'PERLA';
+  if(el('set-stitle'))S.siteTitle=el('set-stitle').value;
+  if(el('set-bgtext'))S.bgText=el('set-bgtext').value;
   const togG=el('tog-gallery');if(togG)S.showGallery=togG.checked;
   const togB=el('tog-blog');if(togB)S.showBlog=togB.checked;
   lsSet(LS.S,S);applySettings();await sbSaveAyarlar();toast('Site bilgileri kaydedildi ✓');
@@ -4191,37 +4192,7 @@ async function initApp(){
   }catch(e){console.warn('Supabase baglanti hatasi:',e);}
 }
 initApp();
-</script>
 
-<!-- BLOG EDIT MODAL -->
-<div class="ap-mo" id="blog-edit-modal">
-  <div class="ap-modal" style="max-width:680px;">
-    <button class="ap-mc" onclick="el('blog-edit-modal').classList.remove('open')">✕</button>
-    <h3 id="bm-heading">Blog Yazısı</h3>
-    <div class="ap-fr">
-      <div class="ap-fg"><label>Başlık *</label><input type="text" id="bm-title" placeholder="Yazı başlığı"></div>
-      <div class="ap-fg"><label>Kategori</label>
-        <select id="bm-cat" style="background:rgba(255,255,255,.06);border:1px solid rgba(212,200,176,.15);color:var(--sand);padding:.6rem;font-family:'Jost',sans-serif;outline:none;">
-          <option>Rehber</option><option>Bakım</option><option>Dekorasyon</option><option>İpuçları</option><option>Haberler</option>
-        </select>
-      </div>
-    </div>
-    <div class="ap-fr">
-      <div class="ap-fg"><label>Emoji / İkon</label><input type="text" id="bm-emoji" placeholder="📝"></div>
-      <div class="ap-fg"><label>Tarih</label><input type="date" id="bm-tarih"></div>
-      <div class="ap-fg"><label>Okuma Süresi (dk)</label><input type="number" id="bm-okuma" min="1" max="30" value="3"></div>
-    </div>
-    <div class="ap-fg"><label>Kısa Özet (kartlarda görünür)</label><textarea id="bm-excerpt" rows="2" placeholder="Yazının kısa özeti..."></textarea></div>
-    <div class="ap-fg">
-      <label>📸 Kapak Görseli</label>
-      <div class="img-upload">
-        <div style="font-size:2rem;">📷</div>
-        <p>Tıkla veya sürükle</p>
-        <input type="file" accept="image/*" onchange="handleBmImg(this)">
-        <img class="img-prev" id="bm-img-prev" src="" alt="" style="display:none;">
-      </div>
-    </div>
-    <div class="ap-fg">
-      <label>📄 İçerik
+</script>
 </body>
 </html>
